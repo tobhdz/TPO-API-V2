@@ -1,0 +1,12 @@
+
+.loginContainer{
+  background-color: #FBFBFB;
+}
+
+.btnNav{
+  border-radius: 50%;
+}
+
+.btnNav :hover{
+  color: #304673;
+}
