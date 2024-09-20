@@ -1,19 +1,23 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, IconButton, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import '../App.css';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from "react-router-dom";
 import LandingLogged from "./LandingLogged";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export default function Login() {
 
     const [user, setUser]=useState("");
     const [password, setPassword]= useState("");
+    const[visibility, setVisibility]=useState(false);
     
     const handleSubmit=()=>{
         <LandingLogged/>
     }
-    
+    const handleVisibility=()=>{
+        setVisibility(!visibility)
+    }
 
     return(
         <>
@@ -51,11 +55,14 @@ export default function Login() {
                     id="password"
                     variant="outlined"
                     size="small"
+                    type={visibility ? "text":"password"}
                     required
                     fullWidth
                     onChange={((e)=>{setPassword(e.target.value)})}
                     value={password}>
+                        
                     </TextField>
+                    <IconButton onClick={handleVisibility}><VisibilityIcon/></IconButton>
 
                     <Link
                     variant="p">Olvidaste tu contraseña? Cambiar contraseña</Link>
