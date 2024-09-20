@@ -3,7 +3,7 @@ import Login from './components/Login';
 import NavBar from './components/NavBar';
 import { Routes, Route } from 'react-router-dom';
 import Registro from './components/Registro';
-import Contacto from './components/Contacto';
+import Contacto from './components/contact/Contacto';
 import Home from './components/Home';
 import LoginIcon from '@mui/icons-material/Login';
 

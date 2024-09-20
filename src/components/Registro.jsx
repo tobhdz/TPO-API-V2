@@ -3,13 +3,36 @@ import { useState } from "react";
 
 export default function Registro() {
 
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        if (validateEmail(email)){
+          setError({
+            error: false,
+            message:""
+          })
+          console.log("email correcto");
+          
+        }else{
+          setError({
+            error: true,
+            message: "Formato de Email incorrecto"
+          })
+        }
+    }
+
     const[name, setName]=useState("")
     const[surname, setSurname]= useState("")
     const[email, setEmail]=useState("")
     const [password, setPassword]=useState("")
+    const[error, setError]= useState({
+        error: false,
+        message:"Ingrese un mail valido"
+      });
 
-    const onSubmit=()=>{
-
+    const validateEmail=(email)=>{
+    // expresion regular para validar email
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return regex.test(email);
     }
 
 
@@ -24,7 +47,7 @@ export default function Registro() {
                 sx={{display:"grid", gap:4, boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.3)",borderRadius:"10px", padding:4}}
                 component="form"
                 autoComplete="off"
-                onSubmit={onSubmit}>
+                onSubmit={handleSubmit}>
                     <Typography variant="h4" sx={{mt:2, mb:2,}} textAlign={"center"}>Registrarme</Typography>
                 
                     <TextField
@@ -56,6 +79,8 @@ export default function Registro() {
                     size="small"
                     required
                     fullWidth
+                    helperText={error.message}
+                    error={error.error}
                     onChange={((e)=>{setEmail(e.target.value)})}
                     value={email}>
                     </TextField>
@@ -74,7 +99,8 @@ export default function Registro() {
                     <Button
                     type="submit" 
                     variant="contained" 
-                    color="primary">
+                    color="primary"
+                    onClick={handleSubmit}>
                         REGISTRARME
                     </Button>
 
