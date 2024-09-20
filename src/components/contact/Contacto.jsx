@@ -1,7 +1,6 @@
-import { Box, Button, Container, IconButton, TextareaAutosize, TextField, Typography } from "@mui/material";
-import { useState } from "react";
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FormularioContacto from "./FormularioContacto";
+import Datos from "./Datos";
+import { Container } from "@mui/material";
 
 export default function Contacto() {
     
@@ -14,12 +13,8 @@ export default function Contacto() {
             sx={{display: "flex", justifyContent:"center", alignItems:"center"}}>
                     <FormularioContacto
                     maxWidth="lg"></FormularioContacto>
-                    <Box sx={{display:"grid"}}>
-                        <IconButton><WhatsAppIcon fontSize="large"/></IconButton>
-                        <Typography variant="h6">Nombre Empresa</Typography>
-                        <Typography variant="p">direccion</Typography>
-                    </Box>
                     
+            <Datos></Datos>        
             </Container>
                     
 
