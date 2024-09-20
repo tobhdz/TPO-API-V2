@@ -21,7 +21,7 @@ export default function Registro() {
             sx={{display: "grid", gap:4, mt: 3}}>
                 <Box
                 className=""
-                sx={{display:"grid", gap:4, borderStyle:"outset",borderRadius:"10px", padding:4}}
+                sx={{display:"grid", gap:4, boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.3)",borderRadius:"10px", padding:4}}
                 component="form"
                 autoComplete="off"
                 onSubmit={onSubmit}>
@@ -74,7 +74,7 @@ export default function Registro() {
                     <Button
                     type="submit" 
                     variant="contained" 
-                    color="inherit">
+                    color="primary">
                         REGISTRARME
                     </Button>
 
