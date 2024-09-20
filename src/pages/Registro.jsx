@@ -1,5 +1,7 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, IconButton, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+
 
 export default function Registro() {
 
@@ -20,6 +22,7 @@ export default function Registro() {
         }
     }
 
+    const [visibility, setVisibility]=useState(false)
     const[name, setName]=useState("")
     const[surname, setSurname]= useState("")
     const[email, setEmail]=useState("")
@@ -33,6 +36,10 @@ export default function Registro() {
     // expresion regular para validar email
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return regex.test(email);
+    }
+
+    const handleVisibility=()=>{
+      setVisibility(!visibility)
     }
 
 
@@ -90,11 +97,13 @@ export default function Registro() {
                     id="password"
                     variant="outlined"
                     size="small"
+                    type={visibility ? "text":"password"}
                     required
                     fullWidth
                     onChange={((e)=>{setPassword(e.target.value)})}
                     value={password}>
                     </TextField>
+                    <IconButton onClick={handleVisibility}><VisibilityIcon/></IconButton>
 
                     <Button
                     type="submit" 
