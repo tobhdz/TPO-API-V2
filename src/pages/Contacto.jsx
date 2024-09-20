@@ -1,5 +1,5 @@
-import FormularioContacto from "./FormularioContacto";
-import Datos from "./Datos";
+import FormularioContacto from "../components/contact/FormularioContacto";
+import Datos from "../components/contact/Datos";
 import { Container } from "@mui/material";
 
 export default function Contacto() {
@@ -15,10 +15,7 @@ export default function Contacto() {
                     maxWidth="lg"></FormularioContacto>
                     
             <Datos></Datos>        
-            </Container>
-                    
-
-            
+            </Container>    
 
     )
 }

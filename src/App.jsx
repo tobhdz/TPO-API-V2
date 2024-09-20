@@ -1,10 +1,10 @@
 import './App.css';
-import Login from './components/Login';
+import Login from './pages/Login';
 import NavBar from './components/NavBar';
 import { Routes, Route } from 'react-router-dom';
-import Registro from './components/Registro';
-import Contacto from './components/contact/Contacto';
-import Home from './components/Home';
+import Registro from './pages/Registro';
+import Contacto from './pages/Contacto';
+import LandingNotLogged from './pages/LandingNotLogged';
 import LoginIcon from '@mui/icons-material/Login';
 
 
@@ -24,7 +24,7 @@ function App() {
     <div className="App">
       <NavBar navLinks={navLinks}/>
       <Routes>
-        <Route path='/' element={<Home/>}></Route>
+        <Route path='/' element={<LandingNotLogged/>}></Route>
         <Route path="/ingresar" element={<Login/>}></Route>
         <Route path="/registrarme" element={<Registro/>}></Route>
         <Route path="/contacto" element={<Contacto/>}></Route>

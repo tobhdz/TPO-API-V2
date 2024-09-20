@@ -2,13 +2,17 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import '../App.css';
 import PersonIcon from '@mui/icons-material/Person';
+import { Link } from "react-router-dom";
+import LandingLogged from "./LandingLogged";
 
 export default function Login() {
 
     const [user, setUser]=useState("");
     const [password, setPassword]= useState("");
     
-    const handleSubmit=()=>{}
+    const handleSubmit=()=>{
+        <LandingLogged/>
+    }
     
 
     return(
@@ -52,6 +56,9 @@ export default function Login() {
                     onChange={((e)=>{setPassword(e.target.value)})}
                     value={password}>
                     </TextField>
+
+                    <Link
+                    variant="p">Olvidaste tu contraseña? Cambiar contraseña</Link>
 
                     <Button
                     type="submit" 
