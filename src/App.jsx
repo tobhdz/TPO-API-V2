@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import Registro from './components/Registro';
 import Contacto from './components/Contacto';
 import Home from './components/Home';
+import LoginIcon from '@mui/icons-material/Login';
 
 
 
@@ -12,7 +13,7 @@ const navLinks=[{
   title: "Contacto", path:"/contacto", icon:""
 },
 {
-  title:"INGRESAR", path:"/ingresar", icon:""
+  title:"INGRESAR", path:"/ingresar", icon:<LoginIcon/>
 },
 {
   title:"REGISTRARME", path:"/registrarme", icon:""

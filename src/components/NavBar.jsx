@@ -42,6 +42,7 @@ export default function NavBar({navLinks}) {
                                     key={item.title} 
                                     component={NavLink} 
                                     to={item.path} 
+                                    sx={{borderRadius:"50px", ml:2}}
                                     >{item.title}</Button>
                                 ))
                             }
