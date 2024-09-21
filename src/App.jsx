@@ -6,6 +6,7 @@ import Registro from './pages/Registro';
 import Contacto from './pages/Contacto';
 import LandingNotLogged from './pages/LandingNotLogged';
 import LoginIcon from '@mui/icons-material/Login';
+import CambiarContrasenia from './pages/CambiarContrasenia';
 
 
 
@@ -28,7 +29,7 @@ function App() {
         <Route path="/ingresar" element={<Login/>}></Route>
         <Route path="/registrarme" element={<Registro/>}></Route>
         <Route path="/contacto" element={<Contacto/>}></Route>
-
+        <Route path='/cambiarcontrasenia' element={<CambiarContrasenia/>}></Route>
       </Routes>
     </div>
   );

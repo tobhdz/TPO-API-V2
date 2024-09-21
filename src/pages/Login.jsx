@@ -5,6 +5,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { Link } from "react-router-dom";
 import LandingLogged from "./LandingLogged";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import CambiarContrasenia from "./CambiarContrasenia";
 
 export default function Login() {
 
@@ -65,7 +66,8 @@ export default function Login() {
                     <IconButton onClick={handleVisibility}><VisibilityIcon/></IconButton>
 
                     <Link
-                    variant="p">Olvidaste tu contraseña? Cambiar contraseña</Link>
+                    variant="p"
+                    >Olvidaste tu contraseña? Cambiar contraseña</Link>
 
                     <Button
                     type="submit" 

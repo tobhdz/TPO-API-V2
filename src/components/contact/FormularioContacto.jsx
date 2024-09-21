@@ -8,13 +8,14 @@ export default function FormularioContacto() {
   const[email, setEmail]=useState("")
   return (
     <Container
-        maxWidth="sm"
+        maxWidth="md"
         sx={{display:"flex", justifyContent:"space-between", mt:3}}>
                   <Box
                   className="contactBox"
                   sx={{display: "grid", gap: 4,boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.3)",borderRadius:"10px", padding:4}}
                   component="form"
                   autoComplete="off"
+                  
                   >
                       <Typography variant="h4" sx={{mt:2, mb:2}}>Contactanos</Typography>
                       <TextField 
