@@ -10,3 +10,17 @@
 .btnNav :hover{
   color: #304673;
 }
+
+.landingNL{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem;
+}
+
+.caracteristicas{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 3rem;
+}
