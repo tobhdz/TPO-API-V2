@@ -7,6 +7,8 @@ import Contacto from './pages/Contacto';
 import LandingNotLogged from './pages/LandingNotLogged';
 import LoginIcon from '@mui/icons-material/Login';
 import CambiarContrasenia from './pages/CambiarContrasenia';
+import LandingLogged from './pages/LandingLogged';
+import EditarProyecto from './pages/EditarProyecto';
 
 
 
@@ -30,6 +32,8 @@ function App() {
         <Route path="/registrarme" element={<Registro/>}></Route>
         <Route path="/contacto" element={<Contacto/>}></Route>
         <Route path='/cambiarcontrasenia' element={<CambiarContrasenia/>}></Route>
+        <Route path='/landinglogged' element={<LandingLogged/>}></Route>
+        <Route path='/editarproyecto' element={<EditarProyecto/>}></Route>
       </Routes>
     </div>
   );

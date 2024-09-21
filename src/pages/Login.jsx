@@ -21,7 +21,7 @@ export default function Login() {
     }
 
     return(
-        <>
+        <div>
             <Container
             className="loginContainer"
             maxWidth="xs"
@@ -39,18 +39,17 @@ export default function Login() {
                     <Typography variant="h4" sx={{mt:2, mb:2}} textAlign={"center"}>Iniciar Sesion</Typography>
                     </Box>
                     
-                
                     <TextField
-                    label="Usuario o email"
-                    id="user"
-                    variant="outlined"
-                    size="small"
-                    required
-                    fullWidth
-                    onChange={((e)=>{setUser(e.target.value)})}
-                    value={user}>
+                        label="Usuario o email"
+                        id="user"
+                        variant="outlined"
+                        size="small"
+                        required
+                        fullWidth
+                        onChange={((e)=>{setUser(e.target.value)})}
+                        value={user}>
                     </TextField>
-
+                    
                     <TextField
                     label="Contraseña"
                     id="password"
@@ -60,10 +59,10 @@ export default function Login() {
                     required
                     fullWidth
                     onChange={((e)=>{setPassword(e.target.value)})}
-                    value={password}>
-                        
+                    value={password}>  
+                    <IconButton onClick={handleVisibility}><VisibilityIcon/></IconButton>                          
                     </TextField>
-                    <IconButton onClick={handleVisibility}><VisibilityIcon/></IconButton>
+                    
 
                     <Link
                     variant="p"
@@ -81,6 +80,6 @@ export default function Login() {
                 </Box>
 
             </Container>
-        </>
+        </div>
     )
 }

@@ -1,23 +1,11 @@
 import { Box, Card, Container, Typography,CardActionArea, CardActions, CardContent, CardMedia } from "@mui/material";
 import '../App.css';
+import Hero from "../components/Hero";
 
 export default function Home() {
     return(
-        <div >
-            <div className="landingNL">
-                <Container
-                maxWidth="md">
-                    <Typography
-                    variant="h2"
-                    >Gestionar tus gastos nunca fue tan fácil</Typography>
-                    <Typography
-                    variant="p">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis commodi sed, doloribus ad quam mollitia est! Ea rerum eveniet necessitatibus voluptatibus nulla ad voluptate, libero dolores modi quis tenetur sit.</Typography>
-                </Container>
-                <Container>
-                    <Typography>img</Typography>
-                </Container>
-            </div>
-            
+        <div className="landing">
+            <Hero></Hero>
             <div className="caracteristicas">
                 <Container
                 maxWidth="xs">
@@ -72,7 +60,8 @@ export default function Home() {
                     </Card>
                 </Container>
                 
-                <Container>
+                <Container
+                maxWidth="xs">
                     <Card
                        
                         sx={{
@@ -80,7 +69,7 @@ export default function Home() {
                         "&:hover": {
                             transform: "scale(1.05)"
                         },
-                        maxWidth:"xs"}}>
+                        }}>
 
                         <CardActionArea>
                             <CardMedia component="img" 
@@ -104,3 +93,5 @@ export default function Home() {
         </div>
     )
 }
+
+//las cards creo podrian pasarse x props y realizarse mediante un map como es en el caso de los bootnes de la barra de navegacion

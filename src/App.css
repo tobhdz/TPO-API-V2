@@ -11,7 +11,11 @@
   color: #304673;
 }
 
-.landingNL{
+.landing{
+  background-color: #675DB4;
+}
+.landing-hero{
+  color: #FBFBFB;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,4 +27,11 @@
   justify-content: space-around;
   align-items: center;
   padding: 3rem;
+}
+
+
+.titular-edicion{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }

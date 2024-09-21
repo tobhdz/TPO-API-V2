@@ -30,7 +30,7 @@ export default function NavBar({navLinks}) {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                            News
+                            Logo
                         </Typography>
                         <Box sx={{display:{xs: "none", sm:"block", justifyContent:"space-between"}, ml:4, mr:4 }}>
                             {
@@ -63,3 +63,5 @@ export default function NavBar({navLinks}) {
         </>
     )
 }
+
+//estaria bueno agregar algun estilo para cuando los botones esten clickeados
