@@ -11,14 +11,30 @@ import Sharebill from './componentes/paginas-app/Sharebill.js';
 import Registrarse from './componentes/paginas/Registrarse.js';
 import Finanzas from './componentes/paginas-app/Finanzas.js';
 import NavBarApp from './componentes/NavBarApp.js';
+import CrearGasto from './componentes/paginas-app/CrearGasto.js';
+import Gastos from './componentes/paginas-app/Gastos.js';
+
+const menuLinks=[
+  {title:"Inicio ", path:"/"},
+  {title:"Sobre Nosotros ", path:"/sobrenosotros"},
+  {title:"Contacto ", path:"/contacto"},
+  {title:"Ingresar ", path:"/ingresar"},
+
+]
+
+const menuAppLinks=[
+  {title:"Finanzas ", path:"/finanzas"},
+  {title:"Algo", path:"/"},
+  {title:"Perfil ", path:"/"},
+]
 
 function App() {
   const location = useLocation(); // Obtiene la ubicación actual
 
   return (
     <div className="App">
-      {location.pathname !== "/app" || location.pathname!=="/finanzas"   && <Navbar />}
-      {location.pathname =="/finanzas" && <NavBarApp/>}
+      {location.pathname !== "/app" && location.pathname!=="/finanzas" && <Navbar links={menuLinks}/>}
+      {location.pathname =="/finanzas" && <NavBarApp links={menuAppLinks}/>}
       <Routes>
         <Route index element={<Inicio />} />
         <Route path="/sobrenosotros" element={<Sobrenosotros />} />
@@ -27,6 +43,9 @@ function App() {
         <Route path="/registrarse" element={<Registrarse />} />
         <Route path="/app" element={<Sharebill />} />
         <Route path='/finanzas' element={<Finanzas/>}/>
+        <Route path='/creargasto' element={<CrearGasto/>}/>
+        <Route path='/gastos' element={<Gastos/>}/>
+
       </Routes>
       <Footer />
     </div>

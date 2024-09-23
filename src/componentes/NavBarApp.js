@@ -3,7 +3,7 @@ import './NavBarApp.css'
 import Finanzas from "./paginas-app/Finanzas";
 
 
-export default function NavBarApp() {
+export default function NavBarApp({links}) {
     return(
         <nav className="navBar">
 

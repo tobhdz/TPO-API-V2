@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function Navbar() {
+function Navbar({links}) {
     const [click, setClick] = useState(false);
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);

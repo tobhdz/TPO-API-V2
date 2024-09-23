@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CardGastos from "../CardGastos";
 import './Finanzas.css';
 
@@ -21,11 +22,13 @@ export default function Finanzas() {
         <div className="finanzas-container">
             <h1>Finanzas</h1>
             <div className="btn-container">
-                <button className="btn">Cuentas por Pagar</button>
-                <button className="btn">Gastos</button>
+                <Link to='/finanzas'><button className="btn">Cuentas por Pagar</button></Link>
+                <Link to='/gastos'><button className="btn">Gastos</button></Link>
+                
             </div>
             <div className="crear-container">
-                <button className="btn">Gastos</button>
+                <Link to='/creargasto'><button className="btn">Gastos</button></Link>
+                
             </div>
             <div className="card-container">
                 <CardGastos title="Atrasados" tipo={gastosVencidos} className="card-item"></CardGastos>
