@@ -1,8 +1,12 @@
 import React from 'react'
+import NavBarApp from '../NavBarApp'
 
 function Sharebill() {
   return (
-    <div>Sharebill</div>
+    <div>
+      <NavBarApp></NavBarApp>
+      Sharebill
+    </div>
   )
 }
 

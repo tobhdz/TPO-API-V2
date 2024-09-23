@@ -25,7 +25,7 @@ import { useNavigate } from "react-router-dom";
     } else {
       alert("Credenciales incorrectas. Por favor, intenta nuevamente.");
     }
-  };
+    };
 
   const handleVisibility = () => {
     setVisibility(!visibility);

@@ -1,0 +1,46 @@
+.navBar {
+    width: 150px; /* Ancho de la barra */
+    height: 100vh; /* Altura completa de la ventana */
+    background-color: #333; /* Color de fondo oscuro */
+    position: fixed; /* Mantiene la barra en el lado izquierdo */
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column; /* Hace que los elementos sean verticales */
+    padding-top: 20px;
+    font-family: Kanit;
+    color: white;
+    justify-content: space-around;
+}
+
+  
+  /* Estilos para la lista de navegación */
+  .navBar .menu {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Estilos para los enlaces de navegación */
+  .navBar .menu .menu-item {
+    margin-bottom: 20px;
+  }
+  
+  .navBar .menu .menu-item .menu-link{
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    transition: background-color 0.3s;
+  }
+
+  
+  /* Efecto hover */
+  .navBar .menu .menu-item .menu-link:hover {
+    background-color: #575757;
+  }
+  
+  /* Estilos para el contenido principal */
+  .main-content {
+    margin-left: 150px; /* Se desplaza para evitar superposición con la barra */
+    padding: 20px;
+  }

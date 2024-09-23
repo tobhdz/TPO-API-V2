@@ -1,0 +1,41 @@
+.finanzas-container{
+    display: flex;
+    flex-direction: column;
+    padding-left: 160px;
+}
+
+.finanzas-container h1{
+    color: white;
+    font-family: Kanit;
+}
+
+.btn-container{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.crear-container{
+    margin: 2rem, 0rem;
+    background-color: #FBFBFB;
+    border-radius: 100px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn{
+    background: var(--degrade1);
+    color: white;
+    font-family: Kanit;
+    text-transform: uppercase;
+    border: 1px solid white;
+    padding: 10px 25px;
+    border-radius: 100px;
+    transition: 0.2s;
+    margin: 0.5rem;
+}
+
+.btn:hover {
+    transform: translate(1px,2px);
+}
+
