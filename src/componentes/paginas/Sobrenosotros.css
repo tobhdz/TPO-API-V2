@@ -1,0 +1,94 @@
+.sn-container {
+    color: white;
+    font-family: Kanit;
+    margin: 50px 100px;
+    margin-bottom: 100px;
+}
+
+.sn-h-container {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+    background: var(--degrade2);
+    border: 1px solid white;
+    text-shadow: 1px 1px black;
+    border-radius: 20px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2
+}
+
+.sn-h-container h2 {
+    font-family: Dela Gothic One;
+    font-weight: normal;
+    font-size: 50px;
+    padding-bottom: 20px;
+}
+
+.sn-h-container p {
+    font-size: 20px;
+    text-align: center
+}
+
+.sn-cuerpo {
+    background: var(--fondogris);
+    padding-inline: 15%;
+    padding-block: 60px 50px;
+    border: 1px solid white;
+    font-weight: 300;
+    font-size: 18px;
+    box-sizing: border-box;
+    margin-top: -20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.sn-cuerpo p:first-child {
+    border-left: 3px solid white;
+    padding-left: 20px;
+}
+
+.sn-cuerpo h3 {
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sn-cuerpo p {
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+
+.sn-cuerpo p p {
+    padding-bottom: 25px;
+}
+
+.sn-cuerpo p:not(.sn-cuerpo p:first-child, .sn-cuerpo p:last-child, .sn-cuerpo p p) {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #3d3d3d;
+}
+
+.sn-cuerpo b {
+    display: block
+}
+
+@media (max-width: 750px) {
+    
+    .sn-container {
+        margin: 40px 15px;
+    }
+
+    .sn-cuerpo {
+        padding-inline: 30px;
+    }
+    
+    .sn-h-container h2 {
+        font-size: 40px;
+        line-height: 40px;
+    }
+
+    .sn-h-container p {
+        text-align: left;
+    }
+}

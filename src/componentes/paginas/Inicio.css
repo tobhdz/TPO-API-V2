@@ -1,0 +1,13 @@
+.seccion-inicio {
+    display: flex;
+    padding: 30px;
+    margin: 30px;
+    background-color: var(--gris);
+    background-size: cover;
+    background-position: bottom;
+    border-radius: 30px;
+    border: 1px solid white;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}

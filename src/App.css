@@ -1,0 +1,25 @@
+:root {
+    --gris: #0f0f0f;
+    --degrade1: linear-gradient(to right, #7c13b5, #d700ca);
+    --degrade2: linear-gradient(40deg, #03001e, #7303c0, #ec38bc, #fdeff9);
+    --fondogris: radial-gradient(rgb(31, 31, 31), black);
+}
+
+body {
+    background: black;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: #e7e7e7;
+    border: 1px solid #cacaca;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #474747;
+}

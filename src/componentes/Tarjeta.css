@@ -1,0 +1,30 @@
+.tarjeta {
+    display: flex;
+    gap: 20px;
+    width: 80%;
+}
+
+.tarjeta-contenido {
+    color: white;
+    font-family: Kanit;
+}
+
+h2 {
+    font-weight: bold;
+}
+
+.tarjeta img {
+    object-fit: cover;
+    min-width: 400px;
+    border-radius: 50px;
+}
+
+@media (max-width: 1140px) {
+    .tarjeta {
+        flex-direction: column;
+    }
+    .tarjeta img {
+        max-height: 200px;
+        min-width: inherit;
+    }
+}
