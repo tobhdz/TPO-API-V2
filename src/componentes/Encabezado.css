@@ -1,0 +1,89 @@
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-section {
+    height: 90vh; 
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;;
+    position: absolute;
+    top: 0;
+    width: 101%;
+    height: 101%;
+    backdrop-filter: hue-rotate(20deg);
+    box-sizing: border-box;
+    padding-inline: 20%;
+    color: white;
+    background: linear-gradient(transparent 50%, black);
+}
+
+
+
+.overlay h1 {
+    font-family: Dela Gothic One;
+    font-size: 40px;
+    text-shadow: 1px 1px black;
+    font-weight: initial;
+}
+
+.overlay p {
+    font-family: Kanit;
+    font-size: 20px;
+    text-shadow: 1px 1px black;
+}
+
+.botones {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.boton:first-child {
+    background: none;
+    border-radius: 0;
+}
+
+.boton {
+    background: var(--degrade1);
+    color: white;
+    font-family: Kanit;
+    text-transform: uppercase;
+    border: 1px solid white;
+    padding: 20px 50px;
+    border-radius: 100px;
+    transition: 0.2s;
+}
+
+.boton:hover {
+    transform: translate(1px,2px);
+}
+
+@media (max-width: 760px) {
+
+    .overlay {
+        padding: 50px 20%;
+    }
+
+    .overlay h1 {
+        font-size: 30px;
+    }
+
+    .overlay p {
+        font-size: 18px
+    }
+
+    .botones {
+        flex-direction: column;
+    }
+
+}
