@@ -1,0 +1,92 @@
+
+.app-container {
+  margin-left: 15%;
+}
+
+/* La clase de big-container está en App.js, para que
+cuando se renderice el nav (que está en position fixed),
+haya un container que desplace los contenidos y no
+se tapen */
+
+.navbarapp-container {
+  width: 15%;
+  height: 100vh;
+  background-color: var(--gris);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  font-family: Kanit;
+  color: white;
+}
+
+/* Estilos para la lista de navegación */
+.navbarapp .navbarapp-menu {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 75px;
+}
+
+/* Estilos para los enlaces de navegación */
+.navbarapp .navbarapp-menu .navbarapp-menu-item {
+  margin-bottom: 20px;
+}
+
+.navbarapp .navbarapp-menu .navbarapp-menu-item .navbarapp-menu-link {
+  font-size: 1.4vw;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+/* Efecto hover */
+.navbarapp .navbarapp-menu .navbarapp-menu-item .navbarapp-menu-link:hover {
+  background-color: #ffffff0c;
+}
+
+/* Estilos para el contenedor del icono de menú */
+.navbarapp .navbarapp-icono-nav {
+  display: none;
+  padding: 30px;
+  cursor: pointer;
+  font-size: 30px;
+  color: white;
+  position: fixed;
+  z-index: 10;
+}
+
+@media (max-width: 1200px) {
+  .navbarapp-container {
+    width: 60%;
+    box-sizing: border-box;
+  }
+
+  .navbarapp .navbarapp-menu .navbarapp-menu-item .navbarapp-menu-link {
+      font-size: 25px;
+      color: white;
+      text-decoration: none;
+      padding: 10px 30px;
+      display: block;
+      transition: background-color 0.3s;
+  }
+
+  .navbarapp-container.active {
+    display: block;
+  }
+  
+  .navbarapp-container {
+    display: none; /* Ocultar el menú por defecto */
+  }
+
+  .navbarapp .navbarapp-icono-nav {
+    display: block;
+  }
+
+  .app-container {
+    margin: 0;
+  }
+}
