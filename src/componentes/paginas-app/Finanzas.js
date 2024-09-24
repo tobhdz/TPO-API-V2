@@ -20,20 +20,22 @@ const prox7dias=[
 export default function Finanzas() {
     return(
         <div className="finanzas-container">
-            <h1>Finanzas</h1>
-            <div className="btn-container">
-                <Link to='/finanzas'><button className="btn">Cuentas por Pagar</button></Link>
-                <Link to='/gastos'><button className="btn">Gastos</button></Link>
+            <div className="finanzas-box">
+                <h1>Finanzas</h1>
+                <div className="btn-container">
+                    <Link to='/finanzas'><button className="btn">Cuentas por Pagar</button></Link>
+                    <Link to='/gastos'><button className="btn">Gastos</button></Link>
                 
-            </div>
-            <div className="crear-container">
-                <Link to='/creargasto'><button className="btn">Gastos</button></Link>
+                </div>
+                <div className="crear-container">
+                    <Link to='/creargasto'><button className="btn">Gastos</button></Link>
                 
-            </div>
-            <div className="card-container">
-                <CardGastos title="Atrasados" tipo={gastosVencidos} className="card-item"></CardGastos>
-                <CardGastos title="Vence hoy" tipo={venceHoy} className="card-item"></CardGastos>
-                <CardGastos title="Proximos 7 días" tipo={prox7dias} className="card-item"></CardGastos>
+                </div>
+                <div className="card-container">
+                    <CardGastos title="Atrasados" tipo={gastosVencidos} className="card-item"></CardGastos>
+                    <CardGastos title="Vence hoy" tipo={venceHoy} className="card-item"></CardGastos>
+                    <CardGastos title="Proximos 7 días" tipo={prox7dias} className="card-item"></CardGastos>
+                </div>
             </div>
         </div>
     )

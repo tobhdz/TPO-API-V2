@@ -1,27 +1,32 @@
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import './NavBarApp.css'
-import Finanzas from "./paginas-app/Finanzas";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import './NavbarApp.css';
 
+export default function NavBarApp({ links }) {
+    const [click, setClick] = useState(false);
+    const handleClick = () => setClick(!click);
+    const closeMobileMenu = () => setClick(false);
 
-export default function NavBarApp({links}) {
-    return(
-        <nav className="navBar">
-
-            <ul className="menu">
-                <li className="menu-item">
-                    <Link to='/finanzas' className="menu-link">Finanzas</Link>
-                </li>
-                <li className="menu-item">
-                    <Link className="menu-link">Algo</Link>
-                </li>
-                <li className="menu-item">
-                    <Link className="menu-link">Algo</Link>
-                </li>
-                <li className="menu-item">
-                    <Link className="menu-link">Configuración</Link>
-                </li>
-            </ul>
-        
-        </nav>
-    )
+    return (
+        <>
+            <nav className="navbarapp">
+            <div className="navbarapp-icono-nav" onClick={handleClick}>
+                        <FontAwesomeIcon icon={click ? faTimes : faBars} />
+                    </div>
+                <div className={click ? 'navbarapp-container active' : "navbarapp-container"}>
+                    <ul className='navbarapp-menu'>
+                        {links.map((link, index) => (
+                            <li key={index} className="navbarapp-menu-item">
+                                <Link to={link.path} className="navbarapp-menu-link" onClick={closeMobileMenu}>
+                                    {link.title}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </nav>
+        </>
+    );
 }

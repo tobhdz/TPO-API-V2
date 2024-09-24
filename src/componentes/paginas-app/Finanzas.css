@@ -1,21 +1,31 @@
-.finanzas-container{
+.finanzas-container {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(#202020, rgb(20, 20, 20))
+}
+
+.finanzas-box {
+    width: 80%;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
-    padding-left: 160px;
 }
 
-.finanzas-container h1{
+.finanzas-container h1 {
     color: white;
-    font-family: Kanit;
+    font-family: Dela Gothic One;
+    text-align: center;
+    font-weight: initial;
+    font-size: 40px;
 }
 
-.btn-container{
+.btn-container {
     display: flex;
     flex-direction: row;
 
 }
 
-.crear-container{
+.crear-container {
     margin: 2rem, 0rem;
     background-color: #FBFBFB;
     border-radius: 100px;
@@ -23,7 +33,7 @@
     justify-content: flex-end;
 }
 
-.btn{
+.btn {
     background: var(--degrade1);
     color: white;
     font-family: Kanit;
