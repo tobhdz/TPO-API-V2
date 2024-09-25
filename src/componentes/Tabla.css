@@ -1,0 +1,24 @@
+.grid-table{
+    background: linear-gradient(#202020, rgb(20, 20, 20));
+    color: white;
+    padding:3%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Tres columnas iguales */
+    gap: 10px; /* Espaciado entre las celdas */
+    font-family: Kanit;
+    border-radius:20px;
+
+    
+
+}
+
+.header, .cell{
+    text-align: center;
+}
+
+.header{
+    font-size: large;
+}
+
+
+
