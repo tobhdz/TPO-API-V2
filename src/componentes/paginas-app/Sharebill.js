@@ -1,12 +1,18 @@
-import React from 'react'
-import NavBarApp from '../NavbarApp'
+import React, { useContext } from 'react';
+import { UserContext } from '../../contexto/UserContext';
 
 function Sharebill() {
+  const { user, balance } = useContext(UserContext);  // Accede al usuario y saldo desde el contexto
+
   return (
     <div>
-      Sharebill
+      
+      <div>
+        <h1>Bienvenido, {user ? user : 'Usuario'}</h1>  {/* Nombre de usuario */}
+        <p>Saldo disponible: ${balance}</p>  {/* Saldo */}
+      </div>
     </div>
-  )
+  );
 }
 
-export default Sharebill
+export default Sharebill;

@@ -1,44 +1,49 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import './Ingresar.css';
+import { UserContext } from "../../contexto/UserContext";
 
-import { useNavigate } from "react-router-dom";
-    export default function Login() {
+export default function Login() {
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [visibility, setVisibility] = useState(false);
-
     const navigate = useNavigate();
 
-    const mockUser = {         // Mock para el login. Reemplazar con una simulación de DB basada en JSON
+    const { login } = useContext(UserContext);
+
+    // Mock temporal para un usuario
+    const mockUser = {  
       user: "admin",
       password: "admin",
+      balance: 5000,
     };
 
     const handleSubmit = (e) => {
       e.preventDefault();
-    
-    if (user === mockUser.user && password === mockUser.password) {     // Envía a la APP si loguea con mock. Idem punto anterior.
-      navigate("/app");
-    } else {
-      alert("Credenciales incorrectas. Por favor, intenta nuevamente.");
-    }
+
+      // Verificación de cred.
+      if (user === mockUser.user && password === mockUser.password) {
+        login({ user: mockUser.user, balance: mockUser.balance });  // Guardar el usuario en el contexto
+        navigate("/app");  // Redirigir a la página /app
+      } else {
+        alert("Credenciales incorrectas. Por favor, intenta nuevamente.");
+      }
     };
 
-  const handleVisibility = () => {
-    setVisibility(!visibility);
-  };
+    const handleVisibility = () => {
+      setVisibility(!visibility);
+    };
 
-  return (
-    <div className="login-container">
-      <div className="login-box">
-        <form autoComplete="off" onSubmit={handleSubmit}>
-          <div className="login-header">
-            <icon><FontAwesomeIcon icon={faRightToBracket} /></icon>
-            <h2>Iniciar Sesión</h2>
-          </div>
+    return (
+      <div className="login-container">
+        <div className="login-box">
+          <form autoComplete="off" onSubmit={handleSubmit}>
+            <div className="login-header">
+              <icon><FontAwesomeIcon icon={faRightToBracket} /></icon>
+              <h2>Iniciar Sesión</h2>
+            </div>
 
             <input
               type="text"
@@ -48,8 +53,6 @@ import { useNavigate } from "react-router-dom";
               value={user}
               onChange={(e) => setUser(e.target.value)}
             />
-
-
 
             <div className="password-field">
               <input
@@ -65,22 +68,21 @@ import { useNavigate } from "react-router-dom";
               </button>
             </div>
 
+            <div className="forgot-password">
+              <Link to="/">¿Has olvidado la contraseña?</Link>
+            </div>
 
-          <div className="forgot-password">
-            <Link to="/">¿Has olvidado la contraseña?</Link>
-          </div>
-
-          <div className="login-botones">
-            <button type="submit" className="submit-button boton-form">
-              Ingresar
-            </button>
-            <div className="divisor"></div>
-            <button type="button" className="boton-form">
-            <Link to="/registrarse">Registrarme</Link>
-            </button>
-          </div>
-        </form>
+            <div className="login-botones">
+              <button type="submit" className="submit-button boton-form">
+                Ingresar
+              </button>
+              <div className="divisor"></div>
+              <button type="button" className="boton-form">
+                <Link to="/registrarse">Registrarme</Link>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
 }

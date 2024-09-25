@@ -13,6 +13,7 @@ import Finanzas from './componentes/paginas-app/Finanzas.js';
 import NavbarApp from './componentes/NavbarApp.js';
 import CrearGasto from './componentes/paginas-app/CrearGasto.js';
 import Gastos from './componentes/paginas-app/Gastos.js';
+import { UserProvider } from './contexto/UserContext';
 
 const menuLinks=[
   {title:"Inicio ", path:"/"},
@@ -37,6 +38,7 @@ function App() {
   const isMenuLink = menuLinks.some(link => link.path === location.pathname);
 
   return (
+    <UserProvider>
     <div className="App">
       {isMenuAppLink ? <NavbarApp links={menuAppLinks} /> : isMenuLink ? <Navbar links={menuLinks} /> : null}
         <Routes>
@@ -56,6 +58,7 @@ function App() {
       </div>
       <Footer />
     </div>
+    </UserProvider>
   );
 }
 
