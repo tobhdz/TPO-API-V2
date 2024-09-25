@@ -1,18 +1,12 @@
 import { useState } from 'react'
 import './FormularioGastos.css'
+import Boton from './Boton';
 
 export default function FormularioGastos() {
 
     const [nombreProyecto, setNombreProyecto]= useState("");
     const [presupuesto, setPresupuesto]= useState(0);
 
-    const handleReset=()=>{
-        
-    }
-
-    const handleSubmit=()=>{
-
-    }
 
     return(
         <div className='form-container'>
@@ -66,8 +60,8 @@ export default function FormularioGastos() {
                     </textarea>
 
                     <div className='form-botones'>
-                        <button type='submit' className='submit-button boton-form' onSubmit={handleSubmit()}>Crear</button>
-                        <button type='button' className='boton-form' onClick={handleReset()}>Restablecer</button>
+                        <Boton className='submit-button boton-form' type={"submit"} title={"Agregar"}/>
+                        <button type='button' className='boton-form' >Restablecer</button>
 
                     </div>
                 </form>
