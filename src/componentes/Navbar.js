@@ -14,7 +14,7 @@ function Navbar({ links }) {
             <nav className="navbar">
                 <div className="navbar-container">
                     <Link to='/' className='nav-logo'>
-                        <img src=".\img\logosimple.png" alt="logo" />
+                        <img src="./img/logosimple.png" alt="logo" />
                         <div className="logo-titulo">Sharebill</div>
                     </Link>
                     <ul className={click ? 'nav-menu active' : 'nav-menu'}>

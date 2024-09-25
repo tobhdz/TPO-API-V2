@@ -1,0 +1,79 @@
+.sharebill-container {
+    background: var(--degrade0);
+    display: flex;
+    flex-direction: column;
+    font-family: Kanit;
+}
+
+.sharebill-encabezado {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding-block: 100px 55px;
+    padding-inline: 10%;
+    color: white;
+    box-sizing: border-box;
+}
+
+.sharebill-encabezado img {
+    max-width: 100px;
+}
+
+.sharebill-encabezado .datos-perfil {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.sharebill-encabezado .datos-perfil img {
+    border-radius: 100%;
+    outline: 1px solid white;
+    border: 1px solid #a3a3a3;
+}
+
+.sharebill-encabezado .balance {
+    width: 100%;
+    max-width: 500px;
+    padding-block: 30px;
+    padding-inline: 2vw;
+    background: linear-gradient(var(--gris), #2c1b45) padding-box, linear-gradient(#c8c9ff, #ca83ff) border-box;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bolder;
+    font-size: 20px;
+    border-radius: 30px;
+}
+
+.sharebill-cuerpo {
+    width: 100%;
+    background: var(--gris2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding-block: 50px;
+    padding-inline: 5%;
+    color: white;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    box-sizing: border-box;
+}
+
+.sharebill-cuerpo h2 {
+    font-family: Dela Gothic One;
+    font-weight: initial;
+    font-size: 30px;
+}
+
+.box-explorar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
