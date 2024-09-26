@@ -2,19 +2,52 @@
     display: flex;
     flex-direction: column;
     padding: 5%;
+    background: var(--fondogris);
+
 }
-.gastos-header h3{
+.gastos-header h1{
     color: white;
-    font-family: Kanit;
-    font-size: larger;
+    font-family: Dela Gothic One;
+    text-align: center;
+    font-weight: initial;
+    font-size: 40px;
 }
 .gastos-tabla{
     display: flex;
     justify-content: flex-start;
 }
-.gastos-boton .boton:hover{
-    color: #422657;
-    background: #dddddd;
+
+.gastos-boton{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    background: var(--degrade1);
+    width:fit-content;
+    padding: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.5s;
+    border: 1px solid white;
+    
+}
+
+.gastos-boton .boton{
+    background: var(--degrade1);
+    font-family: Kanit;
+    font-weight: 600;
+    font-size: 19px;
+    transition: 0.5s;
+    color: white;
+    text-transform: uppercase;
+    border: none;
+}
+.gastos-boton:hover, .gastos.boton .gastos-boton:hover{
+
     text-shadow: 0 0 5px white, 0 0 10px white, 0 0 20px white;
     box-shadow: inset 0 0 20px white, inset 0 0 5px white, inset 0px 0px 10px #ffffff
 }
+.boton:active {
+    transform: scale(0.98);
+  }

@@ -17,6 +17,7 @@ import Configuracion from './componentes/paginas-app/Configuracion.js';
 import { UserProvider } from './contexto/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faWallet, faCommentsDollar, faHandHoldingDollar, faGear } from '@fortawesome/free-solid-svg-icons';
+import EditarGasto from './componentes/paginas-app/EditarGasto.js';
 
 
 // Rutas visibles en el navbar
@@ -63,8 +64,10 @@ function App() {
             <Route path='/creargasto' element={<CrearGasto/>}/>
             <Route path='/gastos' element={<Gastos/>}/>
             <Route path="/configuracion" element={<Configuracion />} />
+            <Route path='/editargasto' element={<EditarGasto/>}/>
           </Routes>
         </div>
+
         <Footer />
       </div>
     </UserProvider>

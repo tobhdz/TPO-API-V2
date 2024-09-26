@@ -1,7 +1,8 @@
 .finanzas-container {
     display: flex;
     justify-content: center;
-    background: linear-gradient(#202020, rgb(20, 20, 20))
+    background: var(--fondogris);
+
 }
 
 .finanzas-box {

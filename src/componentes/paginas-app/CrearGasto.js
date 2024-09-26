@@ -5,9 +5,14 @@ import './CrearGasto.css'
 export default function CrearGasto() {
     return(
         <div className="container">
-            <h3>Crear Gasto</h3>
-            <FormularioGastos/>
-            <FormularioParticipantes/>
+            <div className="header">
+                <h1>Crear Gasto</h1>
+            </div>
+            <div className="formularios">
+                <FormularioGastos/>
+                <FormularioParticipantes/>
+            </div>
+            
         </div>
     )
 }

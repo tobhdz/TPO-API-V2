@@ -7,10 +7,10 @@ export default function Gastos() {
     return(
         <div className="gastos-container">
             <div className="gastos-header">
-                <h3>Gastos</h3>
+                <h1>Gastos</h1>
             </div>
             <div className="gastos-boton">
-                <Boton type={"submit"} title={"Gastos"} className="boton"/>
+                <Boton className={"boton"} type={"submit"} title={"Gastos"} />
             </div>
             <div className="gastos-tabla">
                 <Tabla/>

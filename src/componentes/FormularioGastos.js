@@ -46,22 +46,26 @@ export default function FormularioGastos() {
                         
                     </div>
 
-                    <input 
-                        type='number'
-                        id="presupuesto"
-                        placeholder='Presupuesto'
-                        required
-                        value={presupuesto}
-                        onChange={((e)=>{setPresupuesto(e.target.value)})}
-                    />
+                    <div>
+                        <label className='form-label'>Presupuesto</label>
+                        <input 
+                            type='text'
+                            id="presupuesto"
+                            required
+                            value={presupuesto}
+                            onChange={((e)=>{setPresupuesto(e.target.value)})}
+                        />
+                    </div>
+
+                    
 
                     <textarea
                     placeholder='Deje una descripcion aquí...'>
                     </textarea>
 
                     <div className='form-botones'>
-                        <Boton className='submit-button boton-form' type={"submit"} title={"Agregar"}/>
-                        <button type='button' className='boton-form' >Restablecer</button>
+                        <Boton className={'submit-button boton-form'} type={"submit"} title={"Agregar"}/>
+                        <Boton  className={'boton-form'} type={'button'} title={"Restablecer"}/>
 
                     </div>
                 </form>

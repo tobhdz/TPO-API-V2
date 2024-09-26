@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import CardGastos from "../CardGastos";
 import './Finanzas.css';
+import Boton from "../Boton";
 
 const gastosVencidos=[
     {name: "hola", descripcion:"hola", monto:"1000", fechVto:"24/07/2024"},
@@ -23,8 +24,8 @@ export default function Finanzas() {
             <div className="finanzas-box">
                 <h1>Finanzas</h1>
                 <div className="btn-container">
-                    <Link to='/finanzas'><button className="btn">Cuentas por Pagar</button></Link>
-                    <Link to='/gastos'><button className="btn">Gastos</button></Link>
+                    <Link to='/finanzas'><Boton className="btn" title={"Cuentas por Pagar"}/></Link>
+                    <Link to='/gastos'><Boton className="btn" title={"Gastos"}/></Link>
                 
                 </div>
                 <div className="crear-container">

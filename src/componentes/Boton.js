@@ -1,7 +1,8 @@
-export default function Boton({type, title}) {
+export default function Boton({className, type, title}) {
     return(
         <div>
             <button
+            className={className}
             type={type}
             >
                 {title}

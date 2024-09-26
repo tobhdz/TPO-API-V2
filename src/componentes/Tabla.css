@@ -3,7 +3,7 @@
     color: white;
     padding:3%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Tres columnas iguales */
+    grid-template-columns: repeat(6, 1fr); /* Tres columnas iguales */
     gap: 10px; /* Espaciado entre las celdas */
     font-family: Kanit;
     border-radius:20px;
@@ -18,6 +18,29 @@
 
 .header{
     font-size: large;
+}
+
+.botones{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabla-boton {
+    background: var(--degrade1);
+    color: white;
+    font-family: Kanit;
+    text-transform: uppercase;
+    border: 1px solid white;
+    padding: 10px 25px;
+    border-radius: 100px;
+    transition: 0.2s;
+    margin: 0.5rem;
+}
+
+.tabla-boton:hover {
+    transform: translate(1px,2px);
 }
 
 

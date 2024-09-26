@@ -1,6 +1,6 @@
 import './CardGastos.css';
 
-export default function CardGastos({title, tipo}) {
+export default function CardGastos({title, tipo, className}) {
 
   
     let suma=0;
