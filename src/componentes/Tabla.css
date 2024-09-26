@@ -43,5 +43,11 @@
     transform: translate(1px,2px);
 }
 
+.error{
+    font-family: Kanit;
+    color:white;
+    font-size: 40px;
+}
+
 
 

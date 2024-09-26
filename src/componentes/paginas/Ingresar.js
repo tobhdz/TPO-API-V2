@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import './Ingresar.css';
 import { UserContext } from "../../contexto/UserContext";
+import mockUser from "../../user/mockUser";
+//import {mockUser} from '../user/mockUser.js';
 
 export default function Login() {
     const [user, setUser] = useState("");
@@ -13,19 +15,14 @@ export default function Login() {
 
     const { login } = useContext(UserContext);
 
-    // Mock temporal para un usuario
-    const mockUser = {  
-      user: "admin",
-      password: "admin",
-      balance: 5000,
-    };
+    
 
     const handleSubmit = (e) => {
       e.preventDefault();
 
       // Verificación de cred.
       if (user === mockUser.user && password === mockUser.password) {
-        login({ user: mockUser.user, balance: mockUser.balance });  // Guardar el usuario en el contexto
+        login({ user: mockUser.user, balance: mockUser.balance , gastos:mockUser.gastos});  // Guardar el usuario en el contexto
         navigate("/app");  // Redirigir a la página /app
       } else {
         alert("Credenciales incorrectas. Por favor, intenta nuevamente.");

@@ -1,8 +1,19 @@
 import { Link } from 'react-router-dom'
 import Boton from './Boton'
 import './Tabla.css'
+import React, { useContext } from 'react';
+import mockUser from '../user/mockUser';
+import { UserContext } from '../contexto/UserContext';
+
 
 export default function Tabla() {
+
+    const { gastos } = useContext(UserContext); // Obtener gastos del contexto
+
+    if (!gastos || gastos.length === 0) {
+        return <div className='error'>No hay gastos para mostrar.</div>;  // Mostrar mensaje si no hay gastos
+    }
+
     return(
         <div class="grid-table">
             <div class="header">Nombre del Proyecto</div>
@@ -12,46 +23,25 @@ export default function Tabla() {
             <div class="header">Porcentaje</div>
             <div class="header">Acciones</div>
 
-            <div class="cell">Row 1, Col 1</div>
-            <div class="cell">Row 1, Col 2</div>
-            <div class="cell">Row 1, Col 3</div>
-            <div class="cell">Row 1, Col 3</div>
-            <div class="cell">Row 1, Col 3</div>
-            <div class="cell botones">
-                <Link>
-                    <Boton className={"tabla-boton"} type={"submit"} title={"Pagar"}/>
-                </Link>
-                
-                <Link to="/editargasto">
-                    <Boton className={"tabla-boton"} type={"submit"} title={"Editar"}/>
-                </Link>
-                
-            </div>
+             {/* Renderizar los gastos */}
+            {gastos.map((gasto, index) => (
+                <React.Fragment key={index}>
+                <div className="cell">{gasto.nombre}</div>
+                <div className="cell">{gasto.valor}</div>
+                <div className="cell">{gasto.fecha}</div>
+                <div className="cell">participantes</div>
+                <div className="cell">porcentaje%</div>
 
-            <div class="cell">Row 2, Col 1</div>
-            <div class="cell">Row 2, Col 2</div>
-            <div class="cell">Row 2, Col 3</div>
-            <div class="cell">Row 2, Col 3</div>
-            <div class="cell">Row 2, Col 3</div>
-            <div class="cell">
-            <div class="cell botones">
-                <Boton className={"tabla-boton"} type={"submit"} title={"Pagar"}/>
-                <Boton className={"tabla-boton"} type={"submit"} title={"Editar"}/>
-            </div>
-            </div>
-
-
-            <div class="cell">Row 3, Col 1</div>
-            <div class="cell">Row 3, Col 2</div>
-            <div class="cell">Row 3, Col 3</div>
-            <div class="cell">Row 3, Col 3</div>
-            <div class="cell">Row 3, Col 3</div>
-            <div class="cell">
-            <div class="cell botones">
-                <Boton className={"tabla-boton"} type={"submit"} title={"Pagar"}/>
-                <Boton className={"tabla-boton"} type={"submit"} title={"Editar"}/>
-            </div>
-            </div>
+                <div className="cell botones">
+                    <Link>
+                    <Boton className={"tabla-boton"} type={"submit"} title={"Pagar"} />
+                    </Link>
+                    <Link to="/editargasto">
+                    <Boton className={"tabla-boton"} type={"submit"} title={"Editar"} />
+                    </Link>
+                </div>
+                </React.Fragment>
+            ))}
 
         </div>
 
