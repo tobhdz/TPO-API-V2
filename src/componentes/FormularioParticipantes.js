@@ -35,7 +35,7 @@ export default function FormularioParticipantes() {
 
 
                     <div className='form-botones'>
-                        <Boton className={'submit-button boton-form'} type={'submit'}  title={"Añadir"}/>
+                    <Boton className="boton2" type="submit" title="Añadir" />
 
                     </div>
                 </form>

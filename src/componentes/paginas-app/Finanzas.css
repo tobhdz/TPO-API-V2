@@ -34,19 +34,17 @@
     justify-content: flex-end;
 }
 
-.btn {
-    background: var(--degrade1);
-    color: white;
-    font-family: Kanit;
-    text-transform: uppercase;
-    border: 1px solid white;
-    padding: 10px 25px;
-    border-radius: 100px;
-    transition: 0.2s;
-    margin: 0.5rem;
-}
+@media (max-width: 680px) {
+    .finanzas-box {
+        width: 100%!important;
+    }
 
-.btn:hover {
-    transform: translate(1px,2px);
+    .btn-container {
+        width: 100%;
+        padding-inline: 20px;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        box-sizing: border-box;
+    }
 }
-

@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import CardGastos from "../CardGastos";
 import './Finanzas.css';
 import Boton from "../Boton";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 const gastosVencidos=[
     {name: "hola", descripcion:"hola", monto:"1000", fechVto:"24/07/2024"},
@@ -24,14 +26,11 @@ export default function Finanzas() {
             <div className="finanzas-box">
                 <h1>Finanzas</h1>
                 <div className="btn-container">
-                    <Link to='/finanzas'><Boton className="btn" title={"Cuentas por Pagar"}/></Link>
-                    <Link to='/gastos'><Boton className="btn" title={"Gastos"}/></Link>
-                
+                    <Boton className="boton1" type="button" title="Cuentas por pagar" link="/finanzas" />
+                    <Boton className="boton1" type="button" title="Gastos" link="/gastos" />
+                    <Boton className="boton1" type="button" title={<><FontAwesomeIcon icon={faCirclePlus} /> Crear gasto</>} link="/creargasto" />
                 </div>
-                <div className="crear-container">
-                    <Link to='/creargasto'><button className="btn">Gastos</button></Link>
-                
-                </div>
+
                 <div className="card-container">
                     <CardGastos title="Atrasados" tipo={gastosVencidos} className="card-item"></CardGastos>
                     <CardGastos title="Vence hoy" tipo={venceHoy} className="card-item"></CardGastos>

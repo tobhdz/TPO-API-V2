@@ -64,8 +64,8 @@ export default function FormularioGastos() {
                     </textarea>
 
                     <div className='form-botones'>
-                        <Boton className={'submit-button boton-form'} type={"submit"} title={"Agregar"}/>
-                        <Boton  className={'boton-form'} type={'button'} title={"Restablecer"}/>
+                        <Boton className="boton2" type="submit" title="Agregar" />
+                        <Boton className="boton2" type="submit" title="Reestablecer" />
 
                     </div>
                 </form>
