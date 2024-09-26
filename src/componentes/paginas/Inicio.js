@@ -5,7 +5,7 @@ import Tarjeta from '../Tarjeta';
 
 function Inicio() {
   return (
-    <div>
+    <div className='inicio-container'>
       <Encabezado />
       <div className="seccion-inicio">
       <Tarjeta

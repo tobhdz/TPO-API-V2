@@ -16,8 +16,9 @@ import Gastos from './componentes/paginas-app/Gastos.js';
 import Configuracion from './componentes/paginas-app/Configuracion.js';
 import { UserProvider } from './contexto/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faWallet, faCommentsDollar, faHandHoldingDollar, faGear } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faBell, faWallet, faCommentsDollar, faHandHoldingDollar, faGear } from '@fortawesome/free-solid-svg-icons';
 import EditarGasto from './componentes/paginas-app/EditarGasto.js';
+import Notificaciones from './componentes/paginas-app/Notificaciones.js';
 
 
 // Rutas visibles en el navbar
@@ -30,15 +31,16 @@ const menuLinks=[
 
 const menuAppLinks = [
   { title: <><FontAwesomeIcon icon={faHouse} /> Inicio</>, path: "/app" },
+  { title: <><FontAwesomeIcon icon={faBell} /> Notificaciones</>, path: "/notificaciones" },
   { title: <><FontAwesomeIcon icon={faWallet} /> Finanzas</>, path: "/finanzas" },
   { title: <><FontAwesomeIcon icon={faCommentsDollar} /> Gastos</>, path: "/gastos" },
   { title: <><FontAwesomeIcon icon={faHandHoldingDollar} /> Crear gasto</>, path: "/creargasto" },
   { title: <><FontAwesomeIcon icon={faGear} /> Configuración</>, path: "/configuracion" },
 ];
 
-// Rutas que deben mostrar navbar, aunque no estén en el menú visible
+// Links para la condición de visibilidad del nav
 const menuVisibleLinks = ["/", "/sobrenosotros", "/contacto", "/ingresar", "/registrarse"];
-const menuAppVisibleLinks = ["/app", "/finanzas", "/creargasto", "/gastos", "/configuracion"];
+const menuAppVisibleLinks = ["/app", "/notificaciones", "/finanzas", "/creargasto", "/gastos", "/configuracion", "/configuracion", "/editargasto"];
 
 function App() {
   const location = useLocation();
@@ -60,6 +62,7 @@ function App() {
         <div className="app-container">
           <Routes>
             <Route path="/app" element={<Sharebill />} />
+            <Route path="/notificaciones" element={<Notificaciones />} />
             <Route path='/finanzas' element={<Finanzas/>}/>
             <Route path='/creargasto' element={<CrearGasto/>}/>
             <Route path='/gastos' element={<Gastos/>}/>

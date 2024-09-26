@@ -1,3 +1,8 @@
+.inicio-container {
+    background: black;
+    padding-bottom: 20px;
+}
+
 .seccion-inicio {
     display: flex;
     padding: 30px;

@@ -25,8 +25,8 @@ function Sharebill() {
         <div className="sharebill-cuerpo">
           <h2>Explorar</h2>
           <div className="box-explorar">
-          <CardExplorar titulo="Sección 1" link="/app" imagen="/img/burbujas.png" />
-          <CardExplorar titulo="Sección 2" link="/app" imagen="/img/burbujas1.png" />
+          <CardExplorar titulo="Finanzas" link="/finanzas" imagen="/img/burbujas.png" />
+          <CardExplorar titulo="Gastos" link="/gastos" imagen="/img/burbujas1.png" />
           <CardExplorar titulo="Sección 3" link="/app" imagen="/img/burbujas2.png" />
           </div>
         </div>

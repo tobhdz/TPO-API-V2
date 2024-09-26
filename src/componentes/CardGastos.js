@@ -16,7 +16,7 @@ export default function CardGastos({title, tipo, className}) {
                 <p className="card-sum">Total: ${suma}</p>
                 <p className="card-description">Gastos: {tipo.length}</p>
             </div>
-            <div className="gastos-container">
+            <div className="cardgastos-container">
                 {tipo.length==0 && <p>No hay gastos pendientes</p>}
                 {
                     tipo.map(item=>(

@@ -80,6 +80,10 @@
     color: white;
     transition: 0.2s;
   }
+
+  .tab-boton:hover {
+    background: rgba(255, 255, 255, 0.055);
+  }
   
   .tab-boton.tab-activa {
     background-color: #353238;
