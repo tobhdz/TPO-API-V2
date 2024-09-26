@@ -9,7 +9,7 @@ export default function FormularioGastos() {
 
 
     return(
-        <div className='form-container'>
+        <div className='gastos-form-container'>
             <div className='form-box'>
                 <form>
                     <div className='form-header'>

@@ -77,12 +77,13 @@
     cursor: pointer;
     font-family: Kanit;
     font-weight: 600;
+    font-size: 16px;
     color: white;
     transition: 0.2s;
   }
 
   .tab-boton:hover {
-    background: rgba(255, 255, 255, 0.055);
+    background: #242424;
   }
   
   .tab-boton.tab-activa {
@@ -181,7 +182,7 @@
 
       .field {
         display: flex;
-        flex-direction: row;
+        flex-wrap: wrap;
         gap: 5px;
 
           span {

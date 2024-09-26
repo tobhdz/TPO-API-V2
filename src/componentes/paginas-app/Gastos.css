@@ -5,6 +5,7 @@
     background: var(--fondogris);
 
 }
+
 .gastos-header h1{
     color: white;
     font-family: Dela Gothic One;
@@ -12,38 +13,8 @@
     font-weight: initial;
     font-size: 40px;
 }
+
 .gastos-tabla{
     display: flex;
     justify-content: flex-start;
 }
-
-.gastos-boton{
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 25px;
-    background: var(--degrade1);
-    width:fit-content;
-    padding: 10px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: 0.5s;
-    border: 1px solid white;
-    
-}
-
-.gastos-boton .boton{
-    background: var(--degrade1);
-    font-family: Kanit;
-    font-weight: 600;
-    font-size: 19px;
-    transition: 0.5s;
-    color: white;
-    text-transform: uppercase;
-    border: none;
-}
-
-.boton:active {
-    transform: scale(0.98);
-  }

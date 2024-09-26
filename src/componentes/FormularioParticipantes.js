@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Boton from "./Boton";
+import "./FormularioGastos.css";
 
 export default function FormularioParticipantes() {
 
@@ -7,7 +8,7 @@ export default function FormularioParticipantes() {
     const [porcentaje, setPorcentaje]=useState("");
 
     return(
-        <div className='form-container'>
+        <div className='participantes-form-container'>
             <div className='form-box'>
                 <form>
                     <div className='form-header'>
