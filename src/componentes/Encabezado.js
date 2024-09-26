@@ -6,7 +6,9 @@ function Encabezado() {
   return (
     <div className="encabezado-container">
         <div className="hero-section">
-          <video src=".\img\videoencabezado2.mp4" autoPlay loop muted></video>
+          <div className="filtro-video">
+            <video src=".\img\videoencabezado2.mp4" autoPlay loop muted></video>
+          </div>
           <div className="overlay">
           <div className="elementos-hero">
             <h1>Gestionar tus gastos nunca fue tan fácil</h1>

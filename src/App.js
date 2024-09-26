@@ -13,34 +13,42 @@ import Finanzas from './componentes/paginas-app/Finanzas.js';
 import NavbarApp from './componentes/NavbarApp.js';
 import CrearGasto from './componentes/paginas-app/CrearGasto.js';
 import Gastos from './componentes/paginas-app/Gastos.js';
+import Configuracion from './componentes/paginas-app/Configuracion.js';
 import { UserProvider } from './contexto/UserContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faWallet, faCommentsDollar, faHandHoldingDollar, faGear } from '@fortawesome/free-solid-svg-icons';
 
+
+// Rutas visibles en el navbar
 const menuLinks=[
   {title:"Inicio ", path:"/"},
   {title:"Sobre Nosotros ", path:"/sobrenosotros"},
   {title:"Contacto ", path:"/contacto"},
   {title:"Ingresar ", path:"/ingresar"},
+];
 
-]
+const menuAppLinks = [
+  { title: <><FontAwesomeIcon icon={faHouse} /> Inicio</>, path: "/app" },
+  { title: <><FontAwesomeIcon icon={faWallet} /> Finanzas</>, path: "/finanzas" },
+  { title: <><FontAwesomeIcon icon={faCommentsDollar} /> Gastos</>, path: "/gastos" },
+  { title: <><FontAwesomeIcon icon={faHandHoldingDollar} /> Crear gasto</>, path: "/creargasto" },
+  { title: <><FontAwesomeIcon icon={faGear} /> Configuración</>, path: "/configuracion" },
+];
 
-const menuAppLinks=[
-  {title:"Inicio ", path:"/app"},
-  {title:"Finanzas ", path:"/finanzas"},
-  {title:"Crear gasto ", path:"/creargasto"},
-  {title:"Gastos ", path:"/gastos"},
-
-]
+// Rutas que deben mostrar navbar, aunque no estén en el menú visible
+const menuVisibleLinks = ["/", "/sobrenosotros", "/contacto", "/ingresar", "/registrarse"];
+const menuAppVisibleLinks = ["/app", "/finanzas", "/creargasto", "/gastos", "/configuracion"];
 
 function App() {
   const location = useLocation();
 
-  const isMenuAppLink = menuAppLinks.some(link => link.path === location.pathname);
-  const isMenuLink = menuLinks.some(link => link.path === location.pathname);
+  const isMenuAppLink = menuAppVisibleLinks.includes(location.pathname);
+  const isMenuLink = menuVisibleLinks.includes(location.pathname);
 
   return (
     <UserProvider>
-    <div className="App">
-      {isMenuAppLink ? <NavbarApp links={menuAppLinks} /> : isMenuLink ? <Navbar links={menuLinks} /> : null}
+      <div className="App">
+        {isMenuAppLink ? <NavbarApp links={menuAppLinks} /> : isMenuLink ? <Navbar links={menuLinks} /> : null}
         <Routes>
           <Route index element={<Inicio />} />
           <Route path="/sobrenosotros" element={<Sobrenosotros />} />
@@ -49,15 +57,16 @@ function App() {
           <Route path="/registrarse" element={<Registrarse />} />
         </Routes>
         <div className="app-container">
-        <Routes>
-          <Route path="/app" element={<Sharebill />} />
-          <Route path='/finanzas' element={<Finanzas/>}/>
-          <Route path='/creargasto' element={<CrearGasto/>}/>
-          <Route path='/gastos' element={<Gastos/>}/>
-        </Routes>
+          <Routes>
+            <Route path="/app" element={<Sharebill />} />
+            <Route path='/finanzas' element={<Finanzas/>}/>
+            <Route path='/creargasto' element={<CrearGasto/>}/>
+            <Route path='/gastos' element={<Gastos/>}/>
+            <Route path="/configuracion" element={<Configuracion />} />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
     </UserProvider>
   );
 }

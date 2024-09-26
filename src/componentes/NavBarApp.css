@@ -20,16 +20,17 @@ se tapen */
   padding-top: 20px;
   font-family: Kanit;
   color: white;
+  z-index: 10;
 }
 
-/* Estilos para la lista de navegación */
+
 .navbarapp .navbarapp-menu {
   list-style-type: none;
   padding: 0;
   margin-top: 75px;
 }
 
-/* Estilos para los enlaces de navegación */
+
 .navbarapp .navbarapp-menu .navbarapp-menu-item {
   margin-bottom: 20px;
 }
@@ -41,27 +42,34 @@ se tapen */
   padding: 10px 20px;
   display: block;
   transition: background-color 0.3s;
+  
+    svg {
+      margin-right: 10px;
+    }
 }
 
-/* Efecto hover */
+
 .navbarapp .navbarapp-menu .navbarapp-menu-item .navbarapp-menu-link:hover {
   background-color: #ffffff0c;
 }
 
-/* Estilos para el contenedor del icono de menú */
+
 .navbarapp .navbarapp-icono-nav {
   display: none;
-  padding: 30px;
+  padding: 30px 34px;
   cursor: pointer;
   font-size: 30px;
   color: white;
   position: fixed;
-  z-index: 10;
+  z-index: 11;
+  background: radial-gradient(var(--gris) 45%, transparent 46%);
+  border-radius: 100%;
 }
 
 @media (max-width: 1200px) {
   .navbarapp-container {
     width: 60%;
+    max-width: 300px;
     box-sizing: border-box;
   }
 
@@ -77,9 +85,13 @@ se tapen */
   .navbarapp-container.active {
     display: block;
   }
+
+  .navbarapp-container.active > .navbarapp-icono-nav {
+    background: none !important;
+  }
   
   .navbarapp-container {
-    display: none; /* Ocultar el menú por defecto */
+    display: none;
   }
 
   .navbarapp .navbarapp-icono-nav {
@@ -89,4 +101,11 @@ se tapen */
   .app-container {
     margin: 0;
   }
+}
+
+@media (max-width: 600px) {
+  .navbarapp .navbarapp-menu .navbarapp-menu-item .navbarapp-menu-link {
+    font-size: 20px;
+  }
+
 }

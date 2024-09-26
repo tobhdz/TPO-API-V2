@@ -9,16 +9,12 @@
 .login-box {
     margin-block: 100px;
     padding: 50px 50px;
-    background: linear-gradient(var(--gris), #24142e) padding-box, linear-gradient(#c8c9ff, #e025b2) border-box;
+    background: linear-gradient(var(--gris), #24142e) padding-box, linear-gradient(#c8c9ff, #9525e0) border-box;
     border-radius: 10px;
     border: 1px solid transparent;
     color: white;
     min-width: 445px;
     box-sizing: border-box;
-}
-
-.login-box.reg {
-    filter: hue-rotate(25deg)
 }
 
 .login-header {

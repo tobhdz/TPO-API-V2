@@ -1,0 +1,220 @@
+/* Configuración general */
+  .configuracion-container {
+    background: var(--degrade3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 10%;
+    color: white;
+    font-family: Kanit;
+    font-size: 20px;
+
+      .boton {
+        padding: 10px;
+        border: 1px solid #ffffff63;
+        background: var(--degrade3);
+        color: white;
+        font-family: Kanit;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 13px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+    
+      .boton:hover, .danger-button:hover {
+        filter: brightness(0.9)
+      }
+
+      .boton:active {
+        transform: scale(0.98);
+      }
+      
+      .danger-button {
+        width: fit-content;
+        padding: 10px 20px;
+        background-color: #cc3030;
+        border: 1px solid #ffffff38;
+        border-radius: 10px;
+        font-family: Kanit;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.3s;
+
+          svg {
+            margin-right: 5px;
+          }
+      }
+  }
+  
+  .configuracion-box {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 100%;
+    max-width: 650px;
+    padding: 30px;
+    background: linear-gradient(var(--gris) 40%, #1b1b1b);
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+
+  .configuracion-tabs {
+    width: 100%;
+    display: flex;
+    gap: 15px;
+  }
+  
+  .tab-boton {
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid white;;
+    background-color: var(--gris);
+    cursor: pointer;
+    font-family: Kanit;
+    font-weight: 600;
+    color: white;
+    transition: 0.2s;
+  }
+  
+  .tab-boton.tab-activa {
+    background-color: #353238;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.452);
+  }
+  
+  .configuracion-contenido {
+    width: 100%;
+    padding: 50px 50px 30px;
+    box-sizing: border-box;
+
+  }
+  
+  /* Información personal */
+  .informacion-personal-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+      .foto-perfil {
+        display: flex;
+        flex-flow: column;
+        gap: 20px;
+        width: fit-content;
+      }
+
+      .foto-perfil img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 1px solid white;
+      }
+
+      .informacion-usuario {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .campo-editar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        button {
+          padding: 5px 10px;
+          background: none;
+          border: 1px solid white;
+          color: white;
+          font-family: Kanit;
+          border-radius: 10px;
+          opacity: 0.6;
+          transition: 0.2s;
+          cursor: pointer;
+        }
+
+        button:hover {
+          opacity: 0.8;
+        }
+
+        input {
+          box-sizing: border-box;
+          padding: 15px;
+          border-radius: 10px;
+          border: 1px solid #ffffff8f;
+          background: #ffffff1a;
+          transition: 0.2s;
+          color: white
+        }
+      
+        input:hover {
+            border: 1px solid white;
+        }
+      
+        input:focus {
+            outline: 0;
+            box-shadow: inset 0 0 10px #ffffff46
+        }
+
+        svg {
+            cursor: pointer;
+        }
+      }
+      
+      .campo-editar p {
+        margin: 0;
+      }
+  }
+  
+  /* Seguridad */
+  .seguridad-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+      .field {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+
+          span {
+            color: grey;
+            font-style: italic;
+            padding-inline: 10px;
+            cursor: not-allowed
+          }
+      }
+  }
+  
+  /* Actividad */
+  .actividad-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+      .movimientos {
+        margin-top: 10px;
+      }
+  }
+  
+
+  @media (max-width: 700px) {
+    .configuracion-container {
+      padding: 80px 0 0;
+    }
+
+    .configuracion-box {
+      background: none;
+    }
+
+    .configuracion-contenido {
+      background: linear-gradient(var(--gris) 40%, #1b1b1b);
+      margin-top: 20px;
+      border-radius: 20px;
+      padding: 30px;
+    }
+
+  }

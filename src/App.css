@@ -2,13 +2,14 @@
     --gris: #0f0f0f;
     --gris2: #1c1c1c;
     --degrade0: linear-gradient(90deg, #4f13ab 0%, #ba7ee5 100%);
-    --degrade1: linear-gradient(to right, #7c13b5, #d700ca);
-    --degrade2: linear-gradient(40deg, #03001e, #7303c0, #ec38bc, #fdeff9);;
+    --degrade1: linear-gradient(to right, #7c13b5, #b470b0);
+    --degrade2: linear-gradient(40deg, #03001e, #461268, #c238ec, #fdeff9);
+    --degrade3: linear-gradient(to top, #5a2da3, #7f4ea0);
     --fondogris: radial-gradient(#1f1f1f, black);
 }
 
 body {
-    background: black;
+    background: var(--gris);
 }
 
 ::-webkit-scrollbar {
