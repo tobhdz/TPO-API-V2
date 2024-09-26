@@ -26,9 +26,9 @@ export default function Tabla() {
              {/* Renderizar los gastos */}
             {gastos.map((gasto, index) => (
                 <React.Fragment key={index}>
-                <div className="cell">{gasto.nombre}</div>
-                <div className="cell">{gasto.valor}</div>
-                <div className="cell">{gasto.fecha}</div>
+                <div className="cell">{gasto.name}</div>
+                <div className="cell">{gasto.monto}</div>
+                <div className="cell">{gasto.fechVto}</div>
                 <div className="cell">participantes</div>
                 <div className="cell">porcentaje%</div>
 
