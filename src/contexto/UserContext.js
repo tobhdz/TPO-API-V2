@@ -12,6 +12,7 @@ export const UserProvider = ({ children }) => {
     const [gastos, setGastos] = useState([]);
     const [password, setPassword] = useState('admin'); // Establece una contraseña por defecto
     const [profileImage, setProfileImage] = useState('/img/defaultuser.png');
+    const [metodosPago, setMetodosPago]=useState([]);
 
     // Función para actualizar el estado del usuario y la contraseña
     const login = (userData) => {
@@ -46,8 +47,12 @@ export const UserProvider = ({ children }) => {
         if (newEmail) setEmail(newEmail);
     };
 
+    const addPayMethod=(newPayMethod)=>{
+        setMetodosPago(newPayMethod);
+    }
+
     return (
-        <UserContext.Provider value={{ user, name, email, balance, gastos, password, profileImage, login, logout, updateProfileImage, updateUser, updatePassword }}>
+        <UserContext.Provider value={{ user, name, email, balance, gastos, password, profileImage,metodosPago, login, logout, updateProfileImage, updateUser, updatePassword, addPayMethod }}>
             {children}
         </UserContext.Provider>
     );

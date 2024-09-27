@@ -10,7 +10,8 @@ const mockUser = {
       { name: "hello", descripcion: "hello", monto: "1000", fechaInicio: "", fechaVencimiento: "22/07/2024", participantes: [{ email: "", porcentaje: 0 }] },
       { name: "melu", descripcion: "", monto: "2000", fechaInicio: "", fechaVencimiento: "", participantes: [{ email: "", porcentaje: 0 }] },
       { name: "tobi", descripcion: "", monto: "7000", fechaInicio: "", fechaVencimiento: "", participantes: [{ email: "", porcentaje: 0 }] }
-    ]
+    ],
+    metodosPago:[{}]
 };
 
 export default mockUser;
