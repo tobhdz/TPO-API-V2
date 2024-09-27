@@ -51,7 +51,7 @@ export default function FormularioGastos() {
     }
 
     return(
-        <div className='form-container'>
+        <div className='gastos-form-container'>
             <div className='form-box'>
                 <form onSubmit={handleSubmit}>
                     <div className='form-header'>
@@ -131,8 +131,8 @@ export default function FormularioGastos() {
                     </textarea>
 
                     <div className='form-botones'>
-                        <Boton className={'submit-button boton-form'} type={"submit"} title={"Crear Gasto"}/>
-                        <Boton  className={'boton-form'} type={'button'} title={"Restablecer"} action={handleReset}/>
+                        <Boton className="boton2" type="submit" title="Agregar" />
+                        <Boton className="boton2" type="submit" title="Reestablecer" />
 
                     </div>
                 </form>

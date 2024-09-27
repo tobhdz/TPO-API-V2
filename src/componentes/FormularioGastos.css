@@ -1,104 +1,105 @@
-.form-container {
+.gastos-form-container, .participantes-form-container {
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: Kanit;
-}
 
-.form-box {
-    margin-block: 100px;
-    padding: 50px 50px;
-    background: linear-gradient(var(--gris), rgb(36, 20, 46)) padding-box, linear-gradient(rgb(200, 201, 255), rgb(224, 37, 178)) border-box;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    color: white;
-    min-width: 445px;
-    box-sizing: border-box;
-}
-.form-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    font-family: Kanit;
-    text-transform: uppercase;
-    font-size: 18px;
-    padding-bottom: 20px;
-}
-.form-box form {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    flex-direction: column;
-    gap: 20px
-}
-.form-box form input, .form-box form input::placeholder, .form-box .submit-button, .form-box form textarea {
-    font-family: Kanit;
-    font-size: 15px
-}
-
-.form-box form input , .form-box form textarea{
-    width: 100%;
-    box-sizing: border-box;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #ffffff8f;
-    background: #f0bdff1a;
-    transition: 0.2s;
-    color: white
-}
-
-.form-box form input:hover, .form-box form textarea:hover {
-    border: 1px solid white;
-}
-
-.form-box form input:focus, .form-box form textarea:focus {
-    outline: 0;
-    box-shadow: inset 0 0 10px #ffffff46
-}
-
-.form-box form input::placeholder, .form-box form textarea::placeholder {
-    color: #ffffff88;
-    font-family: Kanit;
-    font-weight: 300;
-}
-.form-box .form-botones {
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 25px
-}
-.form-box .boton-form {
-    font-family: Kanit;
-    font-weight: 600;
-    font-size: 19px;
-    transition: 0.5s;
-    color: #715485;
-    border: 0;
-    background: white;
-    padding: 10px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: 0.5s;
-    text-transform: uppercase;
-}
-
-.form-box .boton-form:hover {
-    color: #422657;
-    background: #dddddd;
-    text-shadow: 0 0 5px white, 0 0 10px white, 0 0 20px white;
-    box-shadow: inset 0 0 20px white, inset 0 0 5px white, inset 0px 0px 10px #ffffff
-}
-
-@media (max-width: 520px) {
     .form-box {
-        padding-block: 100px;
-        margin: 0px;
         width: 100%;
-        border: none;
-        border-radius: 0;
-        min-width: none;
+        padding: 50px 50px;
+        background: var(--gris);
+        border-radius: 10px;
+        border: 1px solid rgb(75, 75, 75);
+        color: white;
+        min-width: 445px;
+        box-sizing: border-box;
+    }
+    .form-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        font-family: Kanit;
+        text-transform: uppercase;
+        font-size: 18px;
+        padding-bottom: 20px;
+    }
+    .form-box form {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 20px
+    }
+    .form-box form input, .form-box form input::placeholder, .form-box .submit-button, .form-box form textarea {
+        font-family: Kanit;
+        font-size: 15px
+    }
+    
+    .form-box form input , .form-box form textarea{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #ffffff8f;
+        background: #f0bdff1a;
+        transition: 0.2s;
+        color: white
+    }
+    
+    .form-box form input:hover, .form-box form textarea:hover {
+        border: 1px solid white;
+    }
+    
+    .form-box form input:focus, .form-box form textarea:focus {
+        outline: 0;
+        box-shadow: inset 0 0 10px #ffffff46
+    }
+    
+    .form-box form input::placeholder, .form-box form textarea::placeholder {
+        color: #ffffff88;
+        font-family: Kanit;
+        font-weight: 300;
+    }
+    .form-box .form-botones {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px
+    }
+    .form-box .boton-form {
+        font-family: Kanit;
+        font-weight: 600;
+        font-size: 19px;
+        transition: 0.5s;
+        color: #715485;
+        border: 0;
+        background: white;
+        padding: 10px;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.5s;
+        text-transform: uppercase;
+    }
+    
+    .form-box .boton-form:hover {
+        color: #422657;
+        background: #dddddd;
+        text-shadow: 0 0 5px white, 0 0 10px white, 0 0 20px white;
+        box-shadow: inset 0 0 20px white, inset 0 0 5px white, inset 0px 0px 10px #ffffff
+    }
+    
+    @media (max-width: 520px) {
+        .form-box {
+            padding-block: 100px;
+            margin: 0px;
+            width: 100%;
+            border: none;
+            border-radius: 0;
+            min-width: none;
+            border-radius: 60px;
+        }
     }
 }
 

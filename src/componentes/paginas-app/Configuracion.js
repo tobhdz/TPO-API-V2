@@ -16,7 +16,7 @@ function Configuracion() {
             className={`tab-boton ${tabActiva === 'informacion' ? 'tab-activa' : ''}`}
             onClick={() => setTabActiva('informacion')}
           >
-            Información Personal
+            Información
           </button>
           <button
             className={`tab-boton ${tabActiva === 'seguridad' ? 'tab-activa' : ''}`}

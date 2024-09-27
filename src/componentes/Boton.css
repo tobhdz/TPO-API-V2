@@ -1,0 +1,48 @@
+
+
+/* Boton 1 (degrade violeta y rosa) */
+
+.boton1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--degrade1);
+    color: white;
+    font-family: Kanit;
+    text-transform: uppercase;
+    border: 1px solid white;
+    padding: 10px 25px;
+    border-radius: 100px;
+    transition: 0.2s;
+    margin: 0.5rem;
+    text-align: center;
+
+        svg {
+            margin-right: 5px;
+        }
+}
+
+.boton1:hover {
+    filter: brightness(1.1);
+}
+
+.boton1:active {
+    transform: scale(0.95);
+}
+
+/* Boton 2 (Blanco y violeta) */
+
+.boton2 {
+    font-family: Kanit;
+    font-weight: 600;
+    font-size: 19px;
+    transition: 0.5s;
+    color: #715485;
+    border: 0;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.5s;
+    text-transform: uppercase;
+}

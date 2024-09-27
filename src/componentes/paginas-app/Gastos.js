@@ -12,9 +12,6 @@ export default function Gastos() {
             <div className="gastos-header">
                 <h1>Gastos</h1>
             </div>
-            <div className="gastos-boton">
-                <Boton className={"boton"} type={"submit"} title={"Gastos"}  />
-            </div>
             <div className="gastos-tabla">
                 <Tabla/>
             </div>

@@ -4,13 +4,15 @@ import './CrearGasto.css'
 
 export default function CrearGasto() {
     return(
-        <div className="container">
-            <div className="header">
+        <div className="creargasto-container">
+            <div className="creargasto-header">
                 <h1>Crear Gasto</h1>
             </div>
-            <div className="formularios">
-                <FormularioGastos/>
-                <FormularioParticipantes/>
+            <div className="creargasto-formularios">
+                <div className="formularios-box">
+                    <FormularioGastos/>
+                    <FormularioParticipantes/>
+                </div>
             </div>
             
         </div>
