@@ -74,7 +74,7 @@ export default function CardGastos({title, tipo, className}) {
                                 <div className="pagar-container" onClick={() => setPagar(false)}>
                                     <div className="pagar-form" onClick={(e) => e.stopPropagation()}>
                                     <FontAwesomeIcon icon={faTimes} onClick={() => setPagar(false)} className="cancelar-button"/>
-                                    <h3>Desea pagar?</h3>
+                                    <h3>Confirmación de Pago</h3>
                                     <p className="gasto-title">{gastoSeleccionado.name}</p>
                                     <p className="gasto-valor">Monto: ${gastoSeleccionado.monto}</p>
                                     <p className="gasto-fecha">Fecha de vencimiento: {gastoSeleccionado.fechaVencimiento}</p>

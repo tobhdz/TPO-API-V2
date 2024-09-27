@@ -4,6 +4,8 @@ import { faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
 import './Configuracion.css';
 import { UserContext } from '../../contexto/UserContext';
 import Boton from '../Boton';
+import { useNavigate } from 'react-router-dom';
+
 
 function Seguridad() {
   const { user, password, updatePassword } = useContext(UserContext);  // Accede a la contraseña del contexto
@@ -12,6 +14,8 @@ function Seguridad() {
   const [nuevaContrasena, setNuevaContrasena] = useState('');
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
+  const [eliminarCuenta, setEliminarCuenta]=useState(false);
+  const navigate=useNavigate();
 
   const handleCambiarContrasena = () => {
     if (contrasenaActual !== password) {
@@ -24,6 +28,11 @@ function Seguridad() {
       alert("Contraseña actualizada exitosamente.");
     }
   };
+
+  const handleEliminarCuenta=()=>{
+    setEliminarCuenta(false)
+    navigate("/");
+  }
 
   return (
     <div className="seguridad-container">
@@ -62,9 +71,19 @@ function Seguridad() {
         </div>
       )}
 
-      <button className="danger-button">
+      <button className="danger-button" onClick={()=>setEliminarCuenta(true)}>
         <FontAwesomeIcon icon={faTrash} /> Eliminar cuenta
       </button>
+      {eliminarCuenta && (
+          <div className="eliminar-cuenta-container" onClick={() => setEliminarCuenta(false)}>
+          <div className="eliminar-cuenta-form" onClick={(e) => e.stopPropagation()}>
+            <FontAwesomeIcon icon={faTimes} onClick={() => setEliminarCuenta(false)} className="cancelar-button"/>
+            <p>Está seguro que quiere eliminar su cuenta?</p>
+            <Boton type={"button"} title={"Eliminar"} action={handleEliminarCuenta} />
+          </div>
+        </div>
+   
+      )}
     </div>
   );
 }

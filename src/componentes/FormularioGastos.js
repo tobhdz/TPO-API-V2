@@ -112,9 +112,7 @@ export default function FormularioGastos() {
                         <input
                         value={porcentaje}
                         onChange={((e)=>{setPorcentaje(e.target.value)})}/>
-                    </div>
-                    
-                    
+                    </div>
 
                     
 

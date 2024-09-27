@@ -212,7 +212,7 @@
       }
   }
 
-  .cambiar-contrasena-container,.nuevo-metodo-container {
+  .cambiar-contrasena-container,.eliminar-cuenta-container, .nuevo-metodo-container {
     background: #000000c4;
     top: 0;
     left: 0;
@@ -225,7 +225,7 @@
     z-index: 15
   }
   
-  .cambiar-contrasena-form , .nuevo-metodo-form{
+  .cambiar-contrasena-form ,.eliminar-cuenta-form, .nuevo-metodo-form{
     position: relative;
     width: 80%;
     padding: 50px 10%;

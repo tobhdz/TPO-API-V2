@@ -62,8 +62,24 @@ export const UserProvider = ({ children }) => {
     const removeGasto=(gastoName)=>{
         setGastos(gastos.filter((gasto) => gasto.name !== gastoName));
     }
+    const getGastosVencidos = () => {
+        const today = new Date();
+        return gastos.filter(gasto => gasto.fechaVencimiento < today);
+    };
+    
+    const getGastosPorVencer = (dias) => {
+        const today = new Date();
+        const limite = new Date();
+        limite.setDate(today.getDate() + dias);
+        
+        return gastos.filter(gasto => {
+            //const fechaVencimiento = new Date(gasto.fechaVencimiento);
+            return gasto.fechaVencimiento >= today && gasto.fechaVencimiento <= limite;
+        });
+    };
+    
     return (
-        <UserContext.Provider value={{ user, name, email, balance, gastos, password, profileImage,metodosPago, login, logout, updateProfileImage, updateUser, updatePassword,addGasto, addPayMethod, updateBalance, removeGasto}}>
+        <UserContext.Provider value={{ user, name, email, balance, gastos, password, profileImage,metodosPago, login, logout, updateProfileImage, updateUser, updatePassword,addGasto, addPayMethod, updateBalance, removeGasto, getGastosVencidos, getGastosPorVencer}}>
             {children}
         </UserContext.Provider>
     );
