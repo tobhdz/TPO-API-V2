@@ -8,18 +8,27 @@
 .tarjeta-contenido {
     color: white;
     font-family: Kanit;
+    display: flex;
+    flex-flow: column;
+    gap: 40px;
 }
 
-h2 {
+
+.tarjeta h2 {
     font-weight: bold;
+    font-size: 30px;
+    text-align: center;
 }
 
 .tarjeta img {
-    object-fit: cover;
+    object-fit: contain;
     min-width: 400px;
+    max-width: 100%;
+    margin-bottom: -20px;
 }
 
 @media (max-width: 1140px) {
+
     .tarjeta {
         flex-direction: column;
     }
@@ -30,6 +39,11 @@ h2 {
 }
 
 @media (max-width: 500px) {
+
+    .tarjeta-contenido {
+        font-size: 20px;
+    }
+
     .tarjeta img {
         width: 100%;
     }

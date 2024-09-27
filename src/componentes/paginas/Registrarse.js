@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './Ingresar.css'; // Reciclé la hoja de estilos del login
@@ -7,27 +7,43 @@ import './Ingresar.css'; // Reciclé la hoja de estilos del login
 export default function Registrarse() {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
+  const [usuario, setUsuario] = useState(""); // Estado para Usuario
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visibility, setVisibility] = useState(false);
   const [error, setError] = useState({
     error: false,
-    message: "Ingrese un mail válido",
+    message: "",
   });
+
+  const navigate = useNavigate(); // Hook para redireccionar
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateEmail(email)) {
+    const emailValid = validateEmail(email);
+    const usuarioValid = validateUsuario(usuario);
+
+    if (emailValid && usuarioValid) { // Validar email y usuario
       setError({ error: false, message: "" });
-      console.log("Email correcto");
+      console.log("Email y usuario correctos");
+      navigate('/registrado');
     } else {
-      setError({ error: true, message: "Formato de Email incorrecto" });
+      // mensajes de error
+      setError({
+        error: true,
+        message: emailValid ? "Solo se permiten los símbolos '_' y '.'" : "Formato de email incorrecto.",
+      });
     }
   };
 
   const validateEmail = (email) => {
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return regex.test(email);
+  };
+
+  const validateUsuario = (usuario) => {
+    const regex = /^[A-Za-z0-9._]+$/; // letras, números, . y _
+    return regex.test(usuario) && usuario.length > 0; // validacion
   };
 
   const handleVisibility = () => {
@@ -60,14 +76,22 @@ export default function Registrarse() {
           />
 
           <input
+            type="text"
+            placeholder="Usuario" // Cambiado a Usuario
+            required
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
+          />
+
+          {error.error && <span className="error-text">{error.message}</span>}
+
+          <input
             type="email"
             placeholder="Email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-
-          {error.error && <span className="error-text">{error.message}</span>}
 
           <div className="password-field">
             <input
@@ -86,9 +110,9 @@ export default function Registrarse() {
             <Link to="/ingresar">¿Ya tienes cuenta? Inicia sesión</Link>
           </div>
           <div className="login-botones reg">
-              <button type="submit" className="submit-button boton-form">
-                Registrarme
-              </button>
+            <button type="submit" className="submit-button boton-form">
+              Registrarme
+            </button>
           </div>
         </form>
       </div>

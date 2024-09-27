@@ -1,53 +1,72 @@
-.grid-table{
-    background: linear-gradient(#202020, rgb(20, 20, 20));
-    color: white;
-    padding:3%;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr); /* Tres columnas iguales */
-    gap: 10px; /* Espaciado entre las celdas */
-    font-family: Kanit;
-    border-radius:20px;
-
-    
-
-}
-
-.header, .cell{
-    text-align: center;
-}
-
-.header{
-    font-size: large;
-}
-
-.botones{
+.card-gastos-container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 60px 2%;
+    background: linear-gradient(var(--gris) 40%, #1b1b1b) padding-box, var(--degrade1) border-box;
+    border: 5px solid transparent;
+    border-radius: 20px;
+    color: white;
+    font-family: Kanit;
     justify-content: center;
 }
 
-.tabla-boton {
+.gasto-card {
+    background: linear-gradient(#202020, rgb(20, 20, 20));
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+    border: 1px solid #ffffff11;
+}
+
+.gasto-card:hover {
+    transform: translateY(-5px);
+}
+
+.gasto-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.gasto-valor, .gasto-fecha, .gasto-participantes, .gasto-porcentaje {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.gasto-acciones {
+    display: flex;
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.gasto-boton {
     background: var(--degrade1);
     color: white;
     font-family: Kanit;
     text-transform: uppercase;
     border: 1px solid white;
-    padding: 10px 25px;
+    padding: 10px 20px;
     border-radius: 100px;
-    transition: 0.2s;
-    margin: 0.5rem;
+    transition: transform 0.2s;
 }
 
-.tabla-boton:hover {
-    transform: translate(1px,2px);
+.gasto-boton:hover {
+    transform: translate(1px, 2px);
 }
 
-.error{
+.error {
     font-family: Kanit;
-    color:white;
+    color: white;
     font-size: 40px;
+    text-align: center;
 }
 
-
-
+@media (max-width: 768px) {
+    .gasto-card {
+        width: 100%;
+    }
+}

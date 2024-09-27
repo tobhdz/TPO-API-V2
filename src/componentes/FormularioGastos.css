@@ -8,8 +8,8 @@
         width: 100%;
         padding: 50px 50px;
         background: var(--gris);
-        border-radius: 10px;
-        border: 1px solid rgb(75, 75, 75);
+        border-radius: 30px;
+        border: 1px solid #4b4b4b;
         color: white;
         min-width: 445px;
         box-sizing: border-box;

@@ -31,5 +31,3 @@ function Encabezado() {
 
 export default Encabezado
 
-
-/* Implementar las pantallas de registro e inicio de sesión */

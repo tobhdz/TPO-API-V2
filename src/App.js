@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faBell, faWallet, faCommentsDollar, faHandHoldingDollar, faGear } from '@fortawesome/free-solid-svg-icons';
 import EditarGasto from './componentes/paginas-app/EditarGasto.js';
 import Notificaciones from './componentes/paginas-app/Notificaciones.js';
+import Registrado from './componentes/paginas/Registrado.js';
 
 
 // Rutas visibles en el navbar
@@ -39,7 +40,7 @@ const menuAppLinks = [
 ];
 
 // Links para la condición de visibilidad del nav
-const menuVisibleLinks = ["/", "/sobrenosotros", "/contacto", "/ingresar", "/registrarse"];
+const menuVisibleLinks = ["/", "/sobrenosotros", "/contacto", "/ingresar", "/registrarse", "/registrado"];
 const menuAppVisibleLinks = ["/app", "/notificaciones", "/finanzas", "/creargasto", "/gastos", "/configuracion", "/configuracion", "/editargasto"];
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/ingresar" element={<Ingresar />} />
           <Route path="/registrarse" element={<Registrarse />} />
+          <Route path="/registrado" element={<Registrado />} />
         </Routes>
         <div className="app-container">
           <Routes>

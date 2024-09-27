@@ -14,11 +14,18 @@
 
 .footer-bloque {
     background: var(--gris);
-    color: white;
     display: flex;
     justify-content: center;
     padding: 20px;
     gap: 100px;
+}
+
+.footer-bloque a {
+    color: white;
+
+        svg {
+            margin-right: 5px;
+        }
 }
 
 .footer-container h3 {

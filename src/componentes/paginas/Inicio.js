@@ -10,10 +10,19 @@ function Inicio() {
       <div className="inicio-body">
         <div className="seccion-inicio">
         <Tarjeta
-          imageSrc="https://via.placeholder.com/800x335"
-          title="Título"
-          bodyText="Lorem ipsum dolor sit amet consectetur adipisicing elit. At assumenda veniam repellat, explicabo id cum esse debitis eius est voluptatum earum dicta possimus, enim obcaecati rerum! Fugit sit sint quisquam. Lorem ipsum dolor sit amet consectetur adipisicing elit. At assumenda veniam repellat, explicabo id cum esse debitis eius est voluptatum earum dicta possimus, enim obcaecati rerum! Fugit sit sint quisquam."
-        />
+          imageSrc="/img/landing1.png"
+          title="Gastos claros, cuentas justas"
+          bodyText="En la vida cotidiana, los gastos compartidos pueden llevar a confusiones y malentendidos. Con Sharebill venimos a transformamor la forma en que manejas tus finanzas en grupo."
+
+          bodyText2="Con Sharebill, compartir gastos nunca ha sido tan fácil y claro. Únete hoy y comienza a disfrutar de una experiencia sin complicaciones en tus actividades sociales. ¡Simplifica tus gastos compartidos y ahorra tiempo para lo que realmente importa!"/>
+        </div>
+        <div className="seccion-inicio">
+        <Tarjeta
+          bodyText="Sube tus Tickets. Captura y carga fácilmente los tickets de compras, ya sea desde cenas, viajes o eventos."
+
+          bodyText2="Calcula Contribuciones. Sharebill automáticamente reparte los gastos entre los miembros del grupo, asegurando que todos contribuyan de manera justa."
+          
+          bodyText3="Mantente Organizado. Lleva un registro de todos los gastos compartidos y visualiza la deuda de cada integrante con un solo clic."/>
         </div>
       </div>
     </div>
@@ -21,7 +30,3 @@ function Inicio() {
 }
 
 export default Inicio
-
-/* Replicar el modelo de seccion y tarjetas con
-otros estilos.
-Pensar más ideas para llenar la landing page */

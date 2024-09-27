@@ -1,49 +1,32 @@
-import { Link } from 'react-router-dom'
-import Boton from './Boton'
-import './Tabla.css'
+import './Tabla.css';
+import Boton from './Boton';
 import React, { useContext } from 'react';
-import mockUser from '../user/mockUser';
 import { UserContext } from '../contexto/UserContext';
 
-
 export default function Tabla() {
-
-    const { gastos } = useContext(UserContext); // Obtener gastos del contexto
+    const { gastos } = useContext(UserContext);
 
     if (!gastos || gastos.length === 0) {
-        return <div className='error'>No hay gastos para mostrar.</div>;  // Mostrar mensaje si no hay gastos
+        return <div className='error'>No hay gastos para mostrar.</div>;
     }
 
-    return(
-        <div class="grid-table">
-            <div class="header">Nombre del Proyecto</div>
-            <div class="header">Valor</div>
-            <div class="header">Fecha</div>
-            <div class="header">Participantes</div>
-            <div class="header">Porcentaje</div>
-            <div class="header">Acciones</div>
-
-             {/* Renderizar los gastos */}
+    return (
+        <div className="card-gastos-container">
             {gastos.map((gasto, index) => (
-                <React.Fragment key={index}>
-                <div className="cell">{gasto.name}</div>
-                <div className="cell">{gasto.monto}</div>
-                <div className="cell">{gasto.fechaVencimiento}</div>
-                <div className="cell">participantes</div>
-                <div className="cell">porcentaje%</div>
-
-                <div className="cell botones">
-                    <Link>
-                    <Boton className={"tabla-boton"} type={"submit"} title={"Pagar"} />
-                    </Link>
-                    <Link to="/editargasto">
-                    <Boton className={"tabla-boton"} type={"submit"} title={"Editar"} />
-                    </Link>
+                <div className="gasto-card" key={index}>
+                    <h3 className="gasto-title">{gasto.name}</h3>
+                    <p className="gasto-valor">Monto: ${gasto.monto}</p>
+                    <p className="gasto-fecha">Fecha de vencimiento: {gasto.fechaVencimiento}</p>
+                    <p className="gasto-participantes">Participantes: participantes</p>
+                    <p className="gasto-porcentaje">Porcentaje: porcentaje%</p>
+                    <div className="gasto-acciones">
+                        <Boton className="boton1" type="button" title="Pagar" />
+                        <Boton className="boton1" type="button" title="Editar" link="/editargasto" />
+                    </div>
                 </div>
-                </React.Fragment>
             ))}
-
         </div>
-
-    )
+    );
 }
+
+// Hay que ponerle el link al boton de pagar cuando este la pag
