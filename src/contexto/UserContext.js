@@ -47,12 +47,23 @@ export const UserProvider = ({ children }) => {
         if (newEmail) setEmail(newEmail);
     };
 
+    const addGasto=(gasto)=>{
+        setGastos(gastos.push(gasto))
+    }
+
     const addPayMethod=(newPayMethod)=>{
         setMetodosPago(newPayMethod);
     }
 
+    const updateBalance=(monto)=>{
+        setBalance(balance-monto);
+    }
+
+    const removeGasto=(gastoName)=>{
+        setGastos(gastos.filter((gasto) => gasto.name !== gastoName));
+    }
     return (
-        <UserContext.Provider value={{ user, name, email, balance, gastos, password, profileImage,metodosPago, login, logout, updateProfileImage, updateUser, updatePassword, addPayMethod }}>
+        <UserContext.Provider value={{ user, name, email, balance, gastos, password, profileImage,metodosPago, login, logout, updateProfileImage, updateUser, updatePassword,addGasto, addPayMethod, updateBalance, removeGasto}}>
             {children}
         </UserContext.Provider>
     );

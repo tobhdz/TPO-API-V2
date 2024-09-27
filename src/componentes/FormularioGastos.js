@@ -6,7 +6,7 @@ import { UserContext } from '../contexto/UserContext';
 
 export default function FormularioGastos() {
 
-    const {user}=useContext(UserContext);   // Asociar el gasto con el usuario que lo creó
+    const {user,gastos, addGasto}=useContext(UserContext);   // Asociar el gasto con el usuario que lo creó
     const [nombreProyecto, setNombreProyecto]= useState("");
     const [presupuesto, setPresupuesto]= useState(0);
     const [fechaInicio, setFechaInicio] = useState("");
@@ -37,7 +37,7 @@ export default function FormularioGastos() {
         if (!user.gastos) {
             user.gastos = [];  // Inicializar si está undefined
         }
-        user.gastos.push(gasto)
+        addGasto(gasto)
     };
    
     const handleReset=(e)=>{

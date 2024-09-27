@@ -48,9 +48,17 @@
     
 }
 
+
 .item-info{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
+
+.pagar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
