@@ -3,6 +3,9 @@ import './Sharebill.css';
 import { UserContext } from '../../contexto/UserContext';
 import '../CardExplorar.js';
 import CardExplorar from '../CardExplorar.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 function Sharebill() {
   const { name, user, email, balance, profileImage } = useContext(UserContext);  // Accede al nombre, usuario, email, saldo e imagen de perfil desde el contexto
@@ -18,6 +21,9 @@ function Sharebill() {
               <p className='usuario'>{user ? user : 'usuario'}</p>
               <p>{email ? email : 'correo@nodisponible.com'}</p>
             </div>
+            <Link to="/configuracion">
+              <><FontAwesomeIcon icon={faGear} /></>
+            </Link>
           </div>
           <div className="balance">
             <p>Saldo disponible: ${balance}</p>

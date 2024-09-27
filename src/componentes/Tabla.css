@@ -12,6 +12,7 @@
 }
 
 .gasto-card {
+    position: relative;
     background: linear-gradient(#202020, rgb(20, 20, 20));
     padding: 20px;
     border-radius: 15px;
@@ -32,7 +33,7 @@
     margin-bottom: 10px;
 }
 
-.gasto-valor, .gasto-fecha, .gasto-participantes, .gasto-porcentaje {
+.gasto-valor, .gasto-fecha, .gasto-lista, .gasto-porcentaje {
     font-size: 18px;
     margin: 5px 0;
 }
@@ -56,6 +57,15 @@
 
 .gasto-boton:hover {
     transform: translate(1px, 2px);
+}
+
+.gasto-title {
+    margin: 0;
+    font-size: 25px;
+}
+
+.gasto-desc {
+    margin-bottom: 15px;
 }
 
 .error {
@@ -88,10 +98,12 @@
     display: flex;
     flex-flow: column;
     align-items: stretch;
-    gap: 20px;
     border: 1px solid rgb(49, 49, 49);
+    color: white;
+    font-family: Kanit;
 
       button {
+        margin-top: 20px;
         padding: 20px 10px;
         background: rgb(14, 14, 14);
         border: 1px solid white;
@@ -105,9 +117,32 @@
 
       button:hover {
         filter: brightness(1.5)
+        
       }
-
 }
+
+.pagar-form h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.pagar-form p {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+.pagar-form ul {
+    padding-left: 20px;
+    margin: 16px 0;
+}
+
+.pagar-form ul li {
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: #c7c7c7;
+}
+
 .cancelar-button {
     right: 0;
     top: 0;
@@ -123,8 +158,27 @@
     filter: brightness(1.1)
   }
 
-@media (max-width: 768px) {
+
+.gasto-card {
+    padding-bottom: 80px;
+}
+.gasto-acciones {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+}
+
+.gasto-lista .gasto-participantes {
+    color: #c5b9c5;
+    cursor: pointer;
+}
+
+@media (max-width: 1000px) {
     .gasto-card {
         width: 100%;
+    }
+
+    .card-gastos-container {
+        padding: 5%;
     }
 }

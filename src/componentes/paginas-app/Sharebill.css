@@ -92,3 +92,13 @@
 .sharebill-mini-perfil .usuario::before {
     content:'@'
 }
+
+.datos-perfil a svg {
+    color: white;
+    font-size: 30px;
+    transition: 1.5s;
+}
+
+.datos-perfil a svg:hover {
+    transform: rotate(180deg);
+}
