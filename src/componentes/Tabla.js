@@ -28,7 +28,7 @@ export default function Tabla() {
                 <React.Fragment key={index}>
                 <div className="cell">{gasto.name}</div>
                 <div className="cell">{gasto.monto}</div>
-                <div className="cell">{gasto.fechVto}</div>
+                <div className="cell">{gasto.fechaVencimiento}</div>
                 <div className="cell">participantes</div>
                 <div className="cell">porcentaje%</div>
 

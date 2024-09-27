@@ -18,6 +18,10 @@ export const UserProvider = ({ children }) => {
         setGastos(userData.gastos);     //Actualiza lista de gastos
     };
 
+    const logout = () => {
+        setUser(null);
+    };
+
     // Paso el usuario, el saldo, gastos y la función login a los componentes que envuelva el proovedor
     return (
         <UserContext.Provider value={{ user, balance,gastos, login }}>

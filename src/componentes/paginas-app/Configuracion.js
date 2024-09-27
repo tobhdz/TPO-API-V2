@@ -3,6 +3,7 @@ import InformacionPersonal from './InformacionPersonal';
 import Seguridad from './Seguridad';
 import Actividad from './Actividad';
 import './Configuracion.css';
+import Boton from '../Boton';
 
 function Configuracion() {
   const [tabActiva, setTabActiva] = useState('informacion');
@@ -23,12 +24,12 @@ function Configuracion() {
           >
             Seguridad
           </button>
-          <button
+          <Boton
             className={`tab-boton ${tabActiva === 'actividad' ? 'tab-activa' : ''}`}
-            onClick={() => setTabActiva('actividad')}
-          >
-            Actividad
-          </button>
+            title={"Actividad"}
+            action={() => setTabActiva('actividad')}
+            
+          />
         </div>
         
         <div className="configuracion-contenido">

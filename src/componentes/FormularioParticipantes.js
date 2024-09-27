@@ -1,15 +1,23 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Boton from "./Boton";
 
 export default function FormularioParticipantes() {
 
+   // const {user}=useContext(UserContext);
+
     const [email, setEmail]=useState("");
     const [porcentaje, setPorcentaje]=useState("");
+
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+
+
+    }
 
     return(
         <div className='form-container'>
             <div className='form-box'>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className='form-header'>
                         <h4>Añadir Participantes</h4>
                     </div>
