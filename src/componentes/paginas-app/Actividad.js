@@ -27,12 +27,12 @@ function Actividad() {
     }
     addPayMethod(nuevoMetodo);
     setAnadirMetodo(false);
-    alert("Nuevo metodor registrado exitosamente.");
+    alert("Nuevo metodo registrado exitosamente.");
   }
   
   return (
     <div className="actividad-container">
-      <p>Saldo disponible: $5000</p>
+      <p className='saldo'>Saldo disponible: $5000</p>
       <div className="metodos-pago">
         <p>Tarjeta 1: **** **** **** 1234</p>
         <p>Tarjeta 2: **** **** **** 5678</p>

@@ -10,7 +10,6 @@ export default function CrearGasto() {
             </div>
             <div className="editargasto-formularios">
                 <FormularioGastos/>
-                <FormularioParticipantes/>
             </div>
             
         </div>

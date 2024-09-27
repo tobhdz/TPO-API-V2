@@ -297,9 +297,16 @@
     flex-direction: column;
     gap: 20px;
 
-      .movimientos {
-        margin-top: 10px;
-      }
+    .saldo {
+      display: block;
+      font-size: 30px;
+      background: linear-gradient(#c29de4 20%, rgb(255, 255, 255), #c29de4);
+      color: transparent;
+      background-clip: text;
+      text-align: center;
+      font-weight: 600;
+    }
+
   }
   
 

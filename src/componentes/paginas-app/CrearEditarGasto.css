@@ -15,7 +15,6 @@
 
 .creargasto-formularios, .editargasto-formularios {
     padding: 50px 50px;
-    display: flex;
     flex-flow: row;
     align-items: flex-start;
     justify-content: center;
@@ -23,16 +22,11 @@
     background: var(--degrade0);
 }
 
-@media (max-width: 1000px) {
-    .creargasto-formularios, .editargasto-formularios {
-        flex-flow: column;
-        gap: 20px;
-        justify-content: center;
-        align-items: stretch;
-    }
-}
 
-@media (max-width: 500px) {
+@media (max-width: 520px) {
+    .creargasto-formularios {
+        padding: 60px 0
+    }
     .formularios-box, .formularios-box {
         width: 100%;
     }
