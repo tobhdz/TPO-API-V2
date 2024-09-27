@@ -7,12 +7,14 @@ function Inicio() {
   return (
     <div className='inicio-container'>
       <Encabezado />
-      <div className="seccion-inicio">
-      <Tarjeta
-        imageSrc="https://via.placeholder.com/800x335"
-        title="Título"
-        bodyText="Lorem ipsum dolor sit amet consectetur adipisicing elit. At assumenda veniam repellat, explicabo id cum esse debitis eius est voluptatum earum dicta possimus, enim obcaecati rerum! Fugit sit sint quisquam. Lorem ipsum dolor sit amet consectetur adipisicing elit. At assumenda veniam repellat, explicabo id cum esse debitis eius est voluptatum earum dicta possimus, enim obcaecati rerum! Fugit sit sint quisquam."
-      />
+      <div className="inicio-body">
+        <div className="seccion-inicio">
+        <Tarjeta
+          imageSrc="https://via.placeholder.com/800x335"
+          title="Título"
+          bodyText="Lorem ipsum dolor sit amet consectetur adipisicing elit. At assumenda veniam repellat, explicabo id cum esse debitis eius est voluptatum earum dicta possimus, enim obcaecati rerum! Fugit sit sint quisquam. Lorem ipsum dolor sit amet consectetur adipisicing elit. At assumenda veniam repellat, explicabo id cum esse debitis eius est voluptatum earum dicta possimus, enim obcaecati rerum! Fugit sit sint quisquam."
+        />
+        </div>
       </div>
     </div>
   )

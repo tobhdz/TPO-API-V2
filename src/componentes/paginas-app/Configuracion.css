@@ -102,6 +102,7 @@
   .informacion-personal-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
 
       .foto-perfil {
@@ -109,25 +110,38 @@
         flex-flow: column;
         gap: 20px;
         width: fit-content;
+        align-items: center;
       }
 
       .foto-perfil img {
         width: 150px;
         height: 150px;
+        object-fit: cover;
         border-radius: 50%;
         border: 1px solid white;
       }
 
       .informacion-usuario {
+        width: 95%;
         display: flex;
         flex-direction: column;
         gap: 10px;
+        border: 1px solid #353535;
+        padding: 20px;
+        border-radius: 20px;
       }
       
       .campo-editar {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         gap: 10px;
+
+        .botones {
+          display: flex;
+          flex-flow: row;
+          gap: 10px;
+        }
 
         button {
           padding: 5px 10px;
@@ -152,7 +166,8 @@
           border: 1px solid #ffffff8f;
           background: #ffffff1a;
           transition: 0.2s;
-          color: white
+          color: white;
+          font-family: kanit;
         }
       
         input:hover {
@@ -184,14 +199,96 @@
         display: flex;
         flex-wrap: wrap;
         gap: 5px;
+        border: 1px solid #353535;
+        padding: 20px;
+        border-radius: 20px;
 
           span {
             color: grey;
             font-style: italic;
             padding-inline: 10px;
-            cursor: not-allowed
+            cursor: pointer;
           }
       }
+  }
+
+  .cambiar-contrasena-container {
+    background: #000000c4;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 15
+  }
+  
+  .cambiar-contrasena-form {
+    position: relative;
+    width: 80%;
+    padding: 50px 10%;
+    box-sizing: border-box;
+    max-width: 800px;
+    border-radius: 20px;
+    background: var(--gris);
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    gap: 20px;
+    border: 1px solid rgb(49, 49, 49);
+
+      button {
+        padding: 20px 10px;
+        background: rgb(14, 14, 14);
+        border: 1px solid white;
+        color: white;
+        font-family: Kanit;
+        border-radius: 20px;
+        opacity: 0.6;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+
+      button:hover {
+        filter: brightness(1.5)
+      }
+
+      input {
+        box-sizing: border-box;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #ffffff8f;
+        background: #ffffff1a;
+        transition: 0.2s;
+        color: white;
+        font-family: kanit;
+      }
+    
+      input:hover {
+          border: 1px solid white;
+      }
+    
+      input:focus {
+          outline: 0;
+          box-shadow: inset 0 0 10px #ffffff46
+      }
+  }
+
+  .cancelar-button {
+    right: 0;
+    top: 0;
+    background: rgb(56, 56, 56);
+    position: absolute;
+    padding: 10px 12px;
+    border-radius: 100%;
+    transform: translate(10px, -10px);
+    cursor: pointer;
+  }
+
+  .cancelar-button:hover {
+    filter: brightness(1.1)
   }
   
   /* Actividad */
@@ -205,6 +302,8 @@
       }
   }
   
+
+  /* Media queries */
 
   @media (max-width: 700px) {
     .configuracion-container {
@@ -220,6 +319,11 @@
       margin-top: 20px;
       border-radius: 20px;
       padding: 30px;
+    }
+
+    .informacion-personal-container .foto-perfil img {
+      width: 70px;
+      height: 70px;
     }
 
   }

@@ -2,6 +2,7 @@
     display: flex;
     gap: 20px;
     width: 80%;
+    max-width: 1500px;
 }
 
 .tarjeta-contenido {
@@ -16,7 +17,6 @@ h2 {
 .tarjeta img {
     object-fit: cover;
     min-width: 400px;
-    border-radius: 50px;
 }
 
 @media (max-width: 1140px) {
@@ -26,5 +26,11 @@ h2 {
     .tarjeta img {
         max-height: 200px;
         min-width: inherit;
+    }
+}
+
+@media (max-width: 500px) {
+    .tarjeta img {
+        width: 100%;
     }
 }

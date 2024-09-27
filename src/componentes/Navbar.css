@@ -1,7 +1,3 @@
-.navbar-container a {
-    color: white;
-}
-
 .navbar-container {
     display: flex;
     flex-direction: row;
@@ -10,6 +6,10 @@
     justify-content: center;
     top: 0;
     font-family: Kanit;
+    color: white;
+}
+
+.navbar-container a {
     color: white;
 }
 

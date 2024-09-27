@@ -3,10 +3,18 @@
     padding-bottom: 20px;
 }
 
+.inicio-body {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
 .seccion-inicio {
     display: flex;
-    padding: 30px;
-    margin: 30px;
+    padding-block: 30px;
     background-color: var(--gris);
     background-size: cover;
     background-position: bottom;
@@ -15,4 +23,15 @@
     box-sizing: border-box;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width: 650px) {
+    .inicio-body {
+        padding: 0;
+        padding-top: 20px;
+    }
+    .seccion-inicio {
+        background: linear-gradient(#1c1c1c, var(--gris));
+        border: none;
+    }
 }

@@ -66,6 +66,16 @@ se tapen */
   border-radius: 100%;
 }
 
+.navbarapp .salir {
+  width: 100%;
+  text-align: left;
+  font-family: Kanit;
+  color: #c685d1!important;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
 @media (max-width: 1200px) {
   .navbarapp-container {
     width: 60%;

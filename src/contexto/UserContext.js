@@ -1,30 +1,53 @@
 import React, { createContext, useState } from 'react';
 
 // Contexto (para compartir información entre componentes)
-// De momento manejamos las variables de user (segun el login) y el saldo
 export const UserContext = createContext();
 
 // Proveedor
 export const UserProvider = ({ children }) => {
-    // Inicializo el estado del user y balance con useState.
     const [user, setUser] = useState(null);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [balance, setBalance] = useState(0);
     const [gastos, setGastos] = useState([]);
+    const [password, setPassword] = useState('admin'); // Establece una contraseña por defecto
+    const [profileImage, setProfileImage] = useState('/img/defaultuser.png');
 
-    // Funcion para actualizar el estado del usuario y el saldo en el login
+    // Función para actualizar el estado del usuario y la contraseña
     const login = (userData) => {
-        setUser(userData.user);       // Actualiza el nombre del usuario
-        setBalance(userData.balance); // Actualiza el saldo
-        setGastos(userData.gastos);     //Actualiza lista de gastos
+        setUser(userData.user);
+        setName(userData.name);
+        setEmail(userData.email);
+        setBalance(userData.balance);
+        setGastos(userData.gastos);
+        setPassword(userData.password); // Almacena la contraseña
     };
 
     const logout = () => {
         setUser(null);
+        setName('');
+        setEmail('');
+        setBalance(0);
+        setGastos([]);
+        setPassword(''); // Limpiar la contraseña al cerrar sesión
     };
 
-    // Paso el usuario, el saldo, gastos y la función login a los componentes que envuelva el proovedor
+    const updatePassword = (newPassword) => {
+        setPassword(newPassword); // Actualiza la contraseña
+    };
+
+    const updateProfileImage = (imageUrl) => {
+        setProfileImage(imageUrl);
+    };
+
+    const updateUser = ({ newUser, newName, newEmail }) => {
+        if (newUser) setUser(newUser);
+        if (newName) setName(newName);
+        if (newEmail) setEmail(newEmail);
+    };
+
     return (
-        <UserContext.Provider value={{ user, balance,gastos, login }}>
+        <UserContext.Provider value={{ user, name, email, balance, gastos, password, profileImage, login, logout, updateProfileImage, updateUser, updatePassword }}>
             {children}
         </UserContext.Provider>
     );

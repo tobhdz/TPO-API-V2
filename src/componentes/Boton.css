@@ -27,7 +27,7 @@
 }
 
 .boton1:active {
-    transform: scale(0.95);
+    transform: scale(0.98);
 }
 
 /* Boton 2 (Blanco y violeta) */
@@ -45,4 +45,11 @@
     cursor: pointer;
     transition: 0.5s;
     text-transform: uppercase;
+}
+
+.boton2:hover {
+    color: #422657;
+    background: #dddddd;
+    text-shadow: 0 0 5px white, 0 0 10px white, 0 0 20px white;
+    box-shadow: inset 0 0 20px white, inset 0 0 5px white, inset 0px 0px 10px #ffffff;
 }

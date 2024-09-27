@@ -24,7 +24,7 @@ import Notificaciones from './componentes/paginas-app/Notificaciones.js';
 // Rutas visibles en el navbar
 const menuLinks=[
   {title:"Inicio ", path:"/"},
-  {title:"Sobre Nosotros ", path:"/sobrenosotros"},
+  {title:"Sobre nosotros ", path:"/sobrenosotros"},
   {title:"Contacto ", path:"/contacto"},
   {title:"Ingresar ", path:"/ingresar"},
 ];

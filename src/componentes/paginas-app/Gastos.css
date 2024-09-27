@@ -1,9 +1,9 @@
 .gastos-container{
     display: flex;
     flex-direction: column;
-    padding: 5%;
+    padding-block: 60px;
+    padding-inline: 5%;
     background: var(--fondogris);
-
 }
 
 .gastos-header h1{

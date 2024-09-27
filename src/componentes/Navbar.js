@@ -17,6 +17,11 @@ function Navbar({ links }) {
                         <img src="./img/logosimple.png" alt="logo" />
                         <div className="logo-titulo">Sharebill</div>
                     </Link>
+
+                    <div className="icono-nav" onClick={handleClick}>
+                        <FontAwesomeIcon icon={click ? faTimes : faBars} />
+                    </div>
+
                     <ul className={click ? 'nav-menu active' : 'nav-menu'}>
                         {links.map((item, index) => (
                             <li key={index} className="nav-item">

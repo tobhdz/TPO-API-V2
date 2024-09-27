@@ -95,3 +95,9 @@
     }
 
 }
+
+@media (max-width: 1590px) {
+    .encabezado-container .overlay h1 {
+        max-width: 550px;
+    }
+}

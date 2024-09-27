@@ -54,9 +54,6 @@ export default function FormularioGastos() {
         <div className='gastos-form-container'>
             <div className='form-box'>
                 <form onSubmit={handleSubmit}>
-                    <div className='form-header'>
-                        <h4>Crear Gasto</h4>
-                    </div>
                     <input 
                     type='text'
                     id="nombre-proyecto"

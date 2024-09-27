@@ -1,21 +1,18 @@
 import FormularioGastos from "../FormularioGastos";
 import FormularioParticipantes from "../FormularioParticipantes";
-import './CrearGasto.css'
+import './CrearEditarGasto.css'
 
 export default function CrearGasto() {
     return(
         <div className="creargasto-container">
             <div className="creargasto-header">
-                <h1>Crear Gasto</h1>
+                <h1>Crear gasto</h1>
             </div>
             <div className="creargasto-formularios">
-                <div className="formularios-box">
-                    <FormularioGastos/>
-                    <FormularioParticipantes/>
-                </div>
+                <FormularioGastos/>
+                <FormularioParticipantes/>
             </div>
             
         </div>
     )
 }
-//formulario para agregar gasto

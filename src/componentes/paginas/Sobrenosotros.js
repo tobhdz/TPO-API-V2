@@ -2,6 +2,7 @@ import React from 'react'
 import './Sobrenosotros.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandshake, faUserGroup, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import Testimonial from '../Testimonial';
 
 
 
@@ -24,10 +25,24 @@ function Sobrenosotros() {
           </p>
         <h3><FontAwesomeIcon icon={faUserGroup} /> Testimoniales</h3>
         <p>
-          "Organizar un viaje con amigos siempre era un dolor de cabeza, pero desde que usamos ShareBill, ¡todo es mucho más fácil! Cada uno paga lo que debe sin problemas." – Mariana R.
-          "No puedo creer lo rápido que se calculan los gastos. Antes solía tomarme horas dividir las cuentas del departamento. Ahora solo subo el ticket y listo." – Lucas M.
-          "Usamos ShareBill para todas nuestras salidas grupales. Es justo, rápido y evita cualquier malentendido." – Carla P.
-        </p>
+        <Testimonial   
+    frase="¡ShareBill hizo que nuestra cena de grupo fuera mucho más fácil! No más cálculos confusos ni discusiones. Todos sabemos exactamente cuánto debemos."   
+    autor="Laura Martínez"   
+    quien="Cliente satisfecha"  
+/>  
+
+<Testimonial   
+    frase="Usar ShareBill para gestionar los gastos de nuestro viaje fue una bendición. Cada vez que subía un ticket, la aplicación se encargaba del resto. ¡Recomendadísimo!"   
+    autor="Carlos López"   
+    quien="Viajero frecuente"  
+/>  
+
+<Testimonial   
+    frase="Como organizador de eventos, ShareBill ha simplificado mi vida. Ahora puedo centrarme en disfrutar, sabiendo que todos los gastos están bien divididos."   
+    autor="Ana Torres"   
+    quien="Organizadora de eventos"  
+/>
+        </p> 
         <h3><FontAwesomeIcon icon={faCircleQuestion} /> FAQs</h3>
         <p>
           <b>¿Cómo funciona ShareBill?</b>

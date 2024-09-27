@@ -18,7 +18,9 @@
 }
 
 .sharebill-encabezado img {
-    max-width: 100px;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
 
 .sharebill-encabezado .datos-perfil {
@@ -76,4 +78,17 @@
     flex-direction: column;
     gap: 20px;
     width: 100%;
+}
+
+.sharebill-mini-perfil h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+.sharebill-mini-perfil p {
+    font-size: 19px;
+}
+
+.sharebill-mini-perfil .usuario::before {
+    content:'@'
 }

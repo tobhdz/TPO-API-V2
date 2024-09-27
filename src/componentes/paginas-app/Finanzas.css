@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     background: var(--fondogris);
-
+    padding-block: 60px;
 }
 
 .finanzas-box {

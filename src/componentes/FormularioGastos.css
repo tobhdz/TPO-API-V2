@@ -18,7 +18,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 15px;
         font-family: Kanit;
         text-transform: uppercase;
         font-size: 18px;
@@ -31,6 +30,7 @@
         flex-direction: column;
         gap: 20px
     }
+
     .form-box form input, .form-box form input::placeholder, .form-box .submit-button, .form-box form textarea {
         font-family: Kanit;
         font-size: 15px
@@ -96,7 +96,6 @@
             margin: 0px;
             width: 100%;
             border: none;
-            border-radius: 0;
             min-width: none;
             border-radius: 60px;
         }

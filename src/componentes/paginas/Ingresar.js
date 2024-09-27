@@ -5,7 +5,6 @@ import { faEye, faEyeSlash, faRightToBracket } from '@fortawesome/free-solid-svg
 import './Ingresar.css';
 import { UserContext } from "../../contexto/UserContext";
 import mockUser from "../../user/mockUser";
-//import {mockUser} from '../user/mockUser.js';
 
 export default function Login() {
     const [user, setUser] = useState("");
@@ -15,14 +14,20 @@ export default function Login() {
 
     const { login } = useContext(UserContext);
 
-    
-
     const handleSubmit = (e) => {
       e.preventDefault();
 
-      // Verificación de cred.
+      // Verificación de credenciales
       if (user === mockUser.user && password === mockUser.password) {
-        login({ user: mockUser.user, balance: mockUser.balance , gastos:mockUser.gastos});  // Guardar el usuario en el contexto
+        // Pasa toda la información del mockUser
+        login({
+          user: mockUser.user,
+          name: mockUser.name,
+          email: mockUser.email,
+          balance: mockUser.balance,
+          gastos: mockUser.gastos,
+          password: mockUser.password,
+        });
         navigate("/app");  // Redirigir a la página /app
       } else {
         alert("Credenciales incorrectas. Por favor, intenta nuevamente.");
