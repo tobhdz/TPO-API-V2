@@ -14,7 +14,9 @@
     width: 80%;
     justify-content: space-around;
     margin-block: 15px;
-    background: linear-gradient(var(--gris), rgb(34, 34, 34))
+    background: linear-gradient(var(--gris), rgb(34, 34, 34));
+    border: 1px solid #ffffff5e;
+    box-sizing: border-box;
 }
 
 .info-container h5 {

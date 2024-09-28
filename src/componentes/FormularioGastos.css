@@ -13,6 +13,7 @@
         border: 1px solid #4b4b4b;
         color: white;
         box-sizing: border-box;
+        box-shadow: 0 0 20px 3px #ca80ff, 0 0 6px 0px #ffffff;
     }
 
     .form-label {
@@ -100,11 +101,11 @@
     }
 
     .participantes-section ul {
-        background: #0000002f;
+        background: #3333332f;
         padding: 30px;
         border-radius: 10px;
         margin-top: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.068);
+        border: 1px solid #ffffff11;
     }
 
     .participantes-section ul::before {
@@ -142,6 +143,7 @@
             border: none;
             min-width: none;
             border-radius: 40px;
+            box-shadow: none;
         }
 
         .form-botones {

@@ -34,8 +34,6 @@ function Actividad() {
     <div className="actividad-container">
       <p className='saldo'>Saldo disponible: $5000</p>
       <div className="metodos-pago">
-        <p>Tarjeta 1: **** **** **** 1234</p>
-        <p>Tarjeta 2: **** **** **** 5678</p>
         <button className="boton" onClick={()=>setAnadirMetodo(true)}>Añadir método de pago</button>
       </div>
 
@@ -81,8 +79,8 @@ function Actividad() {
       }
 
       <div className="movimientos">
-        <p>Movimiento 1: Compra - $50</p>
-        <p>Movimiento 2: Depósito - $100</p>
+        <h4>Movimientos</h4>
+        <p><i className="prueba">No hay movimientos disponibles.</i></p>
       </div>
     </div>
   );

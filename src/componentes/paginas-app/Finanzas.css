@@ -3,6 +3,18 @@
     justify-content: center;
     background: var(--fondogris);
     padding-block: 60px;
+
+    h2 {
+        font-family: Dela Gothic One;
+        font-size: 32px;
+        color: #9d49b2;
+        letter-spacing: 2px;
+        word-spacing: 2px;
+        padding-block: 20px;
+        text-shadow: 1px 0px white, -1px 0px white, 0 1px white, 0 -1px white;
+        text-transform: uppercase;
+        font-weight: normal;
+    }
 }
 
 .finanzas-box {

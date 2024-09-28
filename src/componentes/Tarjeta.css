@@ -2,7 +2,7 @@
     display: flex;
     gap: 20px;
     width: 80%;
-    max-width: 1500px;
+    padding-bottom: 10px;
 }
 
 .tarjeta-contenido {
