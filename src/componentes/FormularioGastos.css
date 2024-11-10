@@ -1,0 +1,155 @@
+.gastos-form-container, .participantes-form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Kanit;
+
+    .form-box {
+        width: 100%;
+        max-width: 800px;
+        padding: 50px 50px;
+        background: var(--gris);
+        border-radius: 30px;
+        border: 1px solid #4b4b4b;
+        color: white;
+        box-sizing: border-box;
+        box-shadow: 0 0 20px 3px #ca80ff, 0 0 6px 0px #ffffff;
+    }
+
+    .form-label {
+        display: block;
+        text-transform: uppercase;
+        font-size: 15px;
+        padding-bottom: 10px;
+    }
+
+    .form-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Kanit;
+        text-transform: uppercase;
+        font-size: 18px;
+        padding-bottom: 20px;
+    }
+
+    .form-box form input, .form-box form input::placeholder, .form-box .submit-button, .form-box form textarea {
+        font-family: Kanit;
+        font-size: 15px
+    }
+    
+    .form-box form input , .form-box form textarea{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #ffffff8f;
+        background: #f0bdff1a;
+        transition: 0.2s;
+        color: white
+    }
+    
+    .form-box form input:hover, .form-box form textarea:hover {
+        border: 1px solid white;
+    }
+    
+    .form-box form input:focus, .form-box form textarea:focus {
+        outline: 0;
+        box-shadow: inset 0 0 10px #ffffff46
+    }
+    
+    .form-box form input::placeholder, .form-box form textarea::placeholder {
+        color: #ffffff88;
+        font-family: Kanit;
+        font-weight: 300;
+    }
+    .form-box .form-botones {
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 25px
+    }
+    .form-box .boton-form {
+        font-family: Kanit;
+        font-weight: 600;
+        font-size: 19px;
+        transition: 0.5s;
+        color: #715485;
+        border: 0;
+        background: white;
+        padding: 10px;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.5s;
+        text-transform: uppercase;
+    }
+    
+    .form-box .boton-form:hover {
+        color: #422657;
+        background: #dddddd;
+        text-shadow: 0 0 5px white, 0 0 10px white, 0 0 20px white;
+        box-shadow: inset 0 0 20px white, inset 0 0 5px white, inset 0px 0px 10px #ffffff
+    }
+
+    .form-box form, .participantes-form {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 20px
+    }
+
+    .participantes-section ul {
+        background: #3333332f;
+        padding: 30px;
+        border-radius: 10px;
+        margin-top: 20px;
+        border: 1px solid #ffffff11;
+    }
+
+    .participantes-section ul::before {
+        content:'Estás añadiendo a los siguientes participantes:';
+        padding-bottom: 20px;
+    }
+
+    .participantes-form button {
+        padding: 10px 20px;
+        width: fit-content;
+        background: #252027;
+        border: 1px solid #ffffff;
+        color: white;
+        font-family: Kanit;
+        font-size: 18px;
+        border-radius: 20px;
+        opacity: 0.5;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .participantes-form button:hover {
+        opacity: 0.8
+    }
+
+    .participantes-sub {
+        margin-top: 10px;
+        opacity: 0.7;
+    }
+    
+    @media (max-width: 520px) {
+        .form-box {
+            margin: 0px;
+            width: 100%;
+            border: none;
+            min-width: none;
+            border-radius: 40px;
+            box-shadow: none;
+        }
+
+        .form-botones {
+            flex-flow: column;
+        }
+    }
+}
+
+

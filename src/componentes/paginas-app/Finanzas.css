@@ -1,0 +1,62 @@
+.finanzas-container {
+    display: flex;
+    justify-content: center;
+    background: var(--fondogris);
+    padding-block: 60px;
+
+    h2 {
+        font-family: Dela Gothic One;
+        font-size: 32px;
+        color: #9d49b2;
+        letter-spacing: 2px;
+        word-spacing: 2px;
+        padding-block: 20px;
+        text-shadow: 1px 0px white, -1px 0px white, 0 1px white, 0 -1px white;
+        text-transform: uppercase;
+        font-weight: normal;
+    }
+}
+
+.finanzas-box {
+    width: 80%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.finanzas-container h1 {
+    color: white;
+    font-family: Dela Gothic One;
+    text-align: center;
+    font-weight: initial;
+    font-size: 40px;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.crear-container {
+    margin: 2rem, 0rem;
+    background-color: #FBFBFB;
+    border-radius: 100px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 680px) {
+    .finanzas-box {
+        width: 100%!important;
+    }
+
+    .btn-container {
+        width: 100%;
+        padding-inline: 20px;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+}

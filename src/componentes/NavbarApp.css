@@ -1,0 +1,121 @@
+
+.app-container {
+  margin-left: 15%;
+}
+
+/* La clase de big-container está en App.js, para que
+cuando se renderice el nav (que está en position fixed),
+haya un container que desplace los contenidos y no
+se tapen */
+
+.navbarapp-container {
+  width: 15%;
+  height: 100vh;
+  background-color: var(--gris);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  font-family: Kanit;
+  color: white;
+  z-index: 10;
+}
+
+
+.navbarapp .navbarapp-menu {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 75px;
+}
+
+
+.navbarapp .navbarapp-menu .navbarapp-menu-item {
+  margin-bottom: 20px;
+}
+
+.navbarapp .navbarapp-menu .navbarapp-menu-item .navbarapp-menu-link {
+  font-size: 1.4vw;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  transition: background-color 0.3s;
+  
+    svg {
+      margin-right: 10px;
+    }
+}
+
+
+.navbarapp .navbarapp-menu .navbarapp-menu-item .navbarapp-menu-link:hover {
+  background-color: #ffffff0c;
+}
+
+
+.navbarapp .navbarapp-icono-nav {
+  display: none;
+  padding: 30px 34px;
+  cursor: pointer;
+  font-size: 30px;
+  color: white;
+  position: fixed;
+  z-index: 11;
+  background: radial-gradient(var(--gris) 45%, transparent 46%);
+  border-radius: 100%;
+}
+
+.navbarapp .salir {
+  width: 100%;
+  text-align: left;
+  font-family: Kanit;
+  color: #c685d1!important;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+  .navbarapp-container {
+    width: 60%;
+    max-width: 300px;
+    box-sizing: border-box;
+  }
+
+  .navbarapp .navbarapp-menu .navbarapp-menu-item .navbarapp-menu-link {
+      font-size: 25px;
+      color: white;
+      text-decoration: none;
+      padding: 10px 30px;
+      display: block;
+      transition: background-color 0.3s;
+  }
+
+  .navbarapp-container.active {
+    display: block;
+  }
+
+  .navbarapp-container.active > .navbarapp-icono-nav {
+    background: none !important;
+  }
+  
+  .navbarapp-container {
+    display: none;
+  }
+
+  .navbarapp .navbarapp-icono-nav {
+    display: block;
+  }
+
+  .app-container {
+    margin: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbarapp .navbarapp-menu .navbarapp-menu-item .navbarapp-menu-link {
+    font-size: 20px;
+  }
+
+}

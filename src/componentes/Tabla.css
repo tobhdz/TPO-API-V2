@@ -1,0 +1,184 @@
+.card-gastos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 60px 2%;
+    background: linear-gradient(var(--gris) 40%, #1b1b1b) padding-box, var(--degrade1) border-box;
+    border: 5px solid transparent;
+    border-radius: 20px;
+    color: white;
+    font-family: Kanit;
+    justify-content: center;
+}
+
+.gasto-card {
+    position: relative;
+    background: linear-gradient(#202020, rgb(20, 20, 20));
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+    border: 1px solid #ffffff11;
+}
+
+.gasto-card:hover {
+    transform: translateY(-5px);
+}
+
+.gasto-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.gasto-valor, .gasto-fecha, .gasto-lista, .gasto-porcentaje {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.gasto-acciones {
+    display: flex;
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.gasto-boton {
+    background: var(--degrade1);
+    color: white;
+    font-family: Kanit;
+    text-transform: uppercase;
+    border: 1px solid white;
+    padding: 10px 20px;
+    border-radius: 100px;
+    transition: transform 0.2s;
+}
+
+.gasto-boton:hover {
+    transform: translate(1px, 2px);
+}
+
+.gasto-title {
+    margin: 0;
+    font-size: 25px;
+}
+
+.gasto-desc {
+    margin-bottom: 15px;
+}
+
+.error {
+    font-family: Kanit;
+    color: white;
+    font-size: 40px;
+    text-align: center;
+}
+
+.pagar-container {
+    background: #000000c4;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 15
+}
+.pagar-form{
+    position: relative;
+    width: 80%;
+    padding: 50px 10%;
+    box-sizing: border-box;
+    max-width: 800px;
+    border-radius: 20px;
+    background: var(--gris);
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    border: 1px solid rgb(49, 49, 49);
+    color: white;
+    font-family: Kanit;
+
+      button {
+        margin-top: 20px;
+        padding: 20px 10px;
+        background: rgb(14, 14, 14);
+        border: 1px solid white;
+        color: white;
+        font-family: Kanit;
+        border-radius: 20px;
+        opacity: 0.6;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+
+      button:hover {
+        filter: brightness(1.5)
+        
+      }
+}
+
+.pagar-form h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.pagar-form p {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+.pagar-form ul {
+    padding-left: 20px;
+    margin: 16px 0;
+}
+
+.pagar-form ul li {
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: #c7c7c7;
+}
+
+.cancelar-button {
+    right: 0;
+    top: 0;
+    background: rgb(56, 56, 56);
+    position: absolute;
+    padding: 10px 12px;
+    border-radius: 100%;
+    transform: translate(10px, -10px);
+    cursor: pointer;
+  }
+
+  .cancelar-button:hover {
+    filter: brightness(1.1)
+  }
+
+
+.gasto-card {
+    padding-bottom: 80px;
+}
+.gasto-acciones {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 10px;
+}
+
+.gasto-lista .gasto-participantes {
+    color: #c5b9c5;
+    cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+    .gasto-card {
+        width: 100%;
+    }
+
+    .card-gastos-container {
+        padding: 5%;
+    }
+}
