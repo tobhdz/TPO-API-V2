@@ -1,0 +1,33 @@
+.creargasto-container, .editargasto-container {
+    color: white;
+    padding-block: 20px;
+}
+
+.creargasto-header h1, .editargasto-header h1 {
+    margin: 0;
+    padding: 0;
+    font-family: Dela Gothic One;
+    text-align: center;
+    font-weight: initial;
+    font-size: 40px;
+    margin-bottom: 30px;
+}
+
+.creargasto-formularios, .editargasto-formularios {
+    padding: 50px 50px;
+    flex-flow: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5%;
+    background: var(--degrade0);
+}
+
+
+@media (max-width: 520px) {
+    .creargasto-formularios {
+        padding: 60px 0
+    }
+    .formularios-box, .formularios-box {
+        width: 100%;
+    }
+}

@@ -1,0 +1,18 @@
+.proyectos-container {
+    padding: 20px;
+    background-color: var(--fondogris);
+}
+
+.proyectos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.proyecto-item {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 10px;
+    color: #333;
+    text-decoration: none;
+}
