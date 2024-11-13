@@ -12,7 +12,7 @@ import Registrarse from './componentes/paginas/Registrarse.js';
 import Finanzas from './componentes/paginas-app/Finanzas.js';
 import NavbarApp from './componentes/NavbarApp.js';
 import CrearGasto from './componentes/paginas-app/CrearGasto.js';
-import Gastos from './componentes/paginas-app/Gastos.js';
+import Proyectos from './componentes/paginas-app/Proyectos.js';
 import Configuracion from './componentes/paginas-app/Configuracion.js';
 import { UserProvider } from './contexto/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -34,20 +34,21 @@ const menuAppLinks = [
   { title: <><FontAwesomeIcon icon={faHouse} /> Inicio</>, path: "/app" },
   { title: <><FontAwesomeIcon icon={faBell} /> Notificaciones</>, path: "/notificaciones" },
   { title: <><FontAwesomeIcon icon={faWallet} /> Finanzas</>, path: "/finanzas" },
-  { title: <><FontAwesomeIcon icon={faCommentsDollar} /> Gastos</>, path: "/gastos" },
+  { title: <><FontAwesomeIcon icon={faCommentsDollar} /> Proyectos</>, path: "/proyectos" },
   { title: <><FontAwesomeIcon icon={faHandHoldingDollar} /> Crear gasto</>, path: "/creargasto" },
   { title: <><FontAwesomeIcon icon={faGear} /> Configuración</>, path: "/configuracion" },
 ];
 
 // Links para la condición de visibilidad del nav
 const menuVisibleLinks = ["/", "/sobrenosotros", "/contacto", "/ingresar", "/registrarse", "/registrado"];
-const menuAppVisibleLinks = ["/app", "/notificaciones", "/finanzas", "/creargasto", "/gastos", "/configuracion", "/configuracion", "/editargasto"];
+const menuAppVisibleLinks = ["/app", "/notificaciones", "/finanzas", "/creargasto", "/proyectos", "/configuracion", "/configuracion", "/editargasto"];
 
 function App() {
   const location = useLocation();
 
   const isMenuAppLink = menuAppVisibleLinks.includes(location.pathname);
   const isMenuLink = menuVisibleLinks.includes(location.pathname);
+
 
   return (
     <UserProvider>
@@ -67,7 +68,7 @@ function App() {
             <Route path="/notificaciones" element={<Notificaciones />} />
             <Route path='/finanzas' element={<Finanzas/>}/>
             <Route path='/creargasto' element={<CrearGasto/>}/>
-            <Route path='/gastos' element={<Gastos/>}/>
+            <Route path='/proyectos' element={<Proyectos/>}/>
             <Route path="/configuracion" element={<Configuracion />} />
             <Route path='/editargasto' element={<EditarGasto/>}/>
           </Routes>

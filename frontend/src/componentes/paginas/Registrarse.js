@@ -2,33 +2,50 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import './Ingresar.css'; // Reciclé la hoja de estilos del login
+import './Ingresar.css';
 
 export default function Registrarse() {
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [usuario, setUsuario] = useState(""); // Estado para Usuario
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [usuario, setUsuario] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [contraseña, setContraseña] = useState("");
   const [visibility, setVisibility] = useState(false);
   const [error, setError] = useState({
     error: false,
     message: "",
   });
 
-  const navigate = useNavigate(); // Hook para redireccionar
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const emailValid = validateEmail(email);
+    const emailValid = validateEmail(correo);
     const usuarioValid = validateUsuario(usuario);
 
-    if (emailValid && usuarioValid) { // Validar email y usuario
+    if (emailValid && usuarioValid) {
       setError({ error: false, message: "" });
-      console.log("Email y usuario correctos");
-      navigate('/registrado');
+
+      const response = await fetch('http://localhost:4000/api/users/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre,
+          apellido,
+          usuario,
+          correo,
+          contraseña
+        }),
+      });
+
+      if (response.ok) {
+        console.log("Usuario registrado exitosamente");
+        navigate('/registrado');
+      } else {
+        const errorData = await response.json();
+        console.error("Error al registrar usuario:", errorData.message);
+      }
     } else {
-      // mensajes de error
       setError({
         error: true,
         message: emailValid ? "Solo se permiten los símbolos '_' y '.'" : "Formato de email incorrecto.",
@@ -36,14 +53,14 @@ export default function Registrarse() {
     }
   };
 
-  const validateEmail = (email) => {
+  const validateEmail = (correo) => {
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return regex.test(email);
+    return regex.test(correo);
   };
 
   const validateUsuario = (usuario) => {
-    const regex = /^[A-Za-z0-9._]+$/; // letras, números, . y _
-    return regex.test(usuario) && usuario.length > 0; // validacion
+    const regex = /^[A-Za-z0-9._]+$/;
+    return regex.test(usuario) && usuario.length > 0;
   };
 
   const handleVisibility = () => {
@@ -55,7 +72,7 @@ export default function Registrarse() {
       <div className="login-box reg">
         <form onSubmit={handleSubmit}>
           <div className="login-header">
-            <icon><FontAwesomeIcon icon={faUserPlus} /></icon>
+            <FontAwesomeIcon icon={faUserPlus} />
             <h2>Registro</h2>
           </div>
 
@@ -63,21 +80,21 @@ export default function Registrarse() {
             type="text"
             placeholder="Nombre"
             required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
           />
 
           <input
             type="text"
             placeholder="Apellido"
             required
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
+            value={apellido}
+            onChange={(e) => setApellido(e.target.value)}
           />
 
           <input
             type="text"
-            placeholder="Usuario" // Cambiado a Usuario
+            placeholder="Usuario"
             required
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
@@ -87,10 +104,10 @@ export default function Registrarse() {
 
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Correo"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
           />
 
           <div className="password-field">
@@ -98,8 +115,8 @@ export default function Registrarse() {
               type={visibility ? "text" : "password"}
               placeholder="Contraseña"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={contraseña}
+              onChange={(e) => setContraseña(e.target.value)}
             />
             <button type="button" onClick={handleVisibility} className="toggle-visibility">
               {visibility ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
