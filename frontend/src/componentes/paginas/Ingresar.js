@@ -4,33 +4,43 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import './Ingresar.css';
 import { UserContext } from "../../contexto/UserContext";
-import mockUser from "../../user/mockUser";
 
 export default function Login() {
-    const [user, setUser] = useState("");
-    const [password, setPassword] = useState("");
+    const [usuario, setUsuario] = useState("");
+    const [contraseña, setContraseña] = useState("");
     const [visibility, setVisibility] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const { login } = useContext(UserContext);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-
-      // Verificación de credenciales
-      if (user === mockUser.user && password === mockUser.password) {
-        // Pasa toda la información del mockUser
-        login({
-          user: mockUser.user,
-          name: mockUser.name,
-          email: mockUser.email,
-          balance: mockUser.balance,
-          gastos: mockUser.gastos,
-          password: mockUser.password,
+      
+      try {
+        const response = await fetch('http://localhost:4000/api/users/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ usuario, contraseña })
         });
-        navigate("/app");  // Redirigir a la página /app
-      } else {
-        alert("Credenciales incorrectas. Por favor, intenta nuevamente.");
+
+        const data = await response.json();
+
+        if (response.ok) {
+          login({
+            user: data.user.usuario,
+            name: `${data.user.nombre} ${data.user.apellido}`,
+            email: data.user.correo,
+            balance: 5000, // Valor por defecto
+            gastos: [], // Array vacío inicial
+            password: contraseña
+          });
+          navigate("/app");
+        } else {
+          setError(data.message);
+        }
+      } catch (error) {
+        setError("Error al intentar iniciar sesión");
       }
     };
 
@@ -43,27 +53,27 @@ export default function Login() {
         <div className="login-box">
           <form autoComplete="off" onSubmit={handleSubmit}>
             <div className="login-header">
-              <icon><FontAwesomeIcon icon={faRightToBracket} /></icon>
+              <FontAwesomeIcon icon={faRightToBracket} />
               <h2>Iniciar Sesión</h2>
             </div>
 
+            {error && <div className="error-message">{error}</div>}
+
             <input
               type="text"
-              id="user"
               placeholder="Usuario"
-              required
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
+              require
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
             />
 
             <div className="password-field">
               <input
                 type={visibility ? "text" : "password"}
-                id="password"
                 placeholder="Contraseña"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={contraseña}
+                onChange={(e) => setContraseña(e.target.value)}
               />
               <button type="button" onClick={handleVisibility} className="toggle-visibility">
                 {visibility ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}

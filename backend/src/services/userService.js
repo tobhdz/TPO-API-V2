@@ -15,3 +15,24 @@ export const createUser = async ({ nombre, apellido, usuario, correo, contraseñ
             SELECT * FROM Usuarios WHERE Id = SCOPE_IDENTITY();`);
   return result.recordset[0];
 };
+
+export const loginUser = async ({ usuario, contraseña }) => {
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input('Usuario', usuario)
+    .query('SELECT * FROM Usuarios WHERE Usuario = @Usuario');
+    
+  const user = result.recordset[0];
+  
+  if (!user) {
+    throw new Error('Usuario no encontrado');
+  }
+  
+  const isValidPassword = await bcrypt.compare(contraseña, user.Contraseña);
+  
+  if (!isValidPassword) {
+    throw new Error('Contraseña incorrecta');
+  }
+  
+  return user;
+};
