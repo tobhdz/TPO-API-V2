@@ -1,17 +1,24 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 // Contexto (para compartir información entre componentes)
 export const UserContext = createContext();
 
 // Proveedor
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [balance, setBalance] = useState(0);
-    const [gastos, setGastos] = useState([]);
-    const [password, setPassword] = useState('admin'); // Establece una contraseña por defecto
-    const [profileImage, setProfileImage] = useState('/img/defaultuser.png');
+    const [user, setUser] = useState(() => Cookies.get('user') || null);
+    const [name, setName] = useState(() => Cookies.get('name') || '');
+    const [email, setEmail] = useState(() => Cookies.get('email') || '');
+    const [balance, setBalance] = useState(() => Number(Cookies.get('balance')) || 0);
+    const [gastos, setGastos] = useState(() => {
+        try {
+            return JSON.parse(Cookies.get('gastos')) || [];
+        } catch {
+            return [];
+        }
+    });
+    const [password, setPassword] = useState(() => Cookies.get('password') || '');
+    const [profileImage, setProfileImage] = useState(() => Cookies.get('profileImage') || '/img/defaultuser.png');
     const [metodosPago, setMetodosPago]=useState([]);
 
     // Función para actualizar el estado del usuario y la contraseña
@@ -22,6 +29,14 @@ export const UserProvider = ({ children }) => {
         setBalance(userData.balance);
         setGastos(userData.gastos);
         setPassword(userData.password); // Almacena la contraseña
+
+        // Guardar en cookies
+        Cookies.set('user', userData.user, { expires: 7 });
+        Cookies.set('name', userData.name, { expires: 7 });
+        Cookies.set('email', userData.email, { expires: 7 });
+        Cookies.set('balance', userData.balance, { expires: 7 });
+        Cookies.set('gastos', JSON.stringify(userData.gastos), { expires: 7 });
+        Cookies.set('password', userData.password, { expires: 7 });
     };
 
     const logout = () => {
@@ -31,6 +46,15 @@ export const UserProvider = ({ children }) => {
         setBalance(0);
         setGastos([]);
         setPassword(''); // Limpiar la contraseña al cerrar sesión
+
+        // Eliminar cookies
+        Cookies.remove('user');
+        Cookies.remove('name');
+        Cookies.remove('email');
+        Cookies.remove('balance');
+        Cookies.remove('gastos');
+        Cookies.remove('password');
+        Cookies.remove('profileImage');
     };
 
     const updatePassword = (newPassword) => {

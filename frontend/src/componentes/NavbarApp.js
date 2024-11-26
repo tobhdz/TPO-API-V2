@@ -8,8 +8,8 @@ import { useAuth } from '../contexto/AuthContext';
 
 export default function NavBarApp({ links }) {
     const [click, setClick] = useState(false);
-    const { logout: authLogout } = useAuth();
     const { logout: userLogout } = useContext(UserContext);
+    const { logout: authLogout } = useAuth();
     const navigate = useNavigate();
 
     const handleClick = () => setClick(!click);

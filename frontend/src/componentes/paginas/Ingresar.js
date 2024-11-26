@@ -1,10 +1,10 @@
-import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
-import './Ingresar.css';
-import { UserContext } from "../../contexto/UserContext";
+import React, { useState, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { UserContext } from '../../contexto/UserContext';
 import { useAuth } from '../../contexto/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import './Ingresar.css';
 
 export default function Login() {
     const [usuario, setUsuario] = useState("");
@@ -79,7 +79,7 @@ export default function Login() {
                 onChange={(e) => setContraseña(e.target.value)}
               />
               <button type="button" onClick={handleVisibility} className="toggle-visibility">
-                {visibility ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+                {visibility ? <FontAwesomeIcon icon="fa-eye-slash" /> : <FontAwesomeIcon icon="fa-eye" />}
               </button>
             </div>
 

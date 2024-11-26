@@ -1,13 +1,23 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import AccesoDenegado from '../componentes/paginas/AccesoDenegado';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return Cookies.get('isAuthenticated') === 'true';
+  });
 
-  const login = () => setIsAuthenticated(true);
-  const logout = () => setIsAuthenticated(false);
+  const login = () => {
+    setIsAuthenticated(true);
+    Cookies.set('isAuthenticated', 'true', { expires: 7 }); // Cookie expira en 7 días
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    Cookies.remove('isAuthenticated');
+  };
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
