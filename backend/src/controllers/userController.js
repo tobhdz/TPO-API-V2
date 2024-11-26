@@ -1,5 +1,6 @@
 import { createUser } from '../services/userService.js';
 import { loginUser } from '../services/userService.js';
+import { updateUserInfo } from '../services/userService.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -27,5 +28,27 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     res.status(401).json({ message: error.message });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  try {
+    const { id, nombre, apellido, usuario } = req.body;
+    const updatedUser = await updateUserInfo({ id, nombre, apellido, usuario });
+    res.status(200).json({ 
+      message: 'Usuario actualizado exitosamente',
+      user: updatedUser 
+    });
+  } catch (error) {
+    if (error.message === 'El nombre de usuario ya está en uso') {
+      res.status(400).json({ 
+        message: error.message 
+      });
+    } else {
+      res.status(500).json({ 
+        message: 'Error al actualizar usuario', 
+        error: error.message 
+      });
+    }
   }
 };

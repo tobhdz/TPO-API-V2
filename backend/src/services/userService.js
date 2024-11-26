@@ -36,3 +36,41 @@ export const loginUser = async ({ usuario, contraseña }) => {
   
   return user;
 };
+
+export const checkUserExists = async (usuario, userId) => {
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input('Usuario', usuario)
+    .input('UserId', userId)
+    .query(`
+      SELECT COUNT(*) as count 
+      FROM Usuarios 
+      WHERE Usuario = @Usuario 
+      AND Id != @UserId
+    `);
+  return result.recordset[0].count > 0;
+};
+
+export const updateUserInfo = async ({ id, nombre, apellido, usuario }) => {
+  // Verificar si el usuario ya existe
+  const userExists = await checkUserExists(usuario, id);
+  if (userExists) {
+    throw new Error('El nombre de usuario ya está en uso');
+  }
+
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input('Id', id)
+    .input('Nombre', nombre)
+    .input('Apellido', apellido)
+    .input('Usuario', usuario)
+    .query(`
+      UPDATE Usuarios 
+      SET Nombre = @Nombre, 
+          Apellido = @Apellido, 
+          Usuario = @Usuario 
+      WHERE Id = @Id;
+      SELECT * FROM Usuarios WHERE Id = @Id;
+    `);
+  return result.recordset[0];
+};

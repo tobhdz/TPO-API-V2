@@ -20,6 +20,7 @@ export const UserProvider = ({ children }) => {
     const [password, setPassword] = useState(() => Cookies.get('password') || '');
     const [profileImage, setProfileImage] = useState(() => Cookies.get('profileImage') || '/img/defaultuser.png');
     const [metodosPago, setMetodosPago]=useState([]);
+    const [userId, setUserId] = useState(() => Cookies.get('userId') || null);
 
     // Función para actualizar el estado del usuario y la contraseña
     const login = (userData) => {
@@ -29,6 +30,7 @@ export const UserProvider = ({ children }) => {
         setBalance(userData.balance);
         setGastos(userData.gastos);
         setPassword(userData.password); // Almacena la contraseña
+        setUserId(userData.id);
 
         // Guardar en cookies
         Cookies.set('user', userData.user, { expires: 7 });
@@ -37,6 +39,7 @@ export const UserProvider = ({ children }) => {
         Cookies.set('balance', userData.balance, { expires: 7 });
         Cookies.set('gastos', JSON.stringify(userData.gastos), { expires: 7 });
         Cookies.set('password', userData.password, { expires: 7 });
+        Cookies.set('userId', userData.id, { expires: 7 });
     };
 
     const logout = () => {
@@ -46,6 +49,7 @@ export const UserProvider = ({ children }) => {
         setBalance(0);
         setGastos([]);
         setPassword(''); // Limpiar la contraseña al cerrar sesión
+        setUserId(null);
 
         // Eliminar cookies
         Cookies.remove('user');
@@ -55,6 +59,7 @@ export const UserProvider = ({ children }) => {
         Cookies.remove('gastos');
         Cookies.remove('password');
         Cookies.remove('profileImage');
+        Cookies.remove('userId');
     };
 
     const updatePassword = (newPassword) => {
@@ -103,7 +108,7 @@ export const UserProvider = ({ children }) => {
     };
     
     return (
-        <UserContext.Provider value={{ user, name, email, balance, gastos, password, profileImage,metodosPago, login, logout, updateProfileImage, updateUser, updatePassword,addGasto, addPayMethod, updateBalance, removeGasto, getGastosVencidos, getGastosPorVencer}}>
+        <UserContext.Provider value={{ user, name, email, balance, gastos, password, profileImage,metodosPago, userId, login, logout, updateProfileImage, updateUser, updatePassword,addGasto, addPayMethod, updateBalance, removeGasto, getGastosVencidos, getGastosPorVencer}}>
             {children}
         </UserContext.Provider>
     );

@@ -354,3 +354,14 @@
     }
 
   }
+
+  .error-message {
+    color: #ff4444;
+    background-color: rgba(255, 68, 68, 0.1);
+    border: 1px solid #ff4444;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    text-align: center;
+    font-family: Kanit;
+  }

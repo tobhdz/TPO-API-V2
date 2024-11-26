@@ -31,6 +31,7 @@ export default function Login() {
         if (response.ok) {
           authLogin();
           userLogin({
+            id: data.user.id,
             user: data.user.usuario,
             name: `${data.user.nombre} ${data.user.apellido}`,
             email: data.user.correo,
