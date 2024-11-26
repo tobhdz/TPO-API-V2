@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import AccesoDenegado from '../componentes/paginas/AccesoDenegado';
 
 const AuthContext = createContext(null);
 
@@ -22,7 +22,7 @@ export const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
-    return <Navigate to="/ingresar" />;
+    return <AccesoDenegado />;
   }
 
   return children;

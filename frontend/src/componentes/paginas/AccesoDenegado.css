@@ -1,0 +1,30 @@
+.acceso-denegado-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: var(--fondogris);
+    color: white;
+    font-family: Kanit;
+    text-align: center;
+    padding: 20px;
+}
+
+.acceso-denegado-container h1 {
+    font-family: Dela Gothic One;
+    font-size: 40px;
+    margin: 20px 0;
+}
+
+.acceso-denegado-container .icono-lock {
+    font-size: 60px;
+    color: #ca80ff;
+    margin-bottom: 20px;
+}
+
+.acceso-denegado-container p {
+    font-size: 20px;
+    margin: 10px 0;
+    margin-bottom: 30px;
+} 
