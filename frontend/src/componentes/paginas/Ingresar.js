@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import './Ingresar.css';
 import { UserContext } from "../../contexto/UserContext";
+import { useAuth } from '../../contexto/AuthContext';
 
 export default function Login() {
     const [usuario, setUsuario] = useState("");
@@ -12,7 +13,8 @@ export default function Login() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const { login } = useContext(UserContext);
+    const { login: userLogin } = useContext(UserContext);
+    const { login: authLogin } = useAuth();
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -27,12 +29,13 @@ export default function Login() {
         const data = await response.json();
 
         if (response.ok) {
-          login({
+          authLogin();
+          userLogin({
             user: data.user.usuario,
             name: `${data.user.nombre} ${data.user.apellido}`,
             email: data.user.correo,
-            balance: 5000, // Valor por defecto
-            gastos: [], // Array vacío inicial
+            balance: 5000,
+            gastos: [],
             password: contraseña
           });
           navigate("/app");

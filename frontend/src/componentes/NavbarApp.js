@@ -4,18 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 import './NavbarApp.css';
 import { UserContext } from '../contexto/UserContext';  // Importamos el contexto del usuario
+import { useAuth } from '../contexto/AuthContext';
 
 export default function NavBarApp({ links }) {
     const [click, setClick] = useState(false);
-    const { logout } = useContext(UserContext);   // Accedemos a la función de logout desde el contexto
+    const { logout: authLogout } = useAuth();
+    const { logout: userLogout } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
 
     const handleLogout = () => {
-        logout();   // Ejecutamos el logout
-        navigate("/ingresar");  // Redirigimos a la página de login
+        authLogout(); // Desactiva la autenticación
+        userLogout(); // Limpia los datos del usuario
+        navigate("/ingresar");
     };
 
     return (

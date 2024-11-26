@@ -20,6 +20,8 @@ import { faHouse, faBell, faWallet, faCommentsDollar, faHandHoldingDollar, faGea
 import EditarGasto from './componentes/paginas-app/EditarGasto.js';
 import Notificaciones from './componentes/paginas-app/Notificaciones.js';
 import Registrado from './componentes/paginas/Registrado.js';
+import { AuthProvider } from './contexto/AuthContext';
+import { ProtectedRoute } from './contexto/AuthContext';
 
 
 // Rutas visibles en el navbar
@@ -49,34 +51,62 @@ function App() {
   const isMenuAppLink = menuAppVisibleLinks.includes(location.pathname);
   const isMenuLink = menuVisibleLinks.includes(location.pathname);
 
-
   return (
-    <UserProvider>
-      <div className="App">
-        {isMenuAppLink ? <NavbarApp links={menuAppLinks} /> : isMenuLink ? <Navbar links={menuLinks} /> : null}
-        <Routes>
-          <Route index element={<Inicio />} />
-          <Route path="/sobrenosotros" element={<Sobrenosotros />} />
-          <Route path="/contacto" element={<Contacto />} />
-          <Route path="/ingresar" element={<Ingresar />} />
-          <Route path="/registrarse" element={<Registrarse />} />
-          <Route path="/registrado" element={<Registrado />} />
-        </Routes>
-        <div className="app-container">
+    <AuthProvider>
+      <UserProvider>
+        <div className="App">
+          {isMenuAppLink ? <NavbarApp links={menuAppLinks} /> : isMenuLink ? <Navbar links={menuLinks} /> : null}
           <Routes>
-            <Route path="/app" element={<Sharebill />} />
-            <Route path="/notificaciones" element={<Notificaciones />} />
-            <Route path='/finanzas' element={<Finanzas/>}/>
-            <Route path='/creargasto' element={<CrearGasto/>}/>
-            <Route path='/proyectos' element={<Proyectos/>}/>
-            <Route path="/configuracion" element={<Configuracion />} />
-            <Route path='/editargasto' element={<EditarGasto/>}/>
+            <Route index element={<Inicio />} />
+            <Route path="/sobrenosotros" element={<Sobrenosotros />} />
+            <Route path="/contacto" element={<Contacto />} />
+            <Route path="/ingresar" element={<Ingresar />} />
+            <Route path="/registrarse" element={<Registrarse />} />
+            <Route path="/registrado" element={<Registrado />} />
           </Routes>
+          <div className="app-container">
+            <Routes>
+              <Route path="/app" element={
+                <ProtectedRoute>
+                  <Sharebill />
+                </ProtectedRoute>
+              } />
+              <Route path="/notificaciones" element={
+                <ProtectedRoute>
+                  <Notificaciones />
+                </ProtectedRoute>
+              } />
+              <Route path="/finanzas" element={
+                <ProtectedRoute>
+                  <Finanzas />
+                </ProtectedRoute>
+              } />
+              <Route path="/creargasto" element={
+                <ProtectedRoute>
+                  <CrearGasto />
+                </ProtectedRoute>
+              } />
+              <Route path="/proyectos" element={
+                <ProtectedRoute>
+                  <Proyectos />
+                </ProtectedRoute>
+              } />
+              <Route path="/configuracion" element={
+                <ProtectedRoute>
+                  <Configuracion />
+                </ProtectedRoute>
+              } />
+              <Route path="/editargasto" element={
+                <ProtectedRoute>
+                  <EditarGasto />
+                </ProtectedRoute>
+              } />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-
-        <Footer />
-      </div>
-    </UserProvider>
+      </UserProvider>
+    </AuthProvider>
   );
 }
 
