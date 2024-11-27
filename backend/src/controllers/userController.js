@@ -1,6 +1,7 @@
 import { createUser } from '../services/userService.js';
 import { loginUser } from '../services/userService.js';
 import { updateUserInfo } from '../services/userService.js';
+import { updatePassword } from '../services/userService.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -51,5 +52,15 @@ export const updateUser = async (req, res) => {
         error: error.message 
       });
     }
+  }
+};
+
+export const changePassword = async (req, res) => {
+  try {
+    const { userId, currentPassword, newPassword } = req.body;
+    await updatePassword(userId, currentPassword, newPassword);
+    res.status(200).json({ message: 'Contraseña actualizada exitosamente' });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };

@@ -75,3 +75,31 @@ export const updateUserInfo = async ({ id, nombre, apellido, usuario }) => {
     `);
   return result.recordset[0];
 };
+
+export const updatePassword = async (userId, currentPassword, newPassword) => {
+  const pool = await getConnection();
+  
+  // Obtener contraseña actual del usuario
+  const result = await pool.request()
+    .input('Id', userId)
+    .query('SELECT Contraseña FROM Usuarios WHERE Id = @Id');
+    
+  const user = result.recordset[0];
+  
+  // Verificar contraseña actual
+  const isValidPassword = await bcrypt.compare(currentPassword, user.Contraseña);
+  if (!isValidPassword) {
+    throw new Error('La contraseña actual es incorrecta');
+  }
+  
+  // Encriptar nueva contraseña
+  const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+  
+  // Actualizar contraseña
+  await pool.request()
+    .input('Id', userId)
+    .input('Contraseña', hashedNewPassword)
+    .query('UPDATE Usuarios SET Contraseña = @Contraseña WHERE Id = @Id');
+    
+  return true;
+};

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Seguridad() {
-  const { user, password, updatePassword } = useContext(UserContext);  // Accede a la contraseña del contexto
+  const { user, password, updatePassword, userId } = useContext(UserContext);  // Accede a la contraseña del contexto
   const [cambiarContrasena, setCambiarContrasena] = useState(false);
   const [contrasenaActual, setContrasenaActual] = useState('');
   const [nuevaContrasena, setNuevaContrasena] = useState('');
@@ -20,15 +20,49 @@ function Seguridad() {
   const [eliminarCuenta, setEliminarCuenta]=useState(false);
   const navigate=useNavigate();
 
-  const handleCambiarContrasena = () => {
-    if (contrasenaActual !== password) {
-      alert("La contraseña actual es incorrecta.");
-    } else if (nuevaContrasena !== confirmarContrasena) {
-      alert("Las contraseñas no coinciden.");
-    } else {
-      updatePassword(nuevaContrasena);
-      setCambiarContrasena(false);
-      alert("Contraseña actualizada exitosamente.");
+  const handleCambiarContrasena = async () => {
+    try {
+      // Validaciones
+      if (!contrasenaActual || !nuevaContrasena || !confirmarContrasena) {
+        alert("Todos los campos son obligatorios");
+        return;
+      }
+
+      if (nuevaContrasena !== confirmarContrasena) {
+        alert("Las contraseñas no coinciden");
+        return;
+      }
+
+      if (nuevaContrasena.length < 6) {
+        alert("La contraseña debe tener al menos 6 caracteres");
+        return;
+      }
+
+      const response = await fetch('http://localhost:4000/api/users/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId,
+          currentPassword: contrasenaActual,
+          newPassword: nuevaContrasena
+        })
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        updatePassword(nuevaContrasena);
+        setCambiarContrasena(false);
+        setContrasenaActual('');
+        setNuevaContrasena('');
+        setConfirmarContrasena('');
+        alert("Contraseña actualizada exitosamente");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert("Error al actualizar la contraseña");
+      console.error(error);
     }
   };
 
