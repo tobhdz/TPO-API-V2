@@ -10,8 +10,9 @@ export const createUser = async ({ nombre, apellido, usuario, correo, contraseñ
     .input('Usuario', usuario)
     .input('Correo', correo)
     .input('Contraseña', hashedPassword)
-    .query(`INSERT INTO Usuarios (Nombre, Apellido, Usuario, Correo, Contraseña) 
-            VALUES (@Nombre, @Apellido, @Usuario, @Correo, @Contraseña);
+    .input('Balance', 0)
+    .query(`INSERT INTO Usuarios (Nombre, Apellido, Usuario, Correo, Contraseña, Balance) 
+            VALUES (@Nombre, @Apellido, @Usuario, @Correo, @Contraseña, @Balance);
             SELECT * FROM Usuarios WHERE Id = SCOPE_IDENTITY();`);
   return result.recordset[0];
 };

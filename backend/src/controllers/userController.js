@@ -23,7 +23,8 @@ export const login = async (req, res) => {
         nombre: user.Nombre,
         apellido: user.Apellido,
         usuario: user.Usuario,
-        correo: user.Correo
+        correo: user.Correo,
+        balance: user.Balance
       }
     });
   } catch (error) {

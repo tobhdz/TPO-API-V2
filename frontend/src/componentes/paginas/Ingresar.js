@@ -27,6 +27,7 @@ export default function Login() {
         });
 
         const data = await response.json();
+        console.log('Datos del usuario:', data);
 
         if (response.ok) {
           authLogin();
@@ -35,7 +36,7 @@ export default function Login() {
             user: data.user.usuario,
             name: `${data.user.nombre} ${data.user.apellido}`,
             email: data.user.correo,
-            balance: 5000,
+            balance: data.user.balance,
             gastos: [],
             password: contraseña
           });

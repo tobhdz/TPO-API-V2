@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faTimes, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './Configuracion.css';
 import { UserContext } from '../../contexto/UserContext';
 import Boton from '../Boton';
@@ -14,6 +14,9 @@ function Seguridad() {
   const [nuevaContrasena, setNuevaContrasena] = useState('');
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
   const [mostrarContrasena, setMostrarContrasena] = useState(false);
+  const [mostrarContrasenaActual, setMostrarContrasenaActual] = useState(false);
+  const [mostrarNuevaContrasena, setMostrarNuevaContrasena] = useState(false);
+  const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] = useState(false);
   const [eliminarCuenta, setEliminarCuenta]=useState(false);
   const navigate=useNavigate();
 
@@ -48,24 +51,51 @@ function Seguridad() {
         <div className="cambiar-contrasena-container" onClick={() => setCambiarContrasena(false)}>
           <div className="cambiar-contrasena-form" onClick={(e) => e.stopPropagation()}>
             <FontAwesomeIcon icon={faTimes} onClick={() => setCambiarContrasena(false)} className="cancelar-button"/>
-            <input
-              type="password"
-              placeholder="Contraseña actual"
-              value={contrasenaActual}
-              onChange={(e) => setContrasenaActual(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Nueva contraseña"
-              value={nuevaContrasena}
-              onChange={(e) => setNuevaContrasena(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Confirmar nueva contraseña"
-              value={confirmarContrasena}
-              onChange={(e) => setConfirmarContrasena(e.target.value)}
-            />
+            <div className="password-field">
+              <input
+                type={mostrarContrasenaActual ? "text" : "password"}
+                placeholder="Contraseña actual"
+                value={contrasenaActual}
+                onChange={(e) => setContrasenaActual(e.target.value)}
+              />
+              <button 
+                type="button" 
+                className="toggle-password"
+                onClick={() => setMostrarContrasenaActual(!mostrarContrasenaActual)}
+              >
+                <FontAwesomeIcon icon={mostrarContrasenaActual ? faEyeSlash : faEye} />
+              </button>
+            </div>
+            <div className="password-field">
+              <input
+                type={mostrarNuevaContrasena ? "text" : "password"}
+                placeholder="Nueva contraseña"
+                value={nuevaContrasena}
+                onChange={(e) => setNuevaContrasena(e.target.value)}
+              />
+              <button 
+                type="button" 
+                className="toggle-password"
+                onClick={() => setMostrarNuevaContrasena(!mostrarNuevaContrasena)}
+              >
+                <FontAwesomeIcon icon={mostrarNuevaContrasena ? faEyeSlash : faEye} />
+              </button>
+            </div>
+            <div className="password-field">
+              <input
+                type={mostrarConfirmarContrasena ? "text" : "password"}
+                placeholder="Confirmar nueva contraseña"
+                value={confirmarContrasena}
+                onChange={(e) => setConfirmarContrasena(e.target.value)}
+              />
+              <button 
+                type="button" 
+                className="toggle-password"
+                onClick={() => setMostrarConfirmarContrasena(!mostrarConfirmarContrasena)}
+              >
+                <FontAwesomeIcon icon={mostrarConfirmarContrasena ? faEyeSlash : faEye} />
+              </button>
+            </div>
             <Boton type={"button"} title={"Guardar"} action={handleCambiarContrasena} />
           </div>
         </div>

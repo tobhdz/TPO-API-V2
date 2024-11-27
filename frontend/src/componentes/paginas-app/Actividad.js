@@ -8,7 +8,7 @@ import { faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function Actividad() {
 
-  const {user, metodosPago, addPayMethod} =useContext(UserContext);
+  const {user, metodosPago, addPayMethod, balance} =useContext(UserContext);
   const [anadirMetodo, setAnadirMetodo]=useState(false);
   const [numeroTarjeta, setNumeroTarjeta]=useState("");
   const [titularTarjeta, setTitularTarjeta]=useState("");
@@ -32,7 +32,7 @@ function Actividad() {
   
   return (
     <div className="actividad-container">
-      <p className='saldo'>Saldo disponible: $5000</p>
+      <p className='saldo'>Saldo disponible: ${balance}</p>
       <div className="metodos-pago">
         <button className="boton" onClick={()=>setAnadirMetodo(true)}>Añadir método de pago</button>
       </div>

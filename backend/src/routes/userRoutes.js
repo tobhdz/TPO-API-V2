@@ -8,3 +8,5 @@ router.post('/login', login);
 router.put('/update', updateUser);
 
 export default router;
+
+

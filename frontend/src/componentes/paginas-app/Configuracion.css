@@ -365,3 +365,28 @@
     text-align: center;
     font-family: Kanit;
   }
+
+  .password-field {
+    position: relative;
+    width: 100%;
+  }
+
+  .password-field input {
+    width: 100%;
+    padding-right: 40px; /* Espacio para el icono */
+  }
+
+  .password-field .toggle-password {
+    position: absolute;
+    right: -10px;
+    top: 17px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+  }
+
+  .toggle-password:hover {
+    color: #333;
+  }
