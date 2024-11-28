@@ -159,17 +159,6 @@
     margin-top: 0.5rem;
 }
 
-.proyecto-participante::before {
-    content: '';
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 5px solid #ffffff;
-    transform: translateY(3px);
-}
-
 .proyecto-participante:hover {
     background: #222222;
 }
@@ -373,6 +362,7 @@
 }
 
 .input-proyecto {
+    width: 100%;
     box-sizing: border-box;
     padding: 15px;
     border-radius: 10px;
@@ -508,4 +498,9 @@
   cursor: pointer;
   color: #ff4444;
 }
+
+.input-proyecto:not(.participantes-proyecto .input-proyecto){
+    margin-block: 10px;
+}
+
 
