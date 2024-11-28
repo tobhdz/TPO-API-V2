@@ -21,7 +21,7 @@
 
 /* Botones */
 
-.proyectos-container button:not(.volver-proyectos) {
+.proyectos-container button:not(.volver-proyectos):not(.boton-agregar-gasto) {
     display: flex;
     align-items: center;
     gap: 15px;
@@ -62,6 +62,22 @@
     cursor: pointer;
     gap: 15px;
     transition: 0.4s;
+}
+
+.boton-agregar-gasto {
+    padding: 16px;
+    text-align: center;
+    border-radius: 62px;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 500;
+    background: transparent;
+    width: fit-content;
+    text-transform: uppercase;
+    font-family: Montserrat;
+    display: none;
+    gap: 15px;
 }
 
 /* Proyectos */

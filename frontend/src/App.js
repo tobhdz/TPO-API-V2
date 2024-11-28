@@ -11,13 +11,11 @@ import Sharebill from './componentes/paginas-app/Sharebill.js';
 import Registrarse from './componentes/paginas/Registrarse.js';
 import Finanzas from './componentes/paginas-app/Finanzas.js';
 import NavbarApp from './componentes/NavbarApp.js';
-import CrearGasto from './componentes/paginas-app/CrearGasto.js';
 import Proyectos from './componentes/paginas-app/Proyectos.js';
 import Configuracion from './componentes/paginas-app/Configuracion.js';
 import { UserProvider } from './contexto/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faBell, faWallet, faCommentsDollar, faHandHoldingDollar, faGear } from '@fortawesome/free-solid-svg-icons';
-import EditarGasto from './componentes/paginas-app/EditarGasto.js';
 import Notificaciones from './componentes/paginas-app/Notificaciones.js';
 import Registrado from './componentes/paginas/Registrado.js';
 import { AuthProvider } from './contexto/AuthContext';
@@ -37,13 +35,12 @@ const menuAppLinks = [
   { title: <><FontAwesomeIcon icon={faBell} /> Notificaciones</>, path: "/notificaciones" },
   { title: <><FontAwesomeIcon icon={faWallet} /> Finanzas</>, path: "/finanzas" },
   { title: <><FontAwesomeIcon icon={faCommentsDollar} /> Proyectos</>, path: "/proyectos" },
-  { title: <><FontAwesomeIcon icon={faHandHoldingDollar} /> Crear gasto</>, path: "/creargasto" },
   { title: <><FontAwesomeIcon icon={faGear} /> Configuración</>, path: "/configuracion" },
 ];
 
 // Links para la condición de visibilidad del nav
 const menuVisibleLinks = ["/", "/sobrenosotros", "/contacto", "/ingresar", "/registrarse", "/registrado"];
-const menuAppVisibleLinks = ["/app", "/notificaciones", "/finanzas", "/creargasto", "/proyectos", "/configuracion", "/configuracion", "/editargasto"];
+const menuAppVisibleLinks = ["/app", "/notificaciones", "/finanzas", "/proyectos", "/configuracion", "/configuracion"];
 
 function App() {
   const location = useLocation();
@@ -81,11 +78,6 @@ function App() {
                   <Finanzas />
                 </ProtectedRoute>
               } />
-              <Route path="/creargasto" element={
-                <ProtectedRoute>
-                  <CrearGasto />
-                </ProtectedRoute>
-              } />
               <Route path="/proyectos" element={
                 <ProtectedRoute>
                   <Proyectos />
@@ -94,11 +86,6 @@ function App() {
               <Route path="/configuracion" element={
                 <ProtectedRoute>
                   <Configuracion />
-                </ProtectedRoute>
-              } />
-              <Route path="/editargasto" element={
-                <ProtectedRoute>
-                  <EditarGasto />
                 </ProtectedRoute>
               } />
             </Routes>

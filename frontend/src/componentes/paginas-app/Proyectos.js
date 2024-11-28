@@ -32,7 +32,7 @@ export default function Proyectos() {
     // Mostrar elementos del proyecto seleccionado
     if (proyectoActual) {
       const proyectoInfo = proyectoActual.querySelector('.proyecto-info');
-      const botonesGasto = proyectoActual.querySelector('.boton-proyectos:not(.crear-proyecto)');
+      const botonesGasto = proyectoActual.querySelector('.boton-agregar-gasto');
       const gastoInfo = proyectoActual.querySelector('.gasto');
 
       if (proyectoInfo) proyectoInfo.style.display = 'block';
@@ -48,7 +48,7 @@ export default function Proyectos() {
     const botonCrear = document.querySelector('.crear-proyecto');
     const botonVolver = document.querySelector('.volver-proyectos');
     const proyectoInfo = document.querySelectorAll('.proyecto-info');
-    const botonesGasto = document.querySelectorAll('.boton-proyectos:not(.crear-proyecto)');
+    const botonesGasto = document.querySelectorAll('.boton-agregar-gasto');
     const gastosInfo = document.querySelectorAll('.gasto');
 
     proyectos.forEach(proyecto => {
@@ -121,7 +121,7 @@ export default function Proyectos() {
                 </div>
             </div>
             
-            <button className="boton-proyectos">
+            <button className="boton-agregar-gasto">
                 <FontAwesomeIcon icon={faCirclePlus} />
                 Añadir gasto
             </button>
@@ -225,7 +225,7 @@ export default function Proyectos() {
                 </div>
             </div>
             
-            <button className="boton-proyectos">
+            <button className="boton-agregar-gasto">
                 <FontAwesomeIcon icon={faCirclePlus} />
                 Añadir gasto
             </button>
