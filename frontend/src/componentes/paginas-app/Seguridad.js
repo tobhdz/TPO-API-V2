@@ -18,23 +18,24 @@ function Seguridad() {
   const [mostrarNuevaContrasena, setMostrarNuevaContrasena] = useState(false);
   const [mostrarConfirmarContrasena, setMostrarConfirmarContrasena] = useState(false);
   const [eliminarCuenta, setEliminarCuenta]=useState(false);
+  const [error, setError] = useState('');
   const navigate=useNavigate();
 
   const handleCambiarContrasena = async () => {
     try {
       // Validaciones
       if (!contrasenaActual || !nuevaContrasena || !confirmarContrasena) {
-        alert("Todos los campos son obligatorios");
+        setError("Todos los campos son obligatorios");
         return;
       }
 
       if (nuevaContrasena !== confirmarContrasena) {
-        alert("Las contraseñas no coinciden");
+        setError("Las contraseñas no coinciden");
         return;
       }
 
       if (nuevaContrasena.length < 6) {
-        alert("La contraseña debe tener al menos 6 caracteres");
+        setError("La contraseña debe tener al menos 6 caracteres");
         return;
       }
 
@@ -56,12 +57,12 @@ function Seguridad() {
         setContrasenaActual('');
         setNuevaContrasena('');
         setConfirmarContrasena('');
-        alert("Contraseña actualizada exitosamente");
+        setError('');
       } else {
-        alert(data.message);
+        setError(data.message);
       }
     } catch (error) {
-      alert("Error al actualizar la contraseña");
+      setError("Error al actualizar la contraseña");
       console.error(error);
     }
   };
@@ -82,9 +83,13 @@ function Seguridad() {
       </div>
 
       {cambiarContrasena && (
-        <div className="cambiar-contrasena-container" onClick={() => setCambiarContrasena(false)}>
+        <div className="cambiar-contrasena-container" onClick={() => {
+          setCambiarContrasena(false);
+          setError('');
+        }}>
           <div className="cambiar-contrasena-form" onClick={(e) => e.stopPropagation()}>
             <FontAwesomeIcon icon={faTimes} onClick={() => setCambiarContrasena(false)} className="cancelar-button"/>
+            {error && <div className="error-message">{error}</div>}
             <div className="password-field">
               <input
                 type={mostrarContrasenaActual ? "text" : "password"}
