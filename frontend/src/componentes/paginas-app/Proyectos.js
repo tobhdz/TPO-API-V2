@@ -67,13 +67,12 @@ export default function Proyectos() {
     gastosInfo.forEach(gasto => gasto.style.display = 'none');
   };
 
-  const handleCrearProyecto = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     const token = localStorage.getItem('token');
     if (!token) {
       alert('No hay sesión activa. Por favor, inicie sesión nuevamente.');
-      // Aquí podrías redirigir al login
       return;
     }
 
@@ -98,6 +97,7 @@ export default function Proyectos() {
       });
 
       const data = await response.json();
+      console.log('Respuesta del servidor:', data);
 
       if (response.ok) {
         setMostrarFormularioProyecto(false);
@@ -105,10 +105,6 @@ export default function Proyectos() {
         setDescripcionProyecto('');
         setParticipantesLista([]);
         alert('Proyecto creado exitosamente');
-      } else if (response.status === 401) {
-        alert('Sesión expirada. Por favor, inicie sesión nuevamente.');
-        localStorage.removeItem('token');
-        // Aquí podrías redirigir al login
       } else {
         alert(data.message || 'Error al crear el proyecto');
       }
@@ -360,7 +356,7 @@ export default function Proyectos() {
               onClick={() => setMostrarFormularioProyecto(false)}
             />
             <h2>Crear Nuevo Proyecto</h2>
-            <form onSubmit={handleCrearProyecto}>
+            <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 className="input-proyecto"

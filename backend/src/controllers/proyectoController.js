@@ -1,3 +1,5 @@
+import pkg from 'mssql';
+const { VarChar, Int, DateTime, Bit } = pkg;
 import { getConnection } from '../database/connection.js';
 
 export const crearProyecto = async (req, res) => {
@@ -5,37 +7,41 @@ export const crearProyecto = async (req, res) => {
   const creadorId = req.userId;
   
   try {
+    console.log('Datos recibidos:', { nombre, descripcion, fechaInicio, participantes, creadorId });
+    
     const pool = await getConnection();
-    const transaction = await pool.transaction();
+    const transaction = new pkg.Transaction(pool);
+    await transaction.begin();
 
     try {
-      // Insertar el proyecto
+      // Insertar el proyecto sin especificar ProyectoId (será generado automáticamente)
       const resultProyecto = await transaction.request()
-        .input('nombre', nombre)
-        .input('descripcion', descripcion)
-        .input('fechaInicio', fechaInicio)
-        .input('creadorId', creadorId)
+        .input('Nombre', VarChar(100), nombre)
+        .input('Descripcion', VarChar(pkg.MAX), descripcion)
+        .input('FechaInicio', DateTime, new Date(fechaInicio))
+        .input('CreadorId', Int, creadorId)
+        .input('Estado', Bit, 1)
         .query(`
-          INSERT INTO Proyectos (projectName, descripcion, fechaInicio, usuarioId)
-          OUTPUT INSERTED.projectId
-          VALUES (@nombre, @descripcion, @fechaInicio, @creadorId)
+          INSERT INTO Proyectos (Nombre, Descripcion, FechaInicio, CreadorId, Estado)
+          OUTPUT INSERTED.ProyectoId
+          VALUES (@Nombre, @Descripcion, @FechaInicio, @CreadorId, @Estado)
         `);
 
-      const proyectoId = resultProyecto.recordset[0].projectId;
+      const proyectoId = resultProyecto.recordset[0].ProyectoId;
+      console.log('Proyecto creado con ID:', proyectoId);
 
       // Insertar participantes si existen
       if (participantes && participantes.length > 0) {
         for (const participante of participantes) {
+          console.log('Insertando participante:', participante.email);
           await transaction.request()
-            .input('proyectoId', proyectoId)
-            .input('usuarioId', creadorId)
-            .input('email', participante.email)
-            .input('porcentaje', participante.porcentaje)
+            .input('ProyectoId', Int, proyectoId)
+            .input('Email', VarChar(100), participante.email)
             .query(`
-              INSERT INTO miembrosProyectos (id_proyecto, id_usuario, porcentaje_participacion)
-              VALUES (@proyectoId, 
-                     (SELECT userId FROM Usuarios WHERE email = @email),
-                     @porcentaje)
+              INSERT INTO ParticipantesProyecto (ProyectoId, UsuarioId)
+              SELECT @ProyectoId, Id
+              FROM Usuarios 
+              WHERE Correo = @Email
             `);
         }
       }
@@ -46,13 +52,16 @@ export const crearProyecto = async (req, res) => {
         proyectoId: proyectoId
       });
     } catch (error) {
+      console.error('Error en la transacción:', error);
       await transaction.rollback();
       throw error;
     }
   } catch (error) {
+    console.error('Error al crear proyecto:', error);
     res.status(500).json({ 
       message: 'Error al crear el proyecto',
-      error: error.message 
+      error: error.message,
+      stack: error.stack
     });
   }
 }; 
