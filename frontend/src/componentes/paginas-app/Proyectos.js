@@ -8,6 +8,10 @@ export default function Proyectos() {
   const [participanteVisible, setParticipanteVisible] = React.useState(null);
   const [proyectoSeleccionado, setProyectoSeleccionado] = React.useState(null);
   const [mostrarFormularioProyecto, setMostrarFormularioProyecto] = useState(false);
+  const [participantesLista, setParticipantesLista] = useState([]);
+  const [participanteEmail, setParticipanteEmail] = useState('');
+  const [nombreProyecto, setNombreProyecto] = useState('');
+  const [descripcionProyecto, setDescripcionProyecto] = useState('');
   
   const toggleDetalles = (participanteId) => {
     setParticipanteVisible(participanteVisible === participanteId ? null : participanteId);
@@ -61,6 +65,67 @@ export default function Proyectos() {
     proyectoInfo.forEach(info => info.style.display = 'none');
     botonesGasto.forEach(boton => boton.style.display = 'none');
     gastosInfo.forEach(gasto => gasto.style.display = 'none');
+  };
+
+  const handleCrearProyecto = async (e) => {
+    e.preventDefault();
+    
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('No hay sesión activa. Por favor, inicie sesión nuevamente.');
+      // Aquí podrías redirigir al login
+      return;
+    }
+
+    if (!nombreProyecto.trim()) {
+      alert('Por favor ingrese un nombre para el proyecto');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:4000/api/proyectos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          nombre: nombreProyecto,
+          descripcion: descripcionProyecto,
+          fechaInicio: new Date().toISOString(),
+          participantes: participantesLista
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMostrarFormularioProyecto(false);
+        setNombreProyecto('');
+        setDescripcionProyecto('');
+        setParticipantesLista([]);
+        alert('Proyecto creado exitosamente');
+      } else if (response.status === 401) {
+        alert('Sesión expirada. Por favor, inicie sesión nuevamente.');
+        localStorage.removeItem('token');
+        // Aquí podrías redirigir al login
+      } else {
+        alert(data.message || 'Error al crear el proyecto');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al crear el proyecto');
+    }
+  };
+
+  const handleAgregarParticipante = () => {
+    if (!participanteEmail) return;
+    
+    setParticipantesLista([
+      ...participantesLista,
+      { email: participanteEmail, porcentaje: 0 }
+    ]);
+    setParticipanteEmail('');
   };
 
   return (
@@ -287,43 +352,70 @@ export default function Proyectos() {
 
       </div>
       {mostrarFormularioProyecto && (
-        <div className="cambiar-contrasena-container" onClick={() => setMostrarFormularioProyecto(false)}>
-          <div className="cambiar-contrasena-form" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-overlay" onClick={() => setMostrarFormularioProyecto(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
             <FontAwesomeIcon 
               icon={faTimes} 
-              onClick={() => setMostrarFormularioProyecto(false)} 
-              className="cancelar-button"
+              className="cerrar-modal" 
+              onClick={() => setMostrarFormularioProyecto(false)}
             />
-            <h2>Crear proyecto</h2>
-            <input
-              type="text"
-              placeholder="Nombre del proyecto"
-              className="input-proyecto"
-            />
-            <textarea
-              placeholder="Descripción del proyecto"
-              className="input-proyecto"
-              rows={4}
-            />
-            <div className="participantes-proyecto">
-              <h3>Participantes</h3>
-              <div className="agregar-participante">
-                <input
-                  type="email"
-                  placeholder="Correo del participante"
-                  className="input-proyecto"
-                />
-                <button className="boton-agregar">
-                  +
-                </button>
+            <h2>Crear Nuevo Proyecto</h2>
+            <form onSubmit={handleCrearProyecto}>
+              <input
+                type="text"
+                className="input-proyecto"
+                placeholder="Nombre del proyecto"
+                value={nombreProyecto}
+                onChange={(e) => setNombreProyecto(e.target.value)}
+                required
+              />
+              
+              <textarea
+                className="input-proyecto"
+                placeholder="Descripción del proyecto"
+                value={descripcionProyecto}
+                onChange={(e) => setDescripcionProyecto(e.target.value)}
+                required
+              />
+
+              <div className="participantes-proyecto">
+                <h3>Participantes</h3>
+                <div className="agregar-participante">
+                  <input
+                    type="email"
+                    className="input-proyecto"
+                    placeholder="Email del participante"
+                    value={participanteEmail}
+                    onChange={(e) => setParticipanteEmail(e.target.value)}
+                  />
+                  <button 
+                    type="button" 
+                    className="boton-agregar"
+                    onClick={handleAgregarParticipante}
+                  >
+                    +
+                  </button>
+                </div>
+
+                <div className="lista-participantes">
+                  {participantesLista.map((participante, index) => (
+                    <div key={index} className="participante-item">
+                      <span>{participante.email}</span>
+                      <FontAwesomeIcon 
+                        icon={faTimes} 
+                        onClick={() => {
+                          setParticipantesLista(participantesLista.filter((_, i) => i !== index));
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="lista-participantes">
-                {/* Aquí irán los participantes agregados */}
-              </div>
-            </div>
-            <button className="boton-crear">
-              Crear Proyecto
-            </button>
+
+              <button type="submit" className="boton-crear">
+                Crear Proyecto
+              </button>
+            </form>
           </div>
         </div>
       )}

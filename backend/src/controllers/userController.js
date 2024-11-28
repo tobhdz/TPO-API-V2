@@ -2,6 +2,7 @@ import { createUser } from '../services/userService.js';
 import { loginUser } from '../services/userService.js';
 import { updateUserInfo } from '../services/userService.js';
 import { updatePassword } from '../services/userService.js';
+import jwt from 'jsonwebtoken';
 
 export const registerUser = async (req, res) => {
   try {
@@ -16,7 +17,24 @@ export const registerUser = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { usuario, contraseña } = req.body;
+    console.log('Intento de login para usuario:', usuario);
+    
     const user = await loginUser({ usuario, contraseña });
+    console.log('Usuario encontrado:', user.Id);
+    
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET no está definida');
+      throw new Error('Error de configuración del servidor');
+    }
+
+    const token = jwt.sign(
+      { userId: user.Id }, 
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+    
+    console.log('Token generado correctamente');
+    
     res.status(200).json({ 
       message: 'Login exitoso',
       user: {
@@ -26,9 +44,11 @@ export const login = async (req, res) => {
         usuario: user.Usuario,
         correo: user.Correo,
         balance: user.Balance
-      }
+      },
+      token: token
     });
   } catch (error) {
+    console.error('Error en login:', error);
     res.status(401).json({ message: error.message });
   }
 };

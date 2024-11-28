@@ -1,13 +1,30 @@
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
-import { getConnection } from './database/connection.js';
+import proyectoRoutes from './routes/proyectoRoutes.js';
+
+// Cargar variables de entorno
+dotenv.config();
+
+// Verificar variables de entorno críticas
+if (!process.env.JWT_SECRET) {
+  console.error('ERROR: JWT_SECRET no está definida en las variables de entorno');
+  process.exit(1);
+}
 
 const app = express();
 
-app.use(cors()); // Habilita CORS para todas las rutas
-app.use(express.json()); // Middleware para parsear JSON
-app.use('/api/users', userRoutes); // Usar las rutas de usuario
+app.use(cors());
+app.use(express.json());
 
-app.listen(4000, () => console.log('Servidor corriendo en el puerto 4000'));
-getConnection();
+// Rutas
+app.use('/api/users', userRoutes);
+app.use('/api/proyectos', proyectoRoutes);
+
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log('JWT_SECRET está configurada:', !!process.env.JWT_SECRET);
+});

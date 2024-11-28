@@ -27,9 +27,11 @@ export default function Login() {
         });
 
         const data = await response.json();
-        console.log('Datos del usuario:', data);
-
+        
         if (response.ok) {
+          // Guardar el token en localStorage
+          localStorage.setItem('token', data.token);
+          
           authLogin();
           userLogin({
             id: data.user.id,
