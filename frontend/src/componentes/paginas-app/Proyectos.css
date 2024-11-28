@@ -21,7 +21,7 @@
 
 /* Botones */
 
-.proyectos-container button {
+.proyectos-container button:not(.volver-proyectos) {
     display: flex;
     align-items: center;
     gap: 15px;
@@ -47,17 +47,21 @@
     font-family: Montserrat;
 }
 
-.volver-proyectos {
+.proyectos-container .volver-proyectos {
     padding: 16px;
     border-radius: 11px;
     border: 1px solid #161616;
     background: #363636;
-    font-size: 24px; font-weight: 600;
+    font-size: 24px;
+    font-weight: 600;
     color: white;
     text-transform: uppercase;
     font-family: Montserrat;
-    font-weight: 600;
     width: fit-content;
+    display: none;
+    cursor: pointer;
+    gap: 15px;
+    transition: 0.4s;
 }
 
 /* Proyectos */
@@ -75,7 +79,7 @@
     font-weight: normal;
 }
 
-.proyecto-id {
+.proyecto-box {
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -91,6 +95,7 @@
     border-radius: 20px;
     border: 1px solid #505050;
     background: #1A1A1A;
+    cursor: pointer;
 }
 
 .proyecto-titulo {
@@ -197,6 +202,7 @@
     outline: 1px solid #5B5B5B;
     outline-offset: -1px;
     background: #282828;
+    display: none;
 }
 
 .gasto h2 {
@@ -330,4 +336,21 @@
     color: #cccccc;
   }
   
+
+.proyecto-box {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.proyecto {
+  cursor: pointer;
+}
+
+.proyecto-info,
+.boton-proyectos:not(.crear-proyecto),
+.gasto,
+.volver-proyectos {
+  display: none;
+}
 
