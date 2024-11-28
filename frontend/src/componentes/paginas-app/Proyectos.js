@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import './Proyectos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faArrowLeft, faFileImage } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faArrowLeft, faFileImage, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Proyectos() {
   const [participanteVisible, setParticipanteVisible] = React.useState(null);
   const [proyectoSeleccionado, setProyectoSeleccionado] = React.useState(null);
+  const [mostrarFormularioProyecto, setMostrarFormularioProyecto] = useState(false);
   
   const toggleDetalles = (participanteId) => {
     setParticipanteVisible(participanteVisible === participanteId ? null : participanteId);
@@ -67,7 +68,7 @@ export default function Proyectos() {
       <div className="proyectos-subcontainer">
         <div className="proyectos-header">
             <h1>Proyectos</h1>
-            <button className="boton-proyectos crear-proyecto">
+            <button className="boton-proyectos crear-proyecto" onClick={() => setMostrarFormularioProyecto(true)}>
               <FontAwesomeIcon icon={faCirclePlus} /> Crear proyecto
             </button>
         </div>
@@ -285,6 +286,47 @@ export default function Proyectos() {
 
 
       </div>
+      {mostrarFormularioProyecto && (
+        <div className="cambiar-contrasena-container" onClick={() => setMostrarFormularioProyecto(false)}>
+          <div className="cambiar-contrasena-form" onClick={(e) => e.stopPropagation()}>
+            <FontAwesomeIcon 
+              icon={faTimes} 
+              onClick={() => setMostrarFormularioProyecto(false)} 
+              className="cancelar-button"
+            />
+            <h2>Crear proyecto</h2>
+            <input
+              type="text"
+              placeholder="Nombre del proyecto"
+              className="input-proyecto"
+            />
+            <textarea
+              placeholder="Descripción del proyecto"
+              className="input-proyecto"
+              rows={4}
+            />
+            <div className="participantes-proyecto">
+              <h3>Participantes</h3>
+              <div className="agregar-participante">
+                <input
+                  type="email"
+                  placeholder="Correo del participante"
+                  className="input-proyecto"
+                />
+                <button className="boton-agregar">
+                  +
+                </button>
+              </div>
+              <div className="lista-participantes">
+                {/* Aquí irán los participantes agregados */}
+              </div>
+            </div>
+            <button className="boton-crear">
+              Crear Proyecto
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -21,15 +21,17 @@
 
 /* Botones */
 
-.proyectos-container button:not(.volver-proyectos):not(.boton-agregar-gasto) {
+.boton-proyectos,
+.boton-crear {
     display: flex;
     align-items: center;
     gap: 15px;
     cursor: pointer;
-    transition: 0.4s
+    transition: 0.4s;
 }
 
-.proyectos-container button:hover {
+.boton-proyectos:hover,
+.boton-crear:hover {
     background: #2c2c2c;
 }
 
@@ -368,5 +370,96 @@
 .gasto,
 .volver-proyectos {
   display: none;
+}
+
+.input-proyecto {
+    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ffffff8f;
+    background: #ffffff1a;
+    transition: 0.2s;
+    color: white;
+    font-family: kanit;
+    font-size: 20px;
+}
+
+.input-proyecto:hover {
+  border: 1px solid white;
+}
+
+.input-proyecto:focus {
+  outline: 0;
+  box-shadow: inset 0 0 10px #ffffff46;
+}
+
+.participantes-proyecto {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.participantes-proyecto h3 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.agregar-participante {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.boton-agregar {
+  width: 60px;
+  height: 60px;
+  background: none;
+  border: 1px solid white;
+  color: white;
+  padding: 15px;
+  border-radius: 100%!important;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+  font-size: 30px;
+  line-height: 0;
+}
+
+.boton-agregar:hover {
+  background: #2c2c2c;
+}
+
+.lista-participantes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.boton-crear {
+  width: fit-content;
+  padding: 15px 20px!important;
+  background: #363636;
+  border: 1px solid #161616;
+  color: white;
+  font-family: kanit;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: 0.4s;
+  text-transform: uppercase;
+}
+
+.boton-crear:hover {
+  background: #2c2c2c;
+}
+
+.cancelar-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: 0.3s;
 }
 
