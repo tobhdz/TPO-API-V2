@@ -64,9 +64,18 @@ function InformacionPersonal() {
         setError("");
       }
 
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError("No hay sesión activa");
+        return;
+      }
+
       const response = await fetch('http://localhost:4000/api/users/update', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({
           id: userId,
           nombre: nombreActualizado,
