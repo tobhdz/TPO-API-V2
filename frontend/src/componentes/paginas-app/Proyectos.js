@@ -21,6 +21,20 @@ export default function Proyectos() {
   const [participantesGasto, setParticipantesGasto] = useState([]);
   const [proyectoActual, setProyectoActual] = useState(null);
   const [acreedorId, setAcreedorId] = useState(null);
+  const [menuProyectoVisible, setMenuProyectoVisible] = useState(null);
+
+  const menuButtonStyle = {
+    display: 'block',
+    width: '100%',
+    padding: '8px 15px',
+    background: 'transparent',
+    border: 'none',
+    color: 'white',
+    textAlign: 'left',
+    cursor: 'pointer',
+    borderRadius: '4px',
+    margin: '2px 0',
+  };
 
   useEffect(() => {
     cargarProyectos();
@@ -347,6 +361,38 @@ export default function Proyectos() {
     console.log('Editar gasto:', gastoId);
   };
 
+  const handleEditarProyecto = (proyectoId) => {
+    console.log('Editar proyecto:', proyectoId);
+    setMenuProyectoVisible(null);
+  };
+
+  const handleEliminarProyecto = (proyectoId) => {
+    if (window.confirm('¿Está seguro que desea eliminar este proyecto?')) {
+      console.log('Eliminar proyecto:', proyectoId);
+    }
+    setMenuProyectoVisible(null);
+  };
+
+  const handleFinalizarProyecto = (proyectoId) => {
+    if (window.confirm('¿Está seguro que desea finalizar este proyecto?')) {
+      console.log('Finalizar proyecto:', proyectoId);
+    }
+    setMenuProyectoVisible(null);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuProyectoVisible !== null) {
+        setMenuProyectoVisible(null);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [menuProyectoVisible]);
+
   return (
     <div className="proyectos-container">
       <div className="proyectos-subcontainer">
@@ -365,6 +411,37 @@ export default function Proyectos() {
           <div className="proyecto-box" key={proyecto.ProyectoId} id={`proyecto-${proyecto.ProyectoId}`}>
             <div className="proyecto" onClick={() => handleProyectoClick(proyecto.ProyectoId)}>
               <div className="proyecto-titulo">
+                <button 
+                  className="menu-proyecto-button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMenuProyectoVisible(menuProyectoVisible === proyecto.ProyectoId ? null : proyecto.ProyectoId);
+                  }}
+                >
+                  •••
+                </button>
+                {menuProyectoVisible === proyecto.ProyectoId && (
+                  <div className="menu-proyecto-opciones">
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditarProyecto(proyecto.ProyectoId);
+                    }}>
+                      Editar
+                    </button>
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      handleEliminarProyecto(proyecto.ProyectoId);
+                    }}>
+                      Eliminar
+                    </button>
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      handleFinalizarProyecto(proyecto.ProyectoId);
+                    }}>
+                      Finalizar
+                    </button>
+                  </div>
+                )}
                 <h2>{proyecto.Nombre}</h2>
                 <div className="estado-proyecto">
                   {proyecto.Estado ? 'Activo' : 'Inactivo'}
@@ -419,7 +496,7 @@ export default function Proyectos() {
                     <p className="acreedor-gasto">{`${gasto.AcreedorNombre} ${gasto.AcreedorApellido}`}</p>
                     <p className="subtotal-gasto">{gasto.MontoTotal}</p>
 
-                    <h2>Participantes</h2>
+                    <h3>Participantes</h3>
                     <div className="tabla-grid">
                       <div className="tabla-header">
                         <div>Nombre</div>

@@ -1,7 +1,7 @@
 /* Contenedor principal */
 .proyectos-container {
     width: 100%;
-    font-family: Montserrat;
+    font-family: Kanit;
     margin: 0 auto;
     background-color: #1e1e1e;
     color: #ffffff;
@@ -42,11 +42,11 @@
     border: 1px solid #ffffff;
     color: #ffffff;
     font-size: 24px;
-    font-weight: 500;
+    font-weight: normal;
     background: transparent;
     width: fit-content;
     text-transform: uppercase;
-    font-family: Montserrat;
+    font-family: Kanit;
 }
 
 .proyectos-container .volver-proyectos {
@@ -58,12 +58,13 @@
     font-weight: 600;
     color: white;
     text-transform: uppercase;
-    font-family: Montserrat;
+    font-family: Kanit;
     width: fit-content;
     display: none;
     cursor: pointer;
     gap: 15px;
     transition: 0.4s;
+    align-items: center;
 }
 
 .boton-agregar-gasto {
@@ -73,11 +74,11 @@
     border: 1px solid #ffffff;
     color: #ffffff;
     font-size: 24px;
-    font-weight: 500;
+    font-weight: normal;
     background: transparent;
     width: fit-content;
     text-transform: uppercase;
-    font-family: Montserrat;
+    font-family: Kanit;
     display: none;
     gap: 15px;
 }
@@ -117,8 +118,10 @@
 }
 
 .proyecto-titulo {
+    width: 100%;
+    position: relative;
+    padding-top: 30px;
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 15px;
 }
@@ -126,6 +129,7 @@
 .proyecto-titulo h2 {
     font-size: 45px;
     font-weight: 700;
+    margin: 0;
 }
 
 .proyecto-titulo .estado-proyecto {
@@ -137,6 +141,7 @@
     border-radius: 56px;
     border: 1px solid #6A6A6A;
     background: #363636;
+    height: fit-content;
 }
 
 .proyectos-container p {
@@ -164,7 +169,7 @@
 }
 
 .proyecto-participante-nombre {
-    font-weight: 500;
+    font-weight: normal;
 }
 
 .proyecto-participante-email {
@@ -182,7 +187,7 @@
 }
 
 .proyecto-participante-deuda {
-    font-weight: 500;
+    font-weight: normal;
     margin-bottom: 0.5rem;
 }
 
@@ -213,7 +218,7 @@
 }
 
 .gasto h2 {
-    font-size: 40px;
+    font-size: 45px;
     font-weight: 700;
 }
 
@@ -237,6 +242,11 @@
     border: 1px solid #ffffff1a;
     padding: 10px 20px;
     border-radius: 10px;
+}
+
+.gasto h3 {
+    font-size: 30px;
+    margin: 10px 0 0 0;
 }
 
 .subtotal-gasto::before {
@@ -282,7 +292,7 @@
     color: white;
     padding-block: 15px;
     font-size: 18px;
-    font-family: Montserrat;
+    font-family: Kanit;
     text-transform: uppercase;
     font-weight: 600;
 }
@@ -359,6 +369,11 @@
 .gasto,
 .volver-proyectos {
   display: none;
+}
+
+.proyecto-info h3 {
+  font-size: 30px;
+  margin: 10px 0 0 0;
 }
 
 .input-proyecto {
@@ -533,6 +548,59 @@
   background-color: #1e1e1e;
   color: white;
   border: 1px solid #444;
+}
+
+.menu-proyecto-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: #6A6A6A;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px 15px;
+  transition: color 0.3s ease;
+}
+
+.menu-proyecto-opciones button {
+  font-family: Kanit;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.menu-proyecto-button:hover {
+  color: white;
+}
+
+.menu-proyecto-opciones {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background: #2A2A2A;
+  border: 1px solid #505050;
+  border-radius: 8px;
+  padding: 5px;
+  z-index: 1000;
+  min-width: 150px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.menu-proyecto-opciones button {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  background: transparent;
+  border: none;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.menu-proyecto-opciones button:hover {
+  background: #363636;
 }
 
 
