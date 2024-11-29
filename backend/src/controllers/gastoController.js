@@ -69,4 +69,58 @@ export const crearGasto = async (req, res) => {
       error: error.message 
     });
   }
+};
+
+export const eliminarGasto = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.userId;
+
+  try {
+    const pool = await getConnection();
+    const transaction = new pkg.Transaction(pool);
+    await transaction.begin();
+
+    try {
+      // Verificar que el usuario es el acreedor del gasto
+      const verificacionAcreedor = await transaction.request()
+        .input('GastoId', Int, id)
+        .input('UsuarioId', Int, userId)
+        .query(`
+          SELECT 1 FROM Gastos 
+          WHERE GastoId = @GastoId AND AcreedorId = @UsuarioId
+        `);
+
+      if (verificacionAcreedor.recordset.length === 0) {
+        throw new Error('No tienes permiso para eliminar este gasto');
+      }
+
+      // Primero eliminar los registros de ParticipantesGasto
+      await transaction.request()
+        .input('GastoId', Int, id)
+        .query(`
+          DELETE FROM ParticipantesGasto
+          WHERE GastoId = @GastoId
+        `);
+
+      // Luego eliminar el gasto
+      await transaction.request()
+        .input('GastoId', Int, id)
+        .query(`
+          DELETE FROM Gastos
+          WHERE GastoId = @GastoId
+        `);
+
+      await transaction.commit();
+      res.json({ message: 'Gasto eliminado exitosamente' });
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  } catch (error) {
+    console.error('Error al eliminar gasto:', error);
+    res.status(500).json({ 
+      message: 'Error al eliminar el gasto',
+      error: error.message 
+    });
+  }
 }; 

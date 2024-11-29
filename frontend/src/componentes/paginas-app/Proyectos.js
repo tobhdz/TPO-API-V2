@@ -300,6 +300,53 @@ export default function Proyectos() {
     }
   };
 
+  const handleEliminarGasto = async (gastoId) => {
+    if (!window.confirm('¿Está seguro que desea eliminar este gasto?')) {
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('No hay sesión activa');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:4000/api/gastos/${gastoId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        // Guardar el ID del proyecto seleccionado
+        const proyectoId = proyectoSeleccionado;
+        
+        // Recargar los proyectos
+        await cargarProyectos();
+        
+        // Volver a mostrar el proyecto seleccionado
+        setTimeout(() => {
+          handleProyectoClick(proyectoId);
+        }, 100);
+
+        alert('Gasto eliminado exitosamente');
+      } else {
+        const data = await response.json();
+        alert(data.message || 'Error al eliminar el gasto');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al eliminar el gasto');
+    }
+  };
+
+  const handleEditarGasto = (gastoId) => {
+    // Función placeholder para la edición
+    console.log('Editar gasto:', gastoId);
+  };
+
   return (
     <div className="proyectos-container">
       <div className="proyectos-subcontainer">
@@ -362,6 +409,10 @@ export default function Proyectos() {
                 
                 return gastosData.map(gasto => (
                   <div className="gasto" key={gasto.GastoId}>
+                    <div>
+                      <button onClick={() => handleEditarGasto(gasto.GastoId)}>Editar</button>
+                      <button onClick={() => handleEliminarGasto(gasto.GastoId)}>Eliminar</button>
+                    </div>
                     <h2>{gasto.Nombre}</h2>
                     <p className="descripcion-gasto">{gasto.Descripcion}</p>
                     <p className="fecha-gasto">{new Date(gasto.Fecha).toLocaleDateString()}</p>
