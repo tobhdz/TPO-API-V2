@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InformacionPersonal from './InformacionPersonal';
 import Seguridad from './Seguridad';
-import Actividad from './Actividad';
+import Saldo from './Saldo';
 import './Configuracion.css';
 
 function Configuracion() {
@@ -24,17 +24,17 @@ function Configuracion() {
             Seguridad
           </button>
           <button
-            className={`tab-boton ${tabActiva === 'actividad' ? 'tab-activa' : ''}`}
-            onClick={() => setTabActiva('actividad')}
+            className={`tab-boton ${tabActiva === 'saldo' ? 'tab-activa' : ''}`}
+            onClick={() => setTabActiva('saldo')}
           >
-            Actividad
+            Saldo
           </button>
         </div>
         
         <div className="configuracion-contenido">
           {tabActiva === 'informacion' && <InformacionPersonal />}
           {tabActiva === 'seguridad' && <Seguridad />}
-          {tabActiva === 'actividad' && <Actividad />}
+          {tabActiva === 'saldo' && <Saldo />}
         </div>
       </div>
     </div>

@@ -291,8 +291,8 @@
     filter: brightness(1.1)
   }
   
-  /* Actividad */
-  .actividad-container {
+  /* Saldo */
+  .saldo-container {
     display: flex;
     flex-direction: column;
     gap: 20px;

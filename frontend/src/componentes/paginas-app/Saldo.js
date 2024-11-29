@@ -6,7 +6,7 @@ import Boton from '../Boton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function Actividad() {
+function Saldo() {
 
   const {user, metodosPago, addPayMethod, balance} =useContext(UserContext);
   const [anadirMetodo, setAnadirMetodo]=useState(false);
@@ -31,7 +31,7 @@ function Actividad() {
   }
   
   return (
-    <div className="actividad-container">
+    <div className="saldo-container">
       <p className='saldo'>Saldo disponible: ${balance}</p>
       <div className="metodos-pago">
         <button className="boton" onClick={()=>setAnadirMetodo(true)}>Añadir método de pago</button>
@@ -86,4 +86,4 @@ function Actividad() {
   );
 }
 
-export default Actividad;
+export default Saldo;
