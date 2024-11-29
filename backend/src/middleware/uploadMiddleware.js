@@ -1,14 +1,24 @@
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join('uploads', 'tickets'))
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, uniqueSuffix + path.extname(file.originalname))
+const createStorage = (folder) => {
+  const uploadPath = path.join('uploads', folder);
+  
+  if (!fs.existsSync(uploadPath)) {
+    fs.mkdirSync(uploadPath, { recursive: true });
   }
-});
 
-export const upload = multer({ storage: storage }); 
+  return multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, uploadPath);
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+  });
+};
+
+export const uploadTicket = multer({ storage: createStorage('tickets') });
+export const uploadProfilePic = multer({ storage: createStorage('pfp') }); 

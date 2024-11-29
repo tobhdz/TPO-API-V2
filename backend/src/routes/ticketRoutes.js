@@ -1,7 +1,7 @@
 import express from 'express';
 import { subirTicket, eliminarTicket } from '../controllers/ticketController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
-import { upload } from '../middleware/uploadMiddleware.js';
+import { uploadTicket } from '../middleware/uploadMiddleware.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -12,7 +12,7 @@ if (!fs.existsSync(ticketsDir)) {
   fs.mkdirSync(ticketsDir, { recursive: true });
 }
 
-router.post('/upload', authMiddleware, upload.single('ticket'), subirTicket);
+router.post('/upload', authMiddleware, uploadTicket.single('ticket'), subirTicket);
 router.delete('/:id', authMiddleware, eliminarTicket);
 
 export default router; 

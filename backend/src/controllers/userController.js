@@ -4,6 +4,10 @@ import { updateUserInfo } from '../services/userService.js';
 import { updatePassword } from '../services/userService.js';
 import jwt from 'jsonwebtoken';
 import { getConnection } from '../database/connection.js';
+import path from 'path';
+import fs from 'fs';
+import pkg from 'mssql';
+const { VarChar, Int } = pkg;
 
 export const registerUser = async (req, res) => {
   try {
@@ -126,6 +130,59 @@ export const updateBalance = async (req, res) => {
     res.status(500).json({ 
       message: 'Error al actualizar el balance', 
       error: error.message 
+    });
+  }
+};
+
+export const updateProfilePic = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No se ha subido ninguna imagen' });
+    }
+
+    const userId = req.userId;
+    const rutaArchivo = req.file.filename;
+
+    const pool = await getConnection();
+    
+    // Obtener foto de perfil anterior
+    const oldPicResult = await pool.request()
+      .input('UserId', Int, userId)
+      .query('SELECT FotoPerfil FROM Usuarios WHERE Id = @UserId');
+    
+    const oldPic = oldPicResult.recordset[0]?.FotoPerfil;
+
+    // Actualizar foto de perfil en la base de datos
+    await pool.request()
+      .input('UserId', Int, userId)
+      .input('FotoPerfil', VarChar(255), rutaArchivo)
+      .query(`
+        UPDATE Usuarios 
+        SET FotoPerfil = @FotoPerfil 
+        WHERE Id = @UserId
+      `);
+
+    // Eliminar foto anterior si existe
+    if (oldPic) {
+      const oldPicPath = path.join('uploads', 'pfp', oldPic);
+      if (fs.existsSync(oldPicPath)) {
+        fs.unlinkSync(oldPicPath);
+      }
+    }
+
+    res.status(200).json({
+      message: 'Foto de perfil actualizada exitosamente',
+      fotoPerfil: rutaArchivo
+    });
+  } catch (error) {
+    console.error('Error al actualizar foto de perfil:', error);
+    // Si hay error, eliminar la imagen subida
+    if (req.file) {
+      fs.unlinkSync(path.join('uploads', 'pfp', req.file.filename));
+    }
+    res.status(500).json({
+      message: 'Error al actualizar la foto de perfil',
+      error: error.message
     });
   }
 };

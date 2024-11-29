@@ -23,11 +23,39 @@ function InformacionPersonal() {
     fileInputRef.current.click();
   };
 
+  const handleProfilePicUpload = async (file) => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('profilePic', file);
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:4000/api/users/update-profile-pic', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        updateProfileImage(`http://localhost:4000/uploads/pfp/${data.fotoPerfil}`);
+      } else {
+        setError(data.message || 'Error al actualizar la foto de perfil');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Error al actualizar la foto de perfil');
+    }
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      updateProfileImage(imageUrl); // Actualiza la imagen de perfil globalmente
+      handleProfilePicUpload(file);
     }
   };
 
