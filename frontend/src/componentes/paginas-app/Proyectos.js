@@ -405,6 +405,46 @@ export default function Proyectos() {
     };
   }, [menuProyectoVisible]);
 
+  const handleSubirTicket = async (gastoId) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    
+    input.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('ticket', file);
+      formData.append('gastoId', gastoId);
+
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:4000/api/tickets/upload', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert('Ticket subido exitosamente');
+          cargarProyectos(); // Recargar los proyectos para mostrar el nuevo ticket
+        } else {
+          alert(data.message || 'Error al subir el ticket');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al subir el ticket');
+      }
+    };
+
+    input.click();
+  };
+
   return (
     <div className="proyectos-container">
       <div className="proyectos-subcontainer">
@@ -536,7 +576,13 @@ export default function Proyectos() {
                       })()}
                     </div>
 
-                    <button className="añadir-ticket">
+                    <button 
+                      className="añadir-ticket"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleSubirTicket(gasto.GastoId);
+                      }}
+                    >
                       <FontAwesomeIcon icon={faFileImage} />
                       Añadir ticket
                     </button>

@@ -11,6 +11,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "js-cookie": "^3.0.5",
+    "multer": "^1.4.5-lts.1",
     "simplex-noise": "^4.0.3"
   }
 }

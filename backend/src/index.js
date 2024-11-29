@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 import proyectoRoutes from './routes/proyectoRoutes.js';
 import gastoRoutes from './routes/gastoRoutes.js';
+import ticketRoutes from './routes/ticketRoutes.js';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -23,6 +24,10 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/proyectos', proyectoRoutes);
 app.use('/api/gastos', gastoRoutes);
+app.use('/api/tickets', ticketRoutes);
+
+// Agregar esta línea para servir archivos estáticos
+app.use('/uploads', express.static('uploads'));
 
 const PORT = process.env.PORT || 4000;
 
