@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './Proyectos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faArrowLeft, faFileImage, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faArrowLeft, faFileImage, faTimes, faTrash, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { jwtDecode } from 'jwt-decode';
 
 
@@ -410,8 +410,14 @@ export default function Proyectos() {
 
   const handleEditarProyecto = (proyectoId) => {
     const proyecto = proyectos.find(p => p.ProyectoId === proyectoId);
+    
     if (!proyecto || !proyecto.Estado) {
       alert('No se pueden editar proyectos finalizados');
+      return;
+    }
+
+    if (proyecto.CreadorId !== userId) {
+      alert('Solo el creador del proyecto puede editarlo');
       return;
     }
     
@@ -625,16 +631,23 @@ export default function Proyectos() {
           >
             <div className="proyecto">
               <div className="proyecto-titulo">
-                <button 
-                  className="menu-proyecto-button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setMenuProyectoVisible(menuProyectoVisible === proyecto.ProyectoId ? null : proyecto.ProyectoId);
-                  }}
-                >
-                  •••
-                </button>
-                {menuProyectoVisible === proyecto.ProyectoId && (
+                <h2>{proyecto.Nombre}</h2>
+                <span className="estado-proyecto">
+                  {proyecto.Estado ? 'Activo' : 'Finalizado'}
+                </span>
+                {proyecto.CreadorId === userId && (
+                  <button 
+                    className="menu-proyecto-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setMenuProyectoVisible(menuProyectoVisible === proyecto.ProyectoId ? null : proyecto.ProyectoId);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faEllipsisV} />
+                  </button>
+                )}
+                
+                {menuProyectoVisible === proyecto.ProyectoId && proyecto.CreadorId === userId && (
                   <div className="menu-proyecto-opciones">
                     {proyecto.Estado ? (
                       <>
@@ -660,10 +673,6 @@ export default function Proyectos() {
                     </button>
                   </div>
                 )}
-                <h2>{proyecto.Nombre}</h2>
-                <div className="estado-proyecto">
-                  {proyecto.Estado ? 'Activo' : 'Inactivo'}
-                </div>
               </div>
               <p className="descripcion-proyecto">{proyecto.Descripcion}</p>
               <p className="fecha-inicio-proyecto">
