@@ -60,12 +60,24 @@ export const crearGasto = async (req, res) => {
           .input('GastoId', Int, gastoId)
           .input('UsuarioId', Int, participante.usuarioId)
           .input('PorcentajeDeuda', Decimal(5,2), participante.porcentajeDeuda)
+          .input('AcreedorId', Int, acreedorId)
           .query(`
             INSERT INTO ParticipantesGasto (GastoId, UsuarioId, PorcentajeDeuda)
             VALUES (@GastoId, @UsuarioId, @PorcentajeDeuda);
 
             INSERT INTO EstadoDeudas (GastoId, UsuarioId, Estado, FechaSaldado)
-            VALUES (@GastoId, @UsuarioId, 0, NULL);
+            VALUES (
+              @GastoId, 
+              @UsuarioId, 
+              CASE 
+                WHEN @UsuarioId = @AcreedorId THEN 1 
+                ELSE 0 
+              END,
+              CASE 
+                WHEN @UsuarioId = @AcreedorId THEN GETDATE() 
+                ELSE NULL 
+              END
+            );
           `);
       }
 
@@ -110,7 +122,15 @@ export const eliminarGasto = async (req, res) => {
         throw new Error('No tienes permiso para eliminar este gasto');
       }
 
-      // Primero eliminar los registros de ParticipantesGasto
+      // Primero eliminar los registros de EstadoDeudas
+      await transaction.request()
+        .input('GastoId', Int, id)
+        .query(`
+          DELETE FROM EstadoDeudas
+          WHERE GastoId = @GastoId
+        `);
+
+      // Luego eliminar los registros de ParticipantesGasto
       await transaction.request()
         .input('GastoId', Int, id)
         .query(`
