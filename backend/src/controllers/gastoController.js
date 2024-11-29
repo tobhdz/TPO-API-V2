@@ -122,7 +122,15 @@ export const eliminarGasto = async (req, res) => {
         throw new Error('No tienes permiso para eliminar este gasto');
       }
 
-      // Primero eliminar los registros de EstadoDeudas
+      // 1. Primero eliminar los tickets asociados
+      await transaction.request()
+        .input('GastoId', Int, id)
+        .query(`
+          DELETE FROM TicketsGasto
+          WHERE GastoId = @GastoId
+        `);
+
+      // 2. Eliminar los registros de EstadoDeudas
       await transaction.request()
         .input('GastoId', Int, id)
         .query(`
@@ -130,7 +138,7 @@ export const eliminarGasto = async (req, res) => {
           WHERE GastoId = @GastoId
         `);
 
-      // Luego eliminar los registros de ParticipantesGasto
+      // 3. Eliminar los registros de ParticipantesGasto
       await transaction.request()
         .input('GastoId', Int, id)
         .query(`
@@ -138,7 +146,7 @@ export const eliminarGasto = async (req, res) => {
           WHERE GastoId = @GastoId
         `);
 
-      // Luego eliminar el gasto
+      // 4. Finalmente eliminar el gasto
       await transaction.request()
         .input('GastoId', Int, id)
         .query(`
@@ -153,10 +161,6 @@ export const eliminarGasto = async (req, res) => {
       throw error;
     }
   } catch (error) {
-    console.error('Error al eliminar gasto:', error);
-    res.status(500).json({ 
-      message: 'Error al eliminar el gasto',
-      error: error.message 
-    });
+    res.status(500).json({ message: error.message });
   }
 }; 

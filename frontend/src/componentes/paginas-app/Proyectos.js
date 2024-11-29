@@ -61,6 +61,7 @@ export default function Proyectos() {
     if (token) {
       const decodedToken = jwtDecode(token);
       setUserId(decodedToken.userId);
+      console.log('userId:', decodedToken.userId);
     }
   }, []);
 
@@ -620,11 +621,19 @@ export default function Proyectos() {
                 
                 return gastosData.map(gasto => (
                   <div className="gasto" key={gasto.GastoId}>
-                    <div className="botones-gasto">
-                      <button onClick={() => handleEliminarGasto(gasto.GastoId)}>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                    </div>
+                    {userId === gasto.AcreedorId && (
+                      <div className="botones-gasto">
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEliminarGasto(gasto.GastoId);
+                          }}
+                          className="boton-eliminar-gasto"
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </div>
+                    )}
                     <h2>{gasto.Nombre}</h2>
                     <p className="descripcion-gasto">{gasto.Descripcion}</p>
                     <p className="fecha-gasto">{new Date(gasto.Fecha).toLocaleDateString()}</p>
