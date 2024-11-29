@@ -293,4 +293,48 @@ export const actualizarProyecto = async (req, res) => {
       message: error.message || 'Error al actualizar el proyecto' 
     });
   }
+};
+
+export const finalizarProyecto = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.userId;
+
+  try {
+    const pool = await getConnection();
+    const transaction = new pkg.Transaction(pool);
+    await transaction.begin();
+
+    try {
+      // Verificar que el usuario es el creador del proyecto
+      const verificacionCreador = await transaction.request()
+        .input('ProyectoId', Int, id)
+        .input('UsuarioId', Int, userId)
+        .query(`
+          SELECT 1 FROM Proyectos 
+          WHERE ProyectoId = @ProyectoId AND CreadorId = @UsuarioId
+        `);
+
+      if (verificacionCreador.recordset.length === 0) {
+        throw new Error('No tienes permiso para finalizar este proyecto');
+      }
+
+      // Actualizar el estado del proyecto
+      await transaction.request()
+        .input('ProyectoId', Int, id)
+        .input('FechaFinalizacion', DateTime, new Date())
+        .query(`
+          UPDATE Proyectos 
+          SET Estado = 0, FechaFinalizacion = @FechaFinalizacion
+          WHERE ProyectoId = @ProyectoId
+        `);
+
+      await transaction.commit();
+      res.json({ message: 'Proyecto finalizado exitosamente' });
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }; 

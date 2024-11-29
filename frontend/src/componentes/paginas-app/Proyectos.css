@@ -116,6 +116,21 @@
     border: 1px solid #505050;
     background: #1A1A1A;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.proyecto:hover {
+    border-color: #666;
+    background: #222;
+}
+
+.proyecto-box.proyecto-abierto .proyecto {
+    cursor: auto;
+}
+
+.proyecto-box.proyecto-abierto .proyecto:hover {
+    border-color: #505050;
+    background: #1A1A1A;
 }
 
 .proyecto-titulo {

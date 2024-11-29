@@ -420,9 +420,35 @@ export default function Proyectos() {
     setMenuProyectoVisible(null);
   };
 
-  const handleFinalizarProyecto = (proyectoId) => {
-    if (window.confirm('¿Está seguro que desea finalizar este proyecto?')) {
-      console.log('Finalizar proyecto:', proyectoId);
+  const handleFinalizarProyecto = async (proyectoId) => {
+    if (!window.confirm('¿Está seguro que desea finalizar este proyecto? Una vez finalizado, no se podrán hacer más cambios.')) {
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('No hay sesión activa');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:4000/api/proyectos/${proyectoId}/finalizar`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        await cargarProyectos();
+        alert('Proyecto finalizado exitosamente');
+      } else {
+        const data = await response.json();
+        alert(data.message || 'Error al finalizar el proyecto');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al finalizar el proyecto');
     }
     setMenuProyectoVisible(null);
   };
@@ -543,8 +569,13 @@ export default function Proyectos() {
         </button>
 
         {proyectos.map(proyecto => (
-          <div className="proyecto-box" key={proyecto.ProyectoId} id={`proyecto-${proyecto.ProyectoId}`}>
-            <div className="proyecto" onClick={() => handleProyectoClick(proyecto.ProyectoId)}>
+          <div 
+            className={`proyecto-box ${proyectoSeleccionado === proyecto.ProyectoId ? 'proyecto-abierto' : ''}`}
+            id={`proyecto-${proyecto.ProyectoId}`}
+            key={proyecto.ProyectoId}
+            onClick={() => handleProyectoClick(proyecto.ProyectoId)}
+          >
+            <div className="proyecto">
               <div className="proyecto-titulo">
                 <button 
                   className="menu-proyecto-button"
