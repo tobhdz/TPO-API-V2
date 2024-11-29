@@ -1,18 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Proyectos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus, faArrowLeft, faFileImage, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Proyectos() {
-  const [participanteVisible, setParticipanteVisible] = React.useState(null);
-  const [proyectoSeleccionado, setProyectoSeleccionado] = React.useState(null);
+  const [proyectos, setProyectos] = useState([]);
+  const [participanteVisible, setParticipanteVisible] = useState(null);
+  const [proyectoSeleccionado, setProyectoSeleccionado] = useState(null);
   const [mostrarFormularioProyecto, setMostrarFormularioProyecto] = useState(false);
   const [participantesLista, setParticipantesLista] = useState([]);
   const [participanteEmail, setParticipanteEmail] = useState('');
   const [nombreProyecto, setNombreProyecto] = useState('');
   const [descripcionProyecto, setDescripcionProyecto] = useState('');
-  
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    cargarProyectos();
+  }, []);
+
+  const cargarProyectos = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('No hay sesión activa');
+        return;
+      }
+
+      const response = await fetch('http://localhost:4000/api/proyectos', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al cargar los proyectos');
+      }
+
+      const data = await response.json();
+      setProyectos(data);
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Error al cargar los proyectos');
+    }
+  };
+
   const toggleDetalles = (participanteId) => {
     setParticipanteVisible(participanteVisible === participanteId ? null : participanteId);
   };
@@ -104,6 +136,7 @@ export default function Proyectos() {
         setNombreProyecto('');
         setDescripcionProyecto('');
         setParticipantesLista([]);
+        cargarProyectos();
         alert('Proyecto creado exitosamente');
       } else {
         alert(data.message || 'Error al crear el proyecto');
@@ -176,293 +209,174 @@ export default function Proyectos() {
     <div className="proyectos-container">
       <div className="proyectos-subcontainer">
         <div className="proyectos-header">
-            <h1>Proyectos</h1>
-            <button className="boton-proyectos crear-proyecto" onClick={() => setMostrarFormularioProyecto(true)}>
-              <FontAwesomeIcon icon={faCirclePlus} /> Crear proyecto
-            </button>
+          <h1>Proyectos</h1>
+          <button className="boton-proyectos crear-proyecto" onClick={() => setMostrarFormularioProyecto(true)}>
+            <FontAwesomeIcon icon={faCirclePlus} /> Crear proyecto
+          </button>
         </div>
 
         <button className="volver-proyectos" onClick={handleVolverClick}>
           <FontAwesomeIcon icon={faArrowLeft} /> Volver al listado
         </button>
 
-        {/* Proyecto 1 */}
-        <div className="proyecto-box" id="proyecto-1">
-            <div className="proyecto" onClick={() => handleProyectoClick(1)}>
-                <div className="proyecto-titulo">
-                    <h2>Nombre proyecto</h2>
-                    <div className="estado-proyecto">Activo</div>
+        {proyectos.map(proyecto => (
+          <div className="proyecto-box" key={proyecto.ProyectoId} id={`proyecto-${proyecto.ProyectoId}`}>
+            <div className="proyecto" onClick={() => handleProyectoClick(proyecto.ProyectoId)}>
+              <div className="proyecto-titulo">
+                <h2>{proyecto.Nombre}</h2>
+                <div className="estado-proyecto">
+                  {proyecto.Estado ? 'Activo' : 'Inactivo'}
                 </div>
-                <p className="descripcion-proyecto">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p className="fecha-inicio-proyecto">27/11/2024</p>
-                <div className="proyecto-info">
-                    <h3>Participantes</h3>
-                    {/* Participante 1 */}
-                    <div className="proyecto-participante" onClick={() => toggleDetalles(1)}>
-                        <div className="proyecto-participante-nombre">Juan Pérez</div>
-                        <div className="proyecto-participante-email">juanperez@gmail.com</div>
-                    </div>
-                    <div className={`proyecto-participante-detalles ${participanteVisible === 1 ? 'visible' : ''}`}>
-                        <p className="proyecto-participante-deuda">Deuda total: $2.000</p>
-                        <div className="proyecto-participante-gastos">
-                            <p>Desglose de gastos:</p>
-                            <ul>
-                                <li>Lorem ipsum</li>
-                                <li>Dolor sit amet</li>
-                            </ul>
-                        </div>
-                    </div>
-                    {/* Participante 2 */}
-                    <div className="proyecto-participante" onClick={() => toggleDetalles(2)}>
-                        <div className="proyecto-participante-nombre">María González</div>
-                        <div className="proyecto-participante-email">mariagonzalez@gmail.com</div>
-                    </div>
-                    <div className={`proyecto-participante-detalles ${participanteVisible === 2 ? 'visible' : ''}`}>
-                        <p className="proyecto-participante-deuda">Deuda total: $1.500</p>
-                        <div className="proyecto-participante-gastos">
-                            <p>Desglose de gastos:</p>
-                            <ul>
-                                <li>Lorem ipsum</li>
-                                <li>Dolor sit amet</li>
-                            </ul>
-                        </div>
-                    </div>
-                    {/* fin participantes */}
-                </div>
-            </div>
-            
-            <button className="boton-agregar-gasto">
-                <FontAwesomeIcon icon={faCirclePlus} />
-                Añadir gasto
-            </button>
-
-            <div className="gasto">
-                <h2>Nombre gasto</h2>
-                <p className="descripcion-gasto">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p className="fecha-gasto">27/11/2024</p>
-                <p className="acreedor-gasto">Nombre apellido</p>
-                <p className="subtotal-gasto">10.000</p>
-
-                <h2>Participantes</h2>
-                <div className="tabla-grid">
-                    <div className="tabla-header">
-                        <div>Nombre</div>
-                        <div>Porcentaje</div>
-                        <div>Deuda</div>
-                    </div>
-                    
-                    <div className="tabla-row">
-                        <div>Juan Pérez</div>
-                        <div>50%</div>
-                        <div>$5.000</div>
-                    </div>
-
-                    <div className="tabla-row">
-                        <div>María González</div>
-                        <div>50%</div>
-                        <div>$5.000</div>
-                    </div>
-                </div>
-                
-                <button className="añadir-ticket">
-                    <FontAwesomeIcon icon={faFileImage} />
-                    Añadir ticket
-                </button>
-
-                <div className="contenedor-imagenes">
-                    <div className="caja-imagen">
-                        <img src="/rutaimg" alt="ticket" />
-                    </div>
-                </div>
-
-                {/*Progreso*/}
-
-
-                <h3>Progreso</h3>
-                <div className="barra-progreso">
-                    <div className="barra-progreso-relleno"></div>
-                </div>
-                <p>5.000 de 10.000 saldado (50%).</p>
-
-
-            </div>
-        </div>
-
-
-
-        {/* Proyecto 2 */}
-        <div className="proyecto-box" id="proyecto-2">
-            <div className="proyecto" onClick={() => handleProyectoClick(2)}>
-                <div className="proyecto-titulo">
-                    <h2>Nerea</h2>
-                    <div className="estado-proyecto">Activo</div>
-                </div>
-                <p className="descripcion-proyecto">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p className="fecha-inicio-proyecto">27/11/2024</p>
-                <div className="proyecto-info">
-                    <h3>Participantes</h3>
-                    {/* Participante 1 */}
-                    <div className="proyecto-participante" onClick={() => toggleDetalles(1)}>
-                        <div className="proyecto-participante-nombre">Juan Pérez</div>
-                        <div className="proyecto-participante-email">juanperez@gmail.com</div>
-                    </div>
-                    <div className={`proyecto-participante-detalles ${participanteVisible === 1 ? 'visible' : ''}`}>
-                        <p className="proyecto-participante-deuda">Deuda total: $2.000</p>
-                        <div className="proyecto-participante-gastos">
-                            <p>Desglose de gastos:</p>
-                            <ul>
-                                <li>Lorem ipsum</li>
-                                <li>Dolor sit amet</li>
-                            </ul>
-                        </div>
-                    </div>
-                    {/* Participante 2 */}
-                    <div className="proyecto-participante" onClick={() => toggleDetalles(2)}>
-                        <div className="proyecto-participante-nombre">María González</div>
-                        <div className="proyecto-participante-email">mariagonzalez@gmail.com</div>
-                    </div>
-                    <div className={`proyecto-participante-detalles ${participanteVisible === 2 ? 'visible' : ''}`}>
-                        <p className="proyecto-participante-deuda">Deuda total: $1.500</p>
-                        <div className="proyecto-participante-gastos">
-                            <p>Desglose de gastos:</p>
-                            <ul>
-                                <li>Lorem ipsum</li>
-                                <li>Dolor sit amet</li>
-                            </ul>
-                        </div>
-                    </div>
-                    {/* fin participantes */}
-                </div>
-            </div>
-            
-            <button className="boton-agregar-gasto">
-                <FontAwesomeIcon icon={faCirclePlus} />
-                Añadir gasto
-            </button>
-
-            <div className="gasto">
-                <h2>Nombre gasto</h2>
-                <p className="descripcion-gasto">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p className="fecha-gasto">27/11/2024</p>
-                <p className="acreedor-gasto">Nombre apellido</p>
-                <p className="subtotal-gasto">10.000</p>
-
-                <h2>Participantes</h2>
-                <div className="tabla-grid">
-                    <div className="tabla-header">
-                        <div>Nombre</div>
-                        <div>Porcentaje</div>
-                        <div>Deuda</div>
-                    </div>
-                    
-                    <div className="tabla-row">
-                        <div>Juan Pérez</div>
-                        <div>50%</div>
-                        <div>$5.000</div>
-                    </div>
-
-                    <div className="tabla-row">
-                        <div>María González</div>
-                        <div>50%</div>
-                        <div>$5.000</div>
-                    </div>
-                </div>
-                
-                <button className="añadir-ticket">
-                    <FontAwesomeIcon icon={faFileImage} />
-                    Añadir ticket
-                </button>
-
-                <div className="contenedor-imagenes">
-                    <div className="caja-imagen">
-                        <img src="/rutaimg" alt="ticket" />
-                    </div>
-                </div>
-
-                {/*Progreso*/}
-
-
-                <h3>Progreso</h3>
-                <div className="barra-progreso">
-                    <div className="barra-progreso-relleno"></div>
-                </div>
-                <p>5.000 de 10.000 saldado (50%).</p>
-
-
-            </div>
-        </div>
-
-
-
-      </div>
-      {mostrarFormularioProyecto && (
-        <div className="modal-overlay" onClick={() => setMostrarFormularioProyecto(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <FontAwesomeIcon 
-              icon={faTimes} 
-              className="cerrar-modal" 
-              onClick={() => setMostrarFormularioProyecto(false)}
-            />
-            <h2>Crear Nuevo Proyecto</h2>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                className="input-proyecto"
-                placeholder="Nombre del proyecto"
-                value={nombreProyecto}
-                onChange={(e) => setNombreProyecto(e.target.value)}
-                required
-              />
+              </div>
+              <p className="descripcion-proyecto">{proyecto.Descripcion}</p>
+              <p className="fecha-inicio-proyecto">
+                {new Date(proyecto.FechaInicio).toLocaleDateString()}
+              </p>
               
-              <textarea
-                className="input-proyecto"
-                placeholder="Descripción del proyecto"
-                value={descripcionProyecto}
-                onChange={(e) => setDescripcionProyecto(e.target.value)}
-                required
-              />
-
-              <div className="participantes-proyecto">
+              <div className="proyecto-info">
                 <h3>Participantes</h3>
-                <div className="agregar-participante">
-                  <input
-                    type="email"
-                    className="input-proyecto"
-                    placeholder="Email del participante"
-                    value={participanteEmail}
-                    onChange={(e) => setParticipanteEmail(e.target.value)}
-                  />
-                  <button 
-                    type="button" 
-                    className="boton-agregar"
-                    onClick={handleAgregarParticipante}
+                {proyecto.Participantes && proyecto.Participantes.map((participante) => (
+                  <div 
+                    key={participante.UsuarioId} 
+                    className="proyecto-participante" 
+                    onClick={() => toggleDetalles(participante.UsuarioId)}
                   >
-                    +
-                  </button>
+                    <div className="proyecto-participante-nombre">
+                      {`${participante.Nombre} ${participante.Apellido}`}
+                    </div>
+                    <div className="proyecto-participante-email">{participante.Email}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <button className="boton-agregar-gasto">
+              <FontAwesomeIcon icon={faCirclePlus} />
+              Añadir gasto
+            </button>
+
+            <div className="gasto">
+              <h2>Nombre gasto</h2>
+              <p className="descripcion-gasto">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+              <p className="fecha-gasto">27/11/2024</p>
+              <p className="acreedor-gasto">Nombre apellido</p>
+              <p className="subtotal-gasto">10.000</p>
+
+              <h2>Participantes</h2>
+              <div className="tabla-grid">
+                <div className="tabla-header">
+                  <div>Nombre</div>
+                  <div>Porcentaje</div>
+                  <div>Deuda</div>
+                </div>
+                
+                <div className="tabla-row">
+                  <div>Juan Pérez</div>
+                  <div>50%</div>
+                  <div>$5.000</div>
                 </div>
 
-                <div className="lista-participantes">
-                  {participantesLista.map((participante, index) => (
-                    <div key={index} className="participante-item">
-                      <span>{participante.email}</span>
-                      <FontAwesomeIcon 
-                        icon={faTimes} 
-                        onClick={() => {
-                          setParticipantesLista(participantesLista.filter((_, i) => i !== index));
-                        }}
-                      />
-                    </div>
-                  ))}
+                <div className="tabla-row">
+                  <div>María González</div>
+                  <div>50%</div>
+                  <div>$5.000</div>
+                </div>
+              </div>
+              
+              <button className="añadir-ticket">
+                <FontAwesomeIcon icon={faFileImage} />
+                Añadir ticket
+              </button>
+
+              <div className="contenedor-imagenes">
+                <div className="caja-imagen">
+                  <img src="/rutaimg" alt="ticket" />
                 </div>
               </div>
 
-              <button type="submit" className="boton-crear">
-                Crear Proyecto
-              </button>
-            </form>
+              {/*Progreso*/}
+
+
+              <h3>Progreso</h3>
+              <div className="barra-progreso">
+                <div className="barra-progreso-relleno"></div>
+              </div>
+              <p>5.000 de 10.000 saldado (50%).</p>
+
+
+            </div>
           </div>
-        </div>
-      )}
+        ))}
+
+        {mostrarFormularioProyecto && (
+          <div className="modal-overlay" onClick={() => setMostrarFormularioProyecto(false)}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+              <FontAwesomeIcon 
+                icon={faTimes} 
+                className="cerrar-modal" 
+                onClick={() => setMostrarFormularioProyecto(false)}
+              />
+              <h2>Crear Nuevo Proyecto</h2>
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  className="input-proyecto"
+                  placeholder="Nombre del proyecto"
+                  value={nombreProyecto}
+                  onChange={(e) => setNombreProyecto(e.target.value)}
+                  required
+                />
+                
+                <textarea
+                  className="input-proyecto"
+                  placeholder="Descripción del proyecto"
+                  value={descripcionProyecto}
+                  onChange={(e) => setDescripcionProyecto(e.target.value)}
+                  required
+                />
+
+                <div className="participantes-proyecto">
+                  <h3>Participantes</h3>
+                  <div className="agregar-participante">
+                    <input
+                      type="email"
+                      className="input-proyecto"
+                      placeholder="Email del participante"
+                      value={participanteEmail}
+                      onChange={(e) => setParticipanteEmail(e.target.value)}
+                    />
+                    <button 
+                      type="button" 
+                      className="boton-agregar"
+                      onClick={handleAgregarParticipante}
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <div className="lista-participantes">
+                    {participantesLista.map((participante, index) => (
+                      <div key={index} className="participante-item">
+                        <span>{participante.email}</span>
+                        <FontAwesomeIcon 
+                          icon={faTimes} 
+                          onClick={() => {
+                            setParticipantesLista(participantesLista.filter((_, i) => i !== index));
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <button type="submit" className="boton-crear">
+                  Crear Proyecto
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
