@@ -77,17 +77,16 @@ export default function Proyectos() {
     if (proyectoActual) {
       const proyectoInfo = proyectoActual.querySelector('.proyecto-info');
       const botonesGasto = proyectoActual.querySelector('.boton-agregar-gasto');
-      const gastoInfo = proyectoActual.querySelector('.gasto');
+      const gastosInfo = proyectoActual.querySelectorAll('.gasto');
 
       if (proyectoInfo) proyectoInfo.style.display = 'block';
       if (botonesGasto) botonesGasto.style.display = 'flex';
-      if (gastoInfo) gastoInfo.style.display = 'flex';
+      if (gastosInfo) gastosInfo.forEach(gasto => gasto.style.display = 'flex');
     }
   };
 
   const handleVolverClick = () => {
     setProyectoSeleccionado(null);
-    // Mostrar todos los proyectos y el botón crear
     const proyectos = document.querySelectorAll('.proyecto');
     const botonCrear = document.querySelector('.crear-proyecto');
     const botonVolver = document.querySelector('.volver-proyectos');
@@ -278,7 +277,18 @@ export default function Proyectos() {
         setDescripcionGasto('');
         setMontoGasto('');
         setParticipantesGasto([]);
-        cargarProyectos(); // Recargar los proyectos para ver el nuevo gasto
+        
+        // Guardar el ID del proyecto seleccionado
+        const proyectoId = proyectoSeleccionado;
+        
+        // Recargar los proyectos
+        await cargarProyectos();
+        
+        // Volver a mostrar el proyecto seleccionado
+        setTimeout(() => {
+          handleProyectoClick(proyectoId);
+        }, 100);
+        
         alert('Gasto creado exitosamente');
       } else {
         const data = await response.json();
