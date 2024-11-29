@@ -61,6 +61,7 @@
     flex-wrap: wrap;
     gap: 20px;
     color: rgb(255, 255, 255);
+    font-family: Kanit;
 }
 
 .finanzas-info {
@@ -112,6 +113,17 @@
     cursor: pointer;
 }
 
+.subtotal-card {
+    font-size: 26px!important;
+    background: #00000010;
+    border: 1px solid #ffffff1a;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.subtotal-card::before {
+    content: 'Total: ';
+}
 
 @media (max-width: 680px) {
     .finanzas-card {

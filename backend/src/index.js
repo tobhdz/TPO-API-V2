@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoutes.js';
 import proyectoRoutes from './routes/proyectoRoutes.js';
 import gastoRoutes from './routes/gastoRoutes.js';
 import ticketRoutes from './routes/ticketRoutes.js';
+import finanzasRoutes from './routes/finanzasRoutes.js';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -25,6 +26,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/proyectos', proyectoRoutes);
 app.use('/api/gastos', gastoRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/finanzas', finanzasRoutes);
 
 // Agregar esta línea para servir archivos estáticos
 app.use('/uploads', express.static('uploads'));
