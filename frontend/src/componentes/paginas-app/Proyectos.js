@@ -24,6 +24,8 @@ export default function Proyectos() {
   const [acreedorId, setAcreedorId] = useState(null);
   const [menuProyectoVisible, setMenuProyectoVisible] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [modoEdicion, setModoEdicion] = useState(false);
+  const [proyectoEditando, setProyectoEditando] = useState(null);
 
   const menuButtonStyle = {
     display: 'block',
@@ -150,23 +152,37 @@ export default function Proyectos() {
       return;
     }
 
-    if (!nombreProyecto.trim()) {
-      alert('Por favor ingrese un nombre para el proyecto');
-      return;
-    }
-
-    // Obtener el email del usuario actual del token
-    const tokenData = JSON.parse(atob(token.split('.')[1]));
-    const creadorEmail = tokenData.email;
-
-    // Asegurarse de que el creador esté en la lista de participantes
-    if (!participantesLista.some(p => p.email === creadorEmail)) {
-      participantesLista.push({ email: creadorEmail });
-    }
-
     try {
-      const response = await fetch('http://localhost:4000/api/proyectos', {
-        method: 'POST',
+      if (modoEdicion) {
+        // Verificar si se están eliminando participantes que están en gastos
+        const proyecto = proyectos.find(p => p.ProyectoId === proyectoEditando);
+        const participantesActuales = proyecto.Participantes.map(p => p.Email);
+        const participantesNuevos = participantesLista.map(p => p.email);
+        
+        const participantesEliminados = participantesActuales.filter(
+          email => !participantesNuevos.includes(email)
+        );
+
+        // Verificar si los participantes eliminados están en algún gasto
+        for (const email of participantesEliminados) {
+          const participante = proyecto.Participantes.find(p => p.Email === email);
+          if (participante && proyecto.Gastos?.some(g => 
+            g.Participantes.some(p => p.UsuarioId === participante.UsuarioId)
+          )) {
+            alert(`No se puede eliminar al participante ${email} porque está incluido en uno o más gastos.`);
+            return;
+          }
+        }
+      }
+
+      const url = modoEdicion 
+        ? `http://localhost:4000/api/proyectos/${proyectoEditando}`
+        : 'http://localhost:4000/api/proyectos';
+      
+      const method = modoEdicion ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
@@ -180,21 +196,22 @@ export default function Proyectos() {
       });
 
       const data = await response.json();
-      console.log('Respuesta del servidor:', data);
 
       if (response.ok) {
         setMostrarFormularioProyecto(false);
         setNombreProyecto('');
         setDescripcionProyecto('');
         setParticipantesLista([]);
+        setModoEdicion(false);
+        setProyectoEditando(null);
         cargarProyectos();
-        alert('Proyecto creado exitosamente');
+        alert(modoEdicion ? 'Proyecto actualizado exitosamente' : 'Proyecto creado exitosamente');
       } else {
-        alert(data.message || 'Error al crear el proyecto');
+        alert(data.message || `Error al ${modoEdicion ? 'actualizar' : 'crear'} el proyecto`);
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al crear el proyecto');
+      alert(`Error al ${modoEdicion ? 'actualizar' : 'crear'} el proyecto`);
     }
   };
 
@@ -381,7 +398,19 @@ export default function Proyectos() {
   };
 
   const handleEditarProyecto = (proyectoId) => {
-    console.log('Editar proyecto:', proyectoId);
+    const proyecto = proyectos.find(p => p.ProyectoId === proyectoId);
+    if (proyecto) {
+      setNombreProyecto(proyecto.Nombre);
+      setDescripcionProyecto(proyecto.Descripcion);
+      // Convertir los participantes al formato esperado
+      const participantes = proyecto.Participantes.map(p => ({
+        email: p.Email
+      }));
+      setParticipantesLista(participantes);
+      setProyectoEditando(proyectoId);
+      setModoEdicion(true);
+      setMostrarFormularioProyecto(true);
+    }
     setMenuProyectoVisible(null);
   };
 
@@ -680,7 +709,7 @@ export default function Proyectos() {
                 className="cerrar-modal" 
                 onClick={() => setMostrarFormularioProyecto(false)}
               />
-              <h2>Crear Nuevo Proyecto</h2>
+              <h2>{modoEdicion ? 'Editar Proyecto' : 'Crear Nuevo Proyecto'}</h2>
               <form onSubmit={handleSubmit}>
                 <input
                   type="text"
@@ -734,7 +763,7 @@ export default function Proyectos() {
                 </div>
 
                 <button type="submit" className="boton-crear">
-                  Crear Proyecto
+                  {modoEdicion ? 'Guardar Cambios' : 'Crear Proyecto'}
                 </button>
               </form>
             </div>

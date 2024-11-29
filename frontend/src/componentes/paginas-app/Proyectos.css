@@ -517,7 +517,7 @@
 .lista-participantes {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  padding-block: 10px;
 }
 
 .boton-crear {

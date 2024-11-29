@@ -185,4 +185,105 @@ export const obtenerProyectosUsuario = async (req, res) => {
       error: error.message 
     });
   }
+};
+
+export const actualizarProyecto = async (req, res) => {
+  const { nombre, descripcion, participantes } = req.body;
+  const proyectoId = req.params.id;
+  const userId = req.userId;
+
+  try {
+    const pool = await getConnection();
+    const transaction = new pkg.Transaction(pool);
+    await transaction.begin();
+
+    try {
+      // Verificar si el usuario es el creador del proyecto
+      const verificacion = await transaction.request()
+        .input('ProyectoId', Int, proyectoId)
+        .input('CreadorId', Int, userId)
+        .query(`
+          SELECT CreadorId FROM Proyectos 
+          WHERE ProyectoId = @ProyectoId AND CreadorId = @CreadorId
+        `);
+
+      if (verificacion.recordset.length === 0) {
+        throw new Error('No tienes permiso para editar este proyecto');
+      }
+
+      // Actualizar información básica del proyecto
+      await transaction.request()
+        .input('ProyectoId', Int, proyectoId)
+        .input('Nombre', VarChar(100), nombre)
+        .input('Descripcion', VarChar(pkg.MAX), descripcion)
+        .query(`
+          UPDATE Proyectos 
+          SET Nombre = @Nombre, Descripcion = @Descripcion
+          WHERE ProyectoId = @ProyectoId
+        `);
+
+      // Obtener participantes actuales que no están en gastos
+      const participantesActuales = await transaction.request()
+        .input('ProyectoId', Int, proyectoId)
+        .query(`
+          SELECT DISTINCT pp.UsuarioId
+          FROM ParticipantesProyecto pp
+          LEFT JOIN ParticipantesGasto pg ON pp.UsuarioId = pg.UsuarioId
+          WHERE pp.ProyectoId = @ProyectoId AND pg.GastoId IS NULL
+        `);
+
+      // Eliminar participantes que no están en gastos
+      await transaction.request()
+        .input('ProyectoId', Int, proyectoId)
+        .query(`
+          DELETE FROM ParticipantesProyecto 
+          WHERE ProyectoId = @ProyectoId 
+          AND UsuarioId IN (
+            SELECT UsuarioId FROM ParticipantesProyecto 
+            WHERE ProyectoId = @ProyectoId 
+            AND UsuarioId NOT IN (
+              SELECT DISTINCT UsuarioId 
+              FROM ParticipantesGasto 
+              WHERE GastoId IN (
+                SELECT GastoId 
+                FROM Gastos 
+                WHERE ProyectoId = @ProyectoId
+              )
+            )
+          )
+        `);
+
+      // Agregar nuevos participantes
+      for (const participante of participantes) {
+        const userResult = await transaction.request()
+          .input('Email', VarChar(100), participante.email)
+          .query(`SELECT Id FROM Usuarios WHERE Correo = @Email`);
+
+        if (userResult.recordset.length > 0) {
+          await transaction.request()
+            .input('ProyectoId', Int, proyectoId)
+            .input('UsuarioId', Int, userResult.recordset[0].Id)
+            .query(`
+              IF NOT EXISTS (
+                SELECT 1 FROM ParticipantesProyecto 
+                WHERE ProyectoId = @ProyectoId AND UsuarioId = @UsuarioId
+              )
+              INSERT INTO ParticipantesProyecto (ProyectoId, UsuarioId)
+              VALUES (@ProyectoId, @UsuarioId)
+            `);
+        }
+      }
+
+      await transaction.commit();
+      res.json({ message: 'Proyecto actualizado exitosamente' });
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ 
+      message: error.message || 'Error al actualizar el proyecto' 
+    });
+  }
 }; 
