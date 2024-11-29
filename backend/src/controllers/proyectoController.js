@@ -136,9 +136,11 @@ export const obtenerProyectosUsuario = async (req, res) => {
                           pg.UsuarioId,
                           u3.Nombre,
                           u3.Apellido,
-                          pg.PorcentajeDeuda
+                          pg.PorcentajeDeuda,
+                          ed.Estado as DeudaSaldada
                         FROM ParticipantesGasto pg
                         JOIN Usuarios u3 ON pg.UsuarioId = u3.Id
+                        LEFT JOIN EstadoDeudas ed ON ed.GastoId = g.GastoId AND ed.UsuarioId = pg.UsuarioId
                         WHERE pg.GastoId = g.GastoId
                         FOR JSON PATH
                       ), '[]'

@@ -606,7 +606,9 @@ export default function Proyectos() {
                             <div className="tabla-row" key={participante.UsuarioId}>
                               <div>{`${participante.Nombre} ${participante.Apellido}`}</div>
                               <div>{`${participante.PorcentajeDeuda}%`}</div>
-                              <div>${(gasto.MontoTotal * participante.PorcentajeDeuda / 100).toFixed(2)}</div>
+                              <div className={participante.DeudaSaldada ? "deuda-saldada" : ""}>
+                                ${(gasto.MontoTotal * participante.PorcentajeDeuda / 100).toFixed(2)}
+                              </div>
                             </div>
                           ));
                         } catch (error) {

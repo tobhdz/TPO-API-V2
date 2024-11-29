@@ -291,7 +291,6 @@
 .tabla-grid {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     width: 100%;
     border: 1px solid #505050;
     border-radius: 8px;
@@ -315,6 +314,12 @@
 
 .tabla-row {
     border-bottom: 1px solid #505050;
+    transition: background-color 0.2s ease;
+    padding-block: 25px;
+}
+
+.tabla-row:hover {
+    background-color: #2a2a2a;
 }
 
 .tabla-row:last-child {
@@ -994,6 +999,41 @@ select.input-proyecto:hover {
 
 body:has(.modal-overlay) {
   overflow: hidden;
+}
+
+.deuda-saldada {
+  color: transparent;
+  font-weight: bold;
+  position: relative;
+  display: inline-block;
+
+}
+
+.deuda-saldada::after {
+  content: 'Saldada';
+  color: #4CAF50;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+  height: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deuda-saldada:hover,
+.tabla-row:hover .deuda-saldada {
+  color: #6b6b6b;
+}
+
+.tabla-row:hover .deuda-saldada::after {
+  display: none;
+}
+
+.deuda-saldada:hover::after {
+  display: none;
 }
 
 
