@@ -109,4 +109,36 @@ export const eliminarTicket = async (req, res) => {
       error: error.message 
     });
   }
+};
+
+export const uploadTicket = async (req, res) => {
+  try {
+    const pool = await getConnection();
+    const transaction = new pkg.Transaction(pool);
+    await transaction.begin();
+
+    try {
+      // Verificar si el proyecto está activo
+      const verificacionProyecto = await transaction.request()
+        .input('GastoId', Int, req.body.gastoId)
+        .query(`
+          SELECT p.Estado 
+          FROM Gastos g
+          JOIN Proyectos p ON p.ProyectoId = g.ProyectoId
+          WHERE g.GastoId = @GastoId
+        `);
+
+      if (!verificacionProyecto.recordset[0]?.Estado) {
+        throw new Error('No se pueden subir tickets a un proyecto inactivo');
+      }
+
+      // Continuar con el código existente de subida de tickets
+      // ... resto del código ...
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }; 

@@ -635,14 +635,47 @@ export default function Proyectos() {
               </div>
             </div>
             
-            <button className="boton-agregar-gasto" onClick={() => {
-              setProyectoActual(proyecto);
-              setProyectoSeleccionado(proyecto.ProyectoId);
-              setMostrarFormularioGasto(true);
-            }}>
-              <FontAwesomeIcon icon={faCirclePlus} />
-              Añadir gasto
-            </button>
+            {proyecto.Estado === 1 && (
+              <>
+                <button className="boton-agregar-gasto" onClick={() => {
+                  setProyectoActual(proyecto);
+                  setProyectoSeleccionado(proyecto.ProyectoId);
+                  setMostrarFormularioGasto(true);
+                }}>
+                  <FontAwesomeIcon icon={faCirclePlus} />
+                  Añadir gasto
+                </button>
+                
+                {menuProyectoVisible === proyecto.ProyectoId && (
+                  <div className="menu-proyecto">
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditarProyecto(proyecto.ProyectoId);
+                    }}>
+                      Editar
+                    </button>
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      handleEliminarProyecto(proyecto.ProyectoId);
+                    }}>
+                      Eliminar
+                    </button>
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      handleFinalizarProyecto(proyecto.ProyectoId);
+                    }}>
+                      Finalizar
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+            
+            {proyecto.Estado === 0 && (
+              <div className="proyecto-inactivo-badge">
+                Proyecto Finalizado
+              </div>
+            )}
 
             {proyecto.Gastos && (() => {
               try {
@@ -652,7 +685,7 @@ export default function Proyectos() {
                 
                 return gastosData.map(gasto => (
                   <div className="gasto" key={gasto.GastoId}>
-                    {userId === gasto.AcreedorId && (
+                    {proyecto.Estado === 1 && gasto.AcreedorId === userId && (
                       <div className="botones-gasto">
                         <button 
                           onClick={(e) => {
@@ -701,16 +734,18 @@ export default function Proyectos() {
                       })()}
                     </div>
 
-                    <button 
-                      className="añadir-ticket"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSubirTicket(gasto.GastoId);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faFileImage} />
-                      Añadir ticket
-                    </button>
+                    {proyecto.Estado === 1 && (
+                      <button 
+                        className="añadir-ticket"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleSubirTicket(gasto.GastoId);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faFileImage} />
+                        Añadir ticket
+                      </button>
+                    )}
 
                     <div className="contenedor-imagenes">
                       {(() => {
