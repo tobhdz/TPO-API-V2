@@ -144,10 +144,14 @@
     height: fit-content;
 }
 
-.proyectos-container p {
+.proyectos-container p:not(:first-of-type) {
     color: #ffffff;
     font-size: 20px;
     font-weight: 500
+}
+
+.proyectos-container p:first-of-type {
+    font-size: 23px;
 }
 
 .fecha-inicio-proyecto::before {
@@ -226,6 +230,31 @@
     margin-top: 15px;
 }
 
+.botones-gasto {
+  width: fit-content;
+  display: flex;
+  gap: 20px;
+  float: right;
+}
+
+.botones-gasto button {
+  font-family: Kanit;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  font-size: 20px;
+  border-radius: 15px;
+  padding: 5px 20px;
+  transition: 0.3s;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.botones-gasto button:hover {
+  background: #313131;
+  opacity: 0.6
+}
+
 .fecha-gasto::before {
     content: 'Fecha: ';
     font-weight: 700;
@@ -250,8 +279,12 @@
 }
 
 .subtotal-gasto::before {
-    content: 'Total: ';
+    content: 'Total: $';
     font-weight: 700;
+}
+
+.subtotal-gasto::after {
+  content: ' (ARS)';
 }
 
 .tabla-grid {
@@ -262,6 +295,7 @@
     border: 1px solid #505050;
     border-radius: 8px;
     background: transparent;
+    text-align: center;
 }
 
 .tabla-header, .tabla-row {

@@ -486,7 +486,7 @@ export default function Proyectos() {
                 
                 return gastosData.map(gasto => (
                   <div className="gasto" key={gasto.GastoId}>
-                    <div>
+                    <div className="botones-gasto">
                       <button onClick={() => handleEditarGasto(gasto.GastoId)}>Editar</button>
                       <button onClick={() => handleEliminarGasto(gasto.GastoId)}>Eliminar</button>
                     </div>
