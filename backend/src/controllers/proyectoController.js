@@ -337,4 +337,95 @@ export const finalizarProyecto = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+export const eliminarProyecto = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.userId;
+
+  try {
+    const pool = await getConnection();
+    const transaction = new pkg.Transaction(pool);
+    await transaction.begin();
+
+    try {
+      // Verificar que el usuario es el creador del proyecto
+      const verificacionCreador = await transaction.request()
+        .input('ProyectoId', Int, id)
+        .input('UsuarioId', Int, userId)
+        .query(`
+          SELECT 1 FROM Proyectos 
+          WHERE ProyectoId = @ProyectoId AND CreadorId = @UsuarioId
+        `);
+
+      if (verificacionCreador.recordset.length === 0) {
+        throw new Error('No tienes permiso para eliminar este proyecto');
+      }
+
+      // Eliminar tickets de los gastos del proyecto
+      await transaction.request()
+        .input('ProyectoId', Int, id)
+        .query(`
+          DELETE t
+          FROM TicketsGasto t
+          INNER JOIN Gastos g ON t.GastoId = g.GastoId
+          WHERE g.ProyectoId = @ProyectoId
+        `);
+
+      // Eliminar estado de deudas
+      await transaction.request()
+        .input('ProyectoId', Int, id)
+        .query(`
+          DELETE ed
+          FROM EstadoDeudas ed
+          INNER JOIN Gastos g ON ed.GastoId = g.GastoId
+          WHERE g.ProyectoId = @ProyectoId
+        `);
+
+      // Eliminar participantes de gastos
+      await transaction.request()
+        .input('ProyectoId', Int, id)
+        .query(`
+          DELETE pg
+          FROM ParticipantesGasto pg
+          INNER JOIN Gastos g ON pg.GastoId = g.GastoId
+          WHERE g.ProyectoId = @ProyectoId
+        `);
+
+      // Eliminar gastos
+      await transaction.request()
+        .input('ProyectoId', Int, id)
+        .query(`
+          DELETE FROM Gastos
+          WHERE ProyectoId = @ProyectoId
+        `);
+
+      // Eliminar participantes del proyecto
+      await transaction.request()
+        .input('ProyectoId', Int, id)
+        .query(`
+          DELETE FROM ParticipantesProyecto
+          WHERE ProyectoId = @ProyectoId
+        `);
+
+      // Finalmente eliminar el proyecto
+      await transaction.request()
+        .input('ProyectoId', Int, id)
+        .query(`
+          DELETE FROM Proyectos
+          WHERE ProyectoId = @ProyectoId
+        `);
+
+      await transaction.commit();
+      res.json({ message: 'Proyecto eliminado exitosamente' });
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ 
+      message: error.message || 'Error al eliminar el proyecto' 
+    });
+  }
 }; 

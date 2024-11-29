@@ -413,11 +413,36 @@ export default function Proyectos() {
     setMenuProyectoVisible(null);
   };
 
-  const handleEliminarProyecto = (proyectoId) => {
-    if (window.confirm('¿Está seguro que desea eliminar este proyecto?')) {
-      console.log('Eliminar proyecto:', proyectoId);
+  const handleEliminarProyecto = async (proyectoId) => {
+    if (!window.confirm('¿Está seguro que desea eliminar este proyecto? Esta acción no se puede deshacer.')) {
+      return;
     }
-    setMenuProyectoVisible(null);
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('No hay sesión activa');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:4000/api/proyectos/${proyectoId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        await cargarProyectos();
+        alert('Proyecto eliminado exitosamente');
+      } else {
+        const data = await response.json();
+        alert(data.message || 'Error al eliminar el proyecto');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al eliminar el proyecto');
+    }
   };
 
   const handleFinalizarProyecto = async (proyectoId) => {
