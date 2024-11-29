@@ -14,6 +14,7 @@
         text-shadow: 1px 0px white, -1px 0px white, 0 1px white, 0 -1px white;
         text-transform: uppercase;
         font-weight: normal;
+        text-align: center;
     }
 }
 
@@ -44,6 +45,78 @@
     border-radius: 100px;
     display: flex;
     justify-content: flex-end;
+}
+                 
+.finanzas-card {
+    background: linear-gradient(#232323, rgb(34, 34, 34));
+    border: 1px solid #ffffff5e;
+    border-radius: 30px;
+    width: 80%;
+    padding: 20px;
+    margin-block: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.finanzas-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    width: 100%;
+}
+
+.finanzas-info h5 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.finanzas-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.finanzas-botones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.finanzas-botones button {
+    padding: 15px 40px;
+    font-size: 24px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 50px;
+    background: rgb(39, 39, 39);
+    border: 1px solid rgb(68, 68, 68);
+    color: white;
+    font-family: Kanit;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.finanzas-botones button:hover {
+    background: rgb(43, 43, 43);
+    border-color: rgb(88, 88, 88);
+    cursor: pointer;
+}
+
+
+@media (max-width: 680px) {
+    .finanzas-card {
+        flex-direction: column;
+    }
 }
 
 @media (max-width: 680px) {

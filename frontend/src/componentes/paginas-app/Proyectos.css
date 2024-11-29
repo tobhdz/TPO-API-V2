@@ -281,7 +281,7 @@
 
 .subtotal-gasto::before {
     content: 'Total: $';
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .subtotal-gasto::after {
