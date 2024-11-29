@@ -28,6 +28,7 @@
     gap: 15px;
     cursor: pointer;
     transition: 0.4s;
+    margin-top: 20px;
 }
 
 .boton-proyectos:hover,
@@ -593,6 +594,7 @@
   overflow-y: auto;
   scrollbar-width: none;  /* Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
+  box-sizing: border-box;
 }
 
 .modal-content::-webkit-scrollbar {
@@ -1054,6 +1056,17 @@ body:has(.modal-overlay) {
 
 .deuda-saldada:hover::after {
   display: none;
+}
+
+.proyecto-box[data-estado="0"] {
+  opacity: 0.7;
+}
+
+.proyecto-box[data-estado="0"] .boton-agregar-gasto,
+.proyecto-box[data-estado="0"] .añadir-ticket,
+.proyecto-box[data-estado="0"] .eliminar-ticket,
+.proyecto-box[data-estado="0"] .boton-eliminar-gasto {
+  display: none !important;
 }
 
 

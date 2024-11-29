@@ -298,6 +298,12 @@ export default function Proyectos() {
   const handleSubmitGasto = async (e) => {
     e.preventDefault();
     
+    const proyecto = proyectos.find(p => p.ProyectoId === proyectoSeleccionado);
+    if (!proyecto || !proyecto.Estado) {
+      alert('No se pueden agregar gastos a proyectos finalizados');
+      return;
+    }
+
     const token = localStorage.getItem('token');
     if (!token) {
       alert('No hay sesión activa');
@@ -355,6 +361,12 @@ export default function Proyectos() {
   };
 
   const handleEliminarGasto = async (gastoId) => {
+    const proyecto = proyectos.find(p => p.ProyectoId === proyectoSeleccionado);
+    if (!proyecto || !proyecto.Estado) {
+      alert('No se pueden eliminar gastos de proyectos finalizados');
+      return;
+    }
+
     if (!window.confirm('¿Está seguro que desea eliminar este gasto?')) {
       return;
     }
@@ -398,10 +410,14 @@ export default function Proyectos() {
 
   const handleEditarProyecto = (proyectoId) => {
     const proyecto = proyectos.find(p => p.ProyectoId === proyectoId);
+    if (!proyecto || !proyecto.Estado) {
+      alert('No se pueden editar proyectos finalizados');
+      return;
+    }
+    
     if (proyecto) {
       setNombreProyecto(proyecto.Nombre);
       setDescripcionProyecto(proyecto.Descripcion);
-      // Convertir los participantes al formato esperado
       const participantes = proyecto.Participantes.map(p => ({
         email: p.Email
       }));
@@ -492,6 +508,12 @@ export default function Proyectos() {
   }, [menuProyectoVisible]);
 
   const handleSubirTicket = async (gastoId) => {
+    const proyecto = proyectos.find(p => p.ProyectoId === proyectoSeleccionado);
+    if (!proyecto || !proyecto.Estado) {
+      alert('No se pueden subir tickets a proyectos finalizados');
+      return;
+    }
+
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
@@ -598,6 +620,7 @@ export default function Proyectos() {
             className={`proyecto-box ${proyectoSeleccionado === proyecto.ProyectoId ? 'proyecto-abierto' : ''}`}
             id={`proyecto-${proyecto.ProyectoId}`}
             key={proyecto.ProyectoId}
+            data-estado={proyecto.Estado ? "1" : "0"}
             onClick={() => handleProyectoClick(proyecto.ProyectoId)}
           >
             <div className="proyecto">
@@ -613,23 +636,27 @@ export default function Proyectos() {
                 </button>
                 {menuProyectoVisible === proyecto.ProyectoId && (
                   <div className="menu-proyecto-opciones">
-                    <button onClick={(e) => {
-                      e.stopPropagation();
-                      handleEditarProyecto(proyecto.ProyectoId);
-                    }}>
-                      Editar
-                    </button>
+                    {proyecto.Estado ? (
+                      <>
+                        <button onClick={(e) => {
+                          e.stopPropagation();
+                          handleEditarProyecto(proyecto.ProyectoId);
+                        }}>
+                          Editar
+                        </button>
+                        <button onClick={(e) => {
+                          e.stopPropagation();
+                          handleFinalizarProyecto(proyecto.ProyectoId);
+                        }}>
+                          Finalizar
+                        </button>
+                      </>
+                    ) : null}
                     <button onClick={(e) => {
                       e.stopPropagation();
                       handleEliminarProyecto(proyecto.ProyectoId);
                     }}>
                       Eliminar
-                    </button>
-                    <button onClick={(e) => {
-                      e.stopPropagation();
-                      handleFinalizarProyecto(proyecto.ProyectoId);
-                    }}>
-                      Finalizar
                     </button>
                   </div>
                 )}
