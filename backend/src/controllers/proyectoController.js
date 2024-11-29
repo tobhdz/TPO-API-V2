@@ -2,24 +2,6 @@ import pkg from 'mssql';
 const { VarChar, Int, DateTime, Bit } = pkg;
 import { getConnection } from '../database/connection.js';
 
-// Función auxiliar para verificar estado del proyecto
-const verificarProyectoActivo = async (transaction, proyectoId) => {
-  const resultado = await transaction.request()
-    .input('ProyectoId', Int, proyectoId)
-    .query(`
-      SELECT Estado FROM Proyectos 
-      WHERE ProyectoId = @ProyectoId
-    `);
-
-  if (resultado.recordset.length === 0) {
-    throw new Error('Proyecto no encontrado');
-  }
-
-  if (!resultado.recordset[0].Estado) {
-    throw new Error('El proyecto está inactivo y no puede ser modificado');
-  }
-};
-
 export const crearProyecto = async (req, res) => {
   const { nombre, descripcion, fechaInicio, participantes } = req.body;
   const creadorId = req.userId;
@@ -253,8 +235,6 @@ export const actualizarProyecto = async (req, res) => {
       }
 
       // Si llegamos aquí, podemos continuar con la actualización
-      await verificarProyectoActivo(transaction, proyectoId);
-
       await transaction.request()
         .input('ProyectoId', Int, proyectoId)
         .input('Nombre', VarChar(100), nombre)
