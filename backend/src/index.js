@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 import proyectoRoutes from './routes/proyectoRoutes.js';
+import gastoRoutes from './routes/gastoRoutes.js';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(express.json());
 // Rutas
 app.use('/api/users', userRoutes);
 app.use('/api/proyectos', proyectoRoutes);
+app.use('/api/gastos', gastoRoutes);
 
 const PORT = process.env.PORT || 4000;
 

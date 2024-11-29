@@ -30,19 +30,35 @@ export const crearProyecto = async (req, res) => {
       const proyectoId = resultProyecto.recordset[0].ProyectoId;
       console.log('Proyecto creado con ID:', proyectoId);
 
-      // Insertar participantes si existen
+      // Insertar al creador como participante primero
+      await transaction.request()
+        .input('ProyectoId', Int, proyectoId)
+        .input('UsuarioId', Int, creadorId)
+        .query(`
+          INSERT INTO ParticipantesProyecto (ProyectoId, UsuarioId)
+          VALUES (@ProyectoId, @UsuarioId)
+        `);
+
+      // Insertar otros participantes si existen
       if (participantes && participantes.length > 0) {
         for (const participante of participantes) {
-          console.log('Insertando participante:', participante.email);
-          await transaction.request()
-            .input('ProyectoId', Int, proyectoId)
+          // Verificar que el participante no sea el creador
+          const userResult = await transaction.request()
             .input('Email', VarChar(100), participante.email)
+            .input('UsuarioId', Int, creadorId)
             .query(`
-              INSERT INTO ParticipantesProyecto (ProyectoId, UsuarioId)
-              SELECT @ProyectoId, Id
-              FROM Usuarios 
-              WHERE Correo = @Email
+              SELECT Id FROM Usuarios WHERE Correo = @Email AND Id != @UsuarioId
             `);
+          
+          if (userResult.recordset.length > 0) {
+            await transaction.request()
+              .input('ProyectoId', Int, proyectoId)
+              .input('UsuarioId', Int, userResult.recordset[0].Id)
+              .query(`
+                INSERT INTO ParticipantesProyecto (ProyectoId, UsuarioId)
+                VALUES (@ProyectoId, @UsuarioId)
+              `);
+          }
         }
       }
 

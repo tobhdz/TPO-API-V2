@@ -14,6 +14,13 @@ export default function Proyectos() {
   const [nombreProyecto, setNombreProyecto] = useState('');
   const [descripcionProyecto, setDescripcionProyecto] = useState('');
   const [error, setError] = useState('');
+  const [mostrarFormularioGasto, setMostrarFormularioGasto] = useState(false);
+  const [nombreGasto, setNombreGasto] = useState('');
+  const [descripcionGasto, setDescripcionGasto] = useState('');
+  const [montoGasto, setMontoGasto] = useState('');
+  const [participantesGasto, setParticipantesGasto] = useState([]);
+  const [proyectoActual, setProyectoActual] = useState(null);
+  const [acreedorId, setAcreedorId] = useState(null);
 
   useEffect(() => {
     cargarProyectos();
@@ -113,6 +120,15 @@ export default function Proyectos() {
       return;
     }
 
+    // Obtener el email del usuario actual del token
+    const tokenData = JSON.parse(atob(token.split('.')[1]));
+    const creadorEmail = tokenData.email;
+
+    // Asegurarse de que el creador esté en la lista de participantes
+    if (!participantesLista.some(p => p.email === creadorEmail)) {
+      participantesLista.push({ email: creadorEmail });
+    }
+
     try {
       const response = await fetch('http://localhost:4000/api/proyectos', {
         method: 'POST',
@@ -205,6 +221,75 @@ export default function Proyectos() {
     }
   };
 
+  const handlePorcentajeChange = (usuarioId, porcentaje) => {
+    const nuevoParticipante = {
+      usuarioId,
+      porcentajeDeuda: parseFloat(porcentaje)
+    };
+
+    const participantesActualizados = participantesGasto.filter(p => p.usuarioId !== usuarioId);
+    setParticipantesGasto([...participantesActualizados, nuevoParticipante]);
+  };
+
+  const handleParticipanteGastoChange = (usuarioId, checked) => {
+    if (checked) {
+      setParticipantesGasto([...participantesGasto, { usuarioId, porcentajeDeuda: 0 }]);
+    } else {
+      setParticipantesGasto(participantesGasto.filter(p => p.usuarioId !== usuarioId));
+    }
+  };
+
+  const handleSubmitGasto = async (e) => {
+    e.preventDefault();
+    
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('No hay sesión activa');
+      return;
+    }
+
+    // Validar que los porcentajes sumen 100
+    const totalPorcentaje = participantesGasto.reduce((sum, p) => sum + p.porcentajeDeuda, 0);
+    if (totalPorcentaje !== 100) {
+      alert('Los porcentajes deben sumar 100%');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:4000/api/gastos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          proyectoId: proyectoSeleccionado,
+          nombre: nombreGasto,
+          descripcion: descripcionGasto,
+          montoTotal: parseFloat(montoGasto),
+          fecha: new Date().toISOString(),
+          participantes: participantesGasto
+        })
+      });
+
+      if (response.ok) {
+        setMostrarFormularioGasto(false);
+        setNombreGasto('');
+        setDescripcionGasto('');
+        setMontoGasto('');
+        setParticipantesGasto([]);
+        cargarProyectos(); // Recargar los proyectos para ver el nuevo gasto
+        alert('Gasto creado exitosamente');
+      } else {
+        const data = await response.json();
+        alert(data.message || 'Error al crear el gasto');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al crear el gasto');
+    }
+  };
+
   return (
     <div className="proyectos-container">
       <div className="proyectos-subcontainer">
@@ -250,7 +335,11 @@ export default function Proyectos() {
               </div>
             </div>
             
-            <button className="boton-agregar-gasto">
+            <button className="boton-agregar-gasto" onClick={() => {
+              setProyectoActual(proyecto);
+              setProyectoSeleccionado(proyecto.ProyectoId);
+              setMostrarFormularioGasto(true);
+            }}>
               <FontAwesomeIcon icon={faCirclePlus} />
               Añadir gasto
             </button>
@@ -371,6 +460,102 @@ export default function Proyectos() {
 
                 <button type="submit" className="boton-crear">
                   Crear Proyecto
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {mostrarFormularioGasto && proyectoActual && (
+          <div className="modal-overlay" onClick={() => {
+            setMostrarFormularioGasto(false);
+            setProyectoActual(null);
+          }}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+              <FontAwesomeIcon 
+                icon={faTimes} 
+                className="cerrar-modal" 
+                onClick={() => {
+                  setMostrarFormularioGasto(false);
+                  setProyectoActual(null);
+                }}
+              />
+              <h2>Crear Nuevo Gasto</h2>
+              <form onSubmit={handleSubmitGasto}>
+                <input
+                  type="text"
+                  className="input-proyecto"
+                  placeholder="Nombre del gasto"
+                  value={nombreGasto}
+                  onChange={(e) => setNombreGasto(e.target.value)}
+                  required
+                />
+                
+                <textarea
+                  className="input-proyecto"
+                  placeholder="Descripción del gasto"
+                  value={descripcionGasto}
+                  onChange={(e) => setDescripcionGasto(e.target.value)}
+                  required
+                />
+
+                <input
+                  type="number"
+                  className="input-proyecto"
+                  placeholder="Monto total"
+                  value={montoGasto}
+                  onChange={(e) => setMontoGasto(e.target.value)}
+                  required
+                  min="0"
+                  step="0.01"
+                />
+
+                <div className="select-acreedor">
+                  <h3>¿Quién pagó el gasto?</h3>
+                  <select 
+                    className="input-proyecto"
+                    required
+                    onChange={(e) => setAcreedorId(parseInt(e.target.value))}
+                  >
+                    <option value="">Seleccione quien pagó</option>
+                    {proyectoActual.Participantes?.map((participante) => (
+                      <option key={participante.UsuarioId} value={participante.UsuarioId}>
+                        {`${participante.Nombre} ${participante.Apellido}`}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="participantes-gasto">
+                  <h3>Participantes del Gasto</h3>
+                  {proyectoActual.Participantes?.map((participante) => (
+                    <div key={participante.UsuarioId} className="participante-gasto-item">
+                      <div className="participante-info">
+                        <input
+                          type="checkbox"
+                          onChange={(e) => handleParticipanteGastoChange(participante.UsuarioId, e.target.checked)}
+                        />
+                        <span>{`${participante.Nombre} ${participante.Apellido}`}</span>
+                      </div>
+                      <input
+                        type="number"
+                        placeholder="Porcentaje"
+                        min="0"
+                        max="100"
+                        disabled={!participantesGasto.some(p => p.usuarioId === participante.UsuarioId)}
+                        onChange={(e) => handlePorcentajeChange(participante.UsuarioId, e.target.value)}
+                      />
+                    </div>
+                  ))}
+                  {participantesGasto.length > 0 && (
+                    <div className="total-porcentaje">
+                      Total: {participantesGasto.reduce((sum, p) => sum + (parseFloat(p.porcentajeDeuda) || 0), 0)}%
+                    </div>
+                  )}
+                </div>
+
+                <button type="submit" className="boton-crear">
+                  Crear Gasto
                 </button>
               </form>
             </div>
