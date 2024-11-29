@@ -185,4 +185,46 @@ export const obtenerProyectosUsuario = async (req, res) => {
       error: error.message 
     });
   }
+};
+
+export const actualizarProyecto = async (req, res) => {
+  const { id } = req.params;
+  const { nombre, descripcion } = req.body;
+  const userId = req.userId;
+
+  try {
+    const pool = await getConnection();
+    
+    // Verificar que el usuario es el creador del proyecto
+    const verificacion = await pool.request()
+      .input('ProyectoId', Int, id)
+      .input('UsuarioId', Int, userId)
+      .query(`
+        SELECT 1 FROM Proyectos 
+        WHERE ProyectoId = @ProyectoId AND CreadorId = @UsuarioId
+      `);
+
+    if (verificacion.recordset.length === 0) {
+      return res.status(403).json({ message: 'No tienes permiso para editar este proyecto' });
+    }
+
+    // Actualizar el proyecto
+    await pool.request()
+      .input('ProyectoId', Int, id)
+      .input('Nombre', VarChar(100), nombre)
+      .input('Descripcion', VarChar(pkg.MAX), descripcion)
+      .query(`
+        UPDATE Proyectos 
+        SET Nombre = @Nombre, Descripcion = @Descripcion
+        WHERE ProyectoId = @ProyectoId
+      `);
+
+    res.json({ message: 'Proyecto actualizado exitosamente' });
+  } catch (error) {
+    console.error('Error al actualizar proyecto:', error);
+    res.status(500).json({ 
+      message: 'Error al actualizar el proyecto',
+      error: error.message 
+    });
+  }
 }; 

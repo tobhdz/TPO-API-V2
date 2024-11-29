@@ -24,6 +24,9 @@ export default function Proyectos() {
   const [acreedorId, setAcreedorId] = useState(null);
   const [menuProyectoVisible, setMenuProyectoVisible] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [editandoProyecto, setEditandoProyecto] = useState(null);
+  const [nombreEditado, setNombreEditado] = useState('');
+  const [descripcionEditada, setDescripcionEditada] = useState('');
 
   const menuButtonStyle = {
     display: 'block',
@@ -123,6 +126,7 @@ export default function Proyectos() {
 
   const handleVolverClick = () => {
     setProyectoSeleccionado(null);
+    setEditandoProyecto(null);
     const proyectos = document.querySelectorAll('.proyecto');
     const botonCrear = document.querySelector('.crear-proyecto');
     const botonVolver = document.querySelector('.volver-proyectos');
@@ -380,9 +384,39 @@ export default function Proyectos() {
     console.log('Editar gasto:', gastoId);
   };
 
-  const handleEditarProyecto = (proyectoId) => {
-    console.log('Editar proyecto:', proyectoId);
+  const handleEditarProyecto = (proyecto) => {
+    setEditandoProyecto(proyecto.ProyectoId);
+    setNombreEditado(proyecto.Nombre);
+    setDescripcionEditada(proyecto.Descripcion);
     setMenuProyectoVisible(null);
+  };
+
+  const handleGuardarEdicion = async (proyectoId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:4000/api/proyectos/${proyectoId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          nombre: nombreEditado,
+          descripcion: descripcionEditada
+        })
+      });
+
+      if (response.ok) {
+        setEditandoProyecto(null);
+        cargarProyectos();
+      } else {
+        const data = await response.json();
+        alert(data.message || 'Error al actualizar el proyecto');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al actualizar el proyecto');
+    }
   };
 
   const handleEliminarProyecto = (proyectoId) => {
@@ -516,7 +550,7 @@ export default function Proyectos() {
                   <div className="menu-proyecto-opciones">
                     <button onClick={(e) => {
                       e.stopPropagation();
-                      handleEditarProyecto(proyecto.ProyectoId);
+                      handleEditarProyecto(proyecto);
                     }}>
                       Editar
                     </button>
@@ -534,12 +568,47 @@ export default function Proyectos() {
                     </button>
                   </div>
                 )}
-                <h2>{proyecto.Nombre}</h2>
+                {editandoProyecto === proyecto.ProyectoId ? (
+                  <input
+                    type="text"
+                    className="input-proyecto"
+                    value={nombreEditado}
+                    onChange={(e) => setNombreEditado(e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                ) : (
+                  <h2>{proyecto.Nombre}</h2>
+                )}
                 <div className="estado-proyecto">
                   {proyecto.Estado ? 'Activo' : 'Inactivo'}
                 </div>
               </div>
-              <p className="descripcion-proyecto">{proyecto.Descripcion}</p>
+              {editandoProyecto === proyecto.ProyectoId ? (
+                <>
+                  <textarea
+                    className="input-proyecto"
+                    value={descripcionEditada}
+                    onChange={(e) => setDescripcionEditada(e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                  <div className="botones-edicion">
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      handleGuardarEdicion(proyecto.ProyectoId);
+                    }}>
+                      Guardar
+                    </button>
+                    <button onClick={(e) => {
+                      e.stopPropagation();
+                      setEditandoProyecto(null);
+                    }}>
+                      Cancelar
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <p className="descripcion-proyecto">{proyecto.Descripcion}</p>
+              )}
               <p className="fecha-inicio-proyecto">
                 {new Date(proyecto.FechaInicio).toLocaleDateString()}
               </p>
