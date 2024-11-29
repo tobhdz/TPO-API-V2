@@ -641,9 +641,9 @@ export default function Proyectos() {
                                 ×
                               </button>
                               <img 
-                                src={`http://localhost:4000/uploads/${ticket.RutaArchivo}`} 
+                                src={`http://localhost:4000/uploads/tickets/${ticket.RutaArchivo}`} 
                                 alt={`Ticket ${ticket.TicketId}`}
-                                onClick={() => window.open(`http://localhost:4000/uploads/${ticket.RutaArchivo}`, '_blank')}
+                                onClick={() => window.open(`http://localhost:4000/uploads/tickets/${ticket.RutaArchivo}`, '_blank')}
                               />
                             </div>
                           ));

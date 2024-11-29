@@ -26,7 +26,7 @@ export const subirTicket = async (req, res) => {
       `);
 
     if (verificacion.recordset.length === 0) {
-      fs.unlinkSync(path.join('uploads', rutaArchivo));
+      fs.unlinkSync(path.join('uploads', 'tickets', rutaArchivo));
       return res.status(403).json({ message: 'No tienes permiso para añadir tickets a este gasto' });
     }
 
@@ -45,7 +45,7 @@ export const subirTicket = async (req, res) => {
     });
   } catch (error) {
     // Si hay error, eliminar el archivo subido
-    fs.unlinkSync(path.join('uploads', rutaArchivo));
+    fs.unlinkSync(path.join('uploads', 'tickets', rutaArchivo));
     res.status(500).json({ 
       message: 'Error al subir el ticket',
       error: error.message 
@@ -91,7 +91,7 @@ export const eliminarTicket = async (req, res) => {
         `);
 
       // Eliminar el archivo físico
-      const rutaCompleta = path.join('uploads', rutaArchivo);
+      const rutaCompleta = path.join('uploads', 'tickets', rutaArchivo);
       if (fs.existsSync(rutaCompleta)) {
         fs.unlinkSync(rutaCompleta);
       }
