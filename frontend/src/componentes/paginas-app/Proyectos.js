@@ -445,6 +445,39 @@ export default function Proyectos() {
     input.click();
   };
 
+  const handleEliminarTicket = async (ticketId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:4000/api/tickets/${ticketId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        // Guardar el ID del proyecto seleccionado
+        const proyectoId = proyectoSeleccionado;
+        
+        // Recargar los proyectos
+        await cargarProyectos();
+        
+        // Volver a mostrar el proyecto seleccionado
+        setTimeout(() => {
+          handleProyectoClick(proyectoId);
+        }, 100);
+
+        alert('Ticket eliminado exitosamente');
+      } else {
+        const data = await response.json();
+        alert(data.message || 'Error al eliminar el ticket');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al eliminar el ticket');
+    }
+  };
+
   return (
     <div className="proyectos-container">
       <div className="proyectos-subcontainer">
@@ -601,8 +634,7 @@ export default function Proyectos() {
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   if (window.confirm('¿Está seguro que desea eliminar este ticket?')) {
-                                    // Aquí irá la lógica para eliminar el ticket
-                                    console.log('Eliminar ticket:', ticket.TicketId);
+                                    handleEliminarTicket(ticket.TicketId);
                                   }
                                 }}
                               >

@@ -51,4 +51,62 @@ export const subirTicket = async (req, res) => {
       error: error.message 
     });
   }
+};
+
+export const eliminarTicket = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.userId;
+
+  try {
+    const pool = await getConnection();
+    const transaction = new pkg.Transaction(pool);
+    await transaction.begin();
+
+    try {
+      // Obtener información del ticket y verificar permisos
+      const verificacion = await transaction.request()
+        .input('TicketId', Int, id)
+        .input('UsuarioId', Int, userId)
+        .query(`
+          SELECT t.RutaArchivo, t.GastoId 
+          FROM TicketsGasto t
+          JOIN Gastos g ON t.GastoId = g.GastoId
+          LEFT JOIN ParticipantesGasto pg ON g.GastoId = pg.GastoId
+          WHERE t.TicketId = @TicketId 
+          AND (g.AcreedorId = @UsuarioId OR pg.UsuarioId = @UsuarioId)
+        `);
+
+      if (verificacion.recordset.length === 0) {
+        throw new Error('No tienes permiso para eliminar este ticket');
+      }
+
+      const rutaArchivo = verificacion.recordset[0].RutaArchivo;
+
+      // Eliminar el ticket de la base de datos
+      await transaction.request()
+        .input('TicketId', Int, id)
+        .query(`
+          DELETE FROM TicketsGasto
+          WHERE TicketId = @TicketId
+        `);
+
+      // Eliminar el archivo físico
+      const rutaCompleta = path.join('uploads', rutaArchivo);
+      if (fs.existsSync(rutaCompleta)) {
+        fs.unlinkSync(rutaCompleta);
+      }
+
+      await transaction.commit();
+      res.json({ message: 'Ticket eliminado exitosamente' });
+    } catch (error) {
+      await transaction.rollback();
+      throw error;
+    }
+  } catch (error) {
+    console.error('Error al eliminar ticket:', error);
+    res.status(500).json({ 
+      message: 'Error al eliminar el ticket',
+      error: error.message 
+    });
+  }
 }; 
