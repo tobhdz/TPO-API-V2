@@ -154,7 +154,6 @@ export default function Proyectos() {
 
     try {
       if (modoEdicion) {
-        // Verificar si se están eliminando participantes que están en gastos
         const proyecto = proyectos.find(p => p.ProyectoId === proyectoEditando);
         const participantesActuales = proyecto.Participantes.map(p => p.Email);
         const participantesNuevos = participantesLista.map(p => p.email);
@@ -166,11 +165,15 @@ export default function Proyectos() {
         // Verificar si los participantes eliminados están en algún gasto
         for (const email of participantesEliminados) {
           const participante = proyecto.Participantes.find(p => p.Email === email);
-          if (participante && proyecto.Gastos?.some(g => 
-            g.Participantes.some(p => p.UsuarioId === participante.UsuarioId)
-          )) {
-            alert(`No se puede eliminar al participante ${email} porque está incluido en uno o más gastos.`);
-            return;
+          if (participante && proyecto.Gastos && proyecto.Gastos.length > 0) {
+            const participanteEnGasto = proyecto.Gastos.some(gasto => 
+              gasto.Participantes && gasto.Participantes.some(p => p.UsuarioId === participante.UsuarioId)
+            );
+            
+            if (participanteEnGasto) {
+              alert(`No se puede eliminar al participante ${email} porque está incluido en uno o más gastos.`);
+              return;
+            }
           }
         }
       }
@@ -512,6 +515,21 @@ export default function Proyectos() {
       console.error('Error:', error);
       alert('Error al eliminar el ticket');
     }
+  };
+
+  const handleEliminarParticipante = (email) => {
+    const proyecto = proyectos.find(p => p.ProyectoId === proyectoEditando);
+    const participante = proyecto.Participantes.find(p => p.Email === email);
+    
+    // Verificar si el participante está en algún gasto
+    if (participante && proyecto.Gastos?.some(g => 
+      g.ParticipantesGasto?.some(p => p.UsuarioId === participante.UsuarioId)
+    )) {
+      alert(`No se puede eliminar al participante ${email} porque está incluido en uno o más gastos.`);
+      return;
+    }
+    
+    setParticipantesLista(participantesLista.filter(p => p.email !== email));
   };
 
   return (

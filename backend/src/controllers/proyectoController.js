@@ -222,15 +222,19 @@ export const actualizarProyecto = async (req, res) => {
           WHERE ProyectoId = @ProyectoId
         `);
 
-      // Obtener participantes actuales que no están en gastos
-      const participantesActuales = await transaction.request()
+      // Verificar participantes en gastos y eliminar los que se pueden eliminar
+      const participantesEnGastos = await transaction.request()
         .input('ProyectoId', Int, proyectoId)
         .query(`
-          SELECT DISTINCT pp.UsuarioId
-          FROM ParticipantesProyecto pp
-          LEFT JOIN ParticipantesGasto pg ON pp.UsuarioId = pg.UsuarioId
-          WHERE pp.ProyectoId = @ProyectoId AND pg.GastoId IS NULL
+          SELECT DISTINCT u.Correo as Email
+          FROM ParticipantesGasto pg
+          JOIN Gastos g ON pg.GastoId = g.GastoId
+          JOIN Usuarios u ON pg.UsuarioId = u.Id
+          WHERE g.ProyectoId = @ProyectoId
         `);
+
+      const emailsEnGastos = participantesEnGastos.recordset.map(p => p.Email);
+      const emailsNuevos = participantes.map(p => p.email);
 
       // Eliminar participantes que no están en gastos
       await transaction.request()
@@ -239,17 +243,12 @@ export const actualizarProyecto = async (req, res) => {
           DELETE FROM ParticipantesProyecto 
           WHERE ProyectoId = @ProyectoId 
           AND UsuarioId IN (
-            SELECT UsuarioId FROM ParticipantesProyecto 
-            WHERE ProyectoId = @ProyectoId 
-            AND UsuarioId NOT IN (
-              SELECT DISTINCT UsuarioId 
-              FROM ParticipantesGasto 
-              WHERE GastoId IN (
-                SELECT GastoId 
-                FROM Gastos 
-                WHERE ProyectoId = @ProyectoId
-              )
-            )
+            SELECT u.Id
+            FROM Usuarios u
+            JOIN ParticipantesProyecto pp ON u.Id = pp.UsuarioId
+            WHERE pp.ProyectoId = @ProyectoId
+            AND u.Correo NOT IN (${emailsEnGastos.map(email => `'${email}'`).join(',') || "''"})
+            AND u.Correo NOT IN (${emailsNuevos.map(email => `'${email}'`).join(',') || "''"})
           )
         `);
 
