@@ -99,3 +99,33 @@ export const checkEmail = async (req, res) => {
     res.status(500).json({ message: 'Error al verificar email' });
   }
 };
+
+export const updateBalance = async (req, res) => {
+  try {
+    const userId = req.userId; // Obtenido del middleware de autenticación
+    const { monto } = req.body;
+    
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('UserId', userId)
+      .input('Monto', monto)
+      .query(`
+        UPDATE Usuarios 
+        SET Balance = Balance + @Monto 
+        WHERE Id = @UserId;
+        SELECT Balance FROM Usuarios WHERE Id = @UserId;
+      `);
+    
+    const nuevoBalance = result.recordset[0].Balance;
+    
+    res.status(200).json({ 
+      message: 'Balance actualizado exitosamente',
+      balance: nuevoBalance
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error al actualizar el balance', 
+      error: error.message 
+    });
+  }
+};

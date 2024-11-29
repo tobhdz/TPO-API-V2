@@ -70,10 +70,14 @@ export const UserProvider = ({ children }) => {
         setProfileImage(imageUrl);
     };
 
-    const updateUser = ({ newUser, newName, newEmail }) => {
+    const updateUser = ({ newUser, newName, newEmail, newBalance }) => {
         if (newUser) setUser(newUser);
         if (newName) setName(newName);
         if (newEmail) setEmail(newEmail);
+        if (newBalance !== undefined) {
+            setBalance(newBalance);
+            Cookies.set('balance', newBalance, { expires: 7 });
+        }
     };
 
     const addGasto=(gasto)=>{
