@@ -114,14 +114,62 @@ export default function Proyectos() {
     }
   };
 
-  const handleAgregarParticipante = () => {
+  const validateEmail = (email) => {
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return regex.test(email);
+  };
+
+  const handleAgregarParticipante = async () => {
     if (!participanteEmail) return;
     
-    setParticipantesLista([
-      ...participantesLista,
-      { email: participanteEmail, porcentaje: 0 }
-    ]);
-    setParticipanteEmail('');
+    if (!validateEmail(participanteEmail)) {
+      alert('Por favor ingrese un email válido');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('No hay sesión activa');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:4000/api/users/check-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ email: participanteEmail })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al verificar el email');
+      }
+
+      const data = await response.json();
+
+      if (!data.exists) {
+        alert('El email ingresado no corresponde a ningún usuario registrado');
+        return;
+      }
+
+      // Verificar que el participante no esté ya en la lista
+      if (participantesLista.some(p => p.email === participanteEmail)) {
+        alert('Este participante ya ha sido agregado');
+        return;
+      }
+
+      setParticipantesLista([
+        ...participantesLista,
+        { email: participanteEmail }
+      ]);
+      setParticipanteEmail('');
+
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al verificar el email');
+    }
   };
 
   return (

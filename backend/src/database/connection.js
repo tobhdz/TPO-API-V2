@@ -17,5 +17,6 @@ export const getConnection = async () => {
     return pool;
   } catch (error) {
     console.error("Error de conexión a la base de datos:", error);
+    throw error;
   }
 };

@@ -3,6 +3,7 @@ import { loginUser } from '../services/userService.js';
 import { updateUserInfo } from '../services/userService.js';
 import { updatePassword } from '../services/userService.js';
 import jwt from 'jsonwebtoken';
+import { getConnection } from '../database/connection.js';
 
 export const registerUser = async (req, res) => {
   try {
@@ -32,8 +33,6 @@ export const login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
-    
-    console.log('Token generado correctamente');
     
     res.status(200).json({ 
       message: 'Login exitoso',
@@ -82,5 +81,21 @@ export const changePassword = async (req, res) => {
     res.status(200).json({ message: 'Contraseña actualizada exitosamente' });
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+export const checkEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input('Correo', email)
+      .query('SELECT COUNT(*) as count FROM Usuarios WHERE Correo = @Correo');
+    
+    const exists = result.recordset[0].count > 0;
+    res.json({ exists });
+  } catch (error) {
+    console.error('Error al verificar email:', error);
+    res.status(500).json({ message: 'Error al verificar email' });
   }
 };
