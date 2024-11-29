@@ -81,6 +81,7 @@
     font-family: Kanit;
     display: none;
     gap: 15px;
+    align-items: center;
 }
 
 /* Proyectos */
