@@ -1,7 +1,7 @@
 .finanzas-container {
     display: flex;
     justify-content: center;
-    background: var(--fondogris);
+    background: #1e1e1e;
     padding-block: 60px;
 
     h2 {

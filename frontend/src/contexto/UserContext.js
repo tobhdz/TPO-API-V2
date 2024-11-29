@@ -29,8 +29,9 @@ export const UserProvider = ({ children }) => {
         setEmail(userData.email);
         setBalance(userData.balance);
         setGastos(userData.gastos);
-        setPassword(userData.password); // Almacena la contraseña
+        setPassword(userData.password);
         setUserId(userData.id);
+        setProfileImage(userData.profileImage);
 
         // Guardar en cookies
         Cookies.set('user', userData.user, { expires: 7 });
@@ -40,6 +41,7 @@ export const UserProvider = ({ children }) => {
         Cookies.set('gastos', JSON.stringify(userData.gastos), { expires: 7 });
         Cookies.set('password', userData.password, { expires: 7 });
         Cookies.set('userId', userData.id, { expires: 7 });
+        Cookies.set('profileImage', userData.profileImage, { expires: 7 });
     };
 
     const logout = () => {

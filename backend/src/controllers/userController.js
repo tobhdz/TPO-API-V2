@@ -46,7 +46,8 @@ export const login = async (req, res) => {
         apellido: user.Apellido,
         usuario: user.Usuario,
         correo: user.Correo,
-        balance: user.Balance
+        balance: user.Balance,
+        fotoPerfil: user.FotoPerfil
       },
       token: token
     });

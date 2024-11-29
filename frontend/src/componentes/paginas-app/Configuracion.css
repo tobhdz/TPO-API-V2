@@ -60,7 +60,7 @@
     background: linear-gradient(var(--gris) 40%, #1b1b1b);
     border-radius: 20px;
     box-sizing: border-box;
-    box-shadow: 0 0 20px 3px #ca80ff, 0 0 6px 0px #ffffff;
+    border: 1px solid #ffffff;
   }
 
   .configuracion-tabs {

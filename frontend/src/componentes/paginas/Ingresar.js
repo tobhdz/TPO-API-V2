@@ -29,8 +29,11 @@ export default function Login() {
         const data = await response.json();
         
         if (response.ok) {
-          // Guardar el token en localStorage
           localStorage.setItem('token', data.token);
+          
+          const profileImageUrl = data.user.fotoPerfil ? 
+            `http://localhost:4000/uploads/pfp/${data.user.fotoPerfil}` : 
+            '/img/defaultuser.png';
           
           authLogin();
           userLogin({
@@ -40,7 +43,8 @@ export default function Login() {
             email: data.user.correo,
             balance: data.user.balance,
             gastos: [],
-            password: contraseña
+            password: contraseña,
+            profileImage: profileImageUrl
           });
           navigate("/app");
         } else {
