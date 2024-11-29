@@ -143,7 +143,19 @@ export const obtenerProyectosUsuario = async (req, res) => {
                         FOR JSON PATH
                       ), '[]'
                     )
-                  ) as ParticipantesGasto
+                  ) as ParticipantesGasto,
+                  (
+                    SELECT COALESCE(
+                      (
+                        SELECT 
+                          t.TicketId,
+                          t.RutaArchivo
+                        FROM TicketsGasto t
+                        WHERE t.GastoId = g.GastoId
+                        FOR JSON PATH
+                      ), '[]'
+                    )
+                  ) as Tickets
                 FROM Gastos g
                 JOIN Usuarios ua ON g.AcreedorId = ua.Id
                 WHERE g.ProyectoId = p.ProyectoId

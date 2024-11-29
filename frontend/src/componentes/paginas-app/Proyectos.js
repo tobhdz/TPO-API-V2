@@ -588,9 +588,26 @@ export default function Proyectos() {
                     </button>
 
                     <div className="contenedor-imagenes">
-                      <div className="caja-imagen">
-                        <img src="/rutaimg" alt="ticket" />
-                      </div>
+                      {(() => {
+                        try {
+                          const tickets = typeof gasto.Tickets === 'string' ? 
+                            JSON.parse(gasto.Tickets) : 
+                            gasto.Tickets;
+
+                          return tickets.map(ticket => (
+                            <div className="caja-imagen" key={ticket.TicketId}>
+                              <img 
+                                src={`http://localhost:4000/uploads/${ticket.RutaArchivo}`} 
+                                alt={`Ticket ${ticket.TicketId}`}
+                                onClick={() => window.open(`http://localhost:4000/uploads/${ticket.RutaArchivo}`, '_blank')}
+                              />
+                            </div>
+                          ));
+                        } catch (error) {
+                          console.error('Error al parsear tickets:', error);
+                          return null;
+                        }
+                      })()}
                     </div>
                   </div>
                 ));
