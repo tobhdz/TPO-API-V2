@@ -32,37 +32,61 @@ export default function Finanzas() {
         obtenerFinanzas();
     }, []);
 
+    // Separar las finanzas en pendientes y saldadas
+    const cuentasPendientes = finanzas.filter(gasto => !gasto.EstadoDeuda);
+    const cuentasSaldadas = finanzas.filter(gasto => gasto.EstadoDeuda);
+
     return (
         <div className="finanzas-container">
-            
             <div className="finanzas-box">
                 <h1>Finanzas</h1>
                 {error && <p className="error">{error}</p>}
                 
                 <div className="card-container">
                     <h2>Cuentas por pagar</h2>
-                    {finanzas.map((gasto) => (
-                        <div 
-                            key={gasto.GastoId} 
-                            className={`finanzas-card ${gasto.EstadoDeuda ? 'saldada' : 'pendiente'}`}
-                        >
-                            <div className="finanzas-info">
-                                <h5>{gasto.Nombre}</h5>
-                                <div className="finanzas-detalles">
-                                    <span>Proyecto: {gasto.NombreProyecto}</span>
-                                    <span>Acreedor: {gasto.AcreedorNombre} {gasto.AcreedorApellido}</span>
+                    {cuentasPendientes.length === 0 ? (
+                        <p className="no-gastos">No hay cuentas pendientes</p>
+                    ) : (
+                        cuentasPendientes.map((gasto) => (
+                            <div key={gasto.GastoId} className="finanzas-card pendiente">
+                                <div className="finanzas-info">
+                                    <h5>{gasto.Nombre}</h5>
+                                    <div className="finanzas-detalles">
+                                        <span>Proyecto: {gasto.NombreProyecto}</span>
+                                        <span>Acreedor: {gasto.AcreedorNombre} {gasto.AcreedorApellido}</span>
+                                    </div>
+                                    <p className="subtotal-card">
+                                        ${(gasto.MontoTotal * gasto.PorcentajeDeuda / 100).toFixed(2)}
+                                    </p>
                                 </div>
-                                <p className="subtotal-card">
-                                    ${(gasto.MontoTotal * gasto.PorcentajeDeuda / 100).toFixed(2)}
-                                </p>
-                            </div>
-                            {!gasto.EstadoDeuda && (
                                 <div className="finanzas-botones">
                                     <button>Pagar</button>
                                 </div>
-                            )}
-                        </div>
-                    ))}
+                            </div>
+                        ))
+                    )}
+                </div>
+
+                <div className="card-container">
+                    <h2>Cuentas saldadas</h2>
+                    {cuentasSaldadas.length === 0 ? (
+                        <p className="no-gastos">No hay cuentas saldadas</p>
+                    ) : (
+                        cuentasSaldadas.map((gasto) => (
+                            <div key={gasto.GastoId} className="finanzas-card saldada">
+                                <div className="finanzas-info">
+                                    <h5>{gasto.Nombre}</h5>
+                                    <div className="finanzas-detalles">
+                                        <span>Proyecto: {gasto.NombreProyecto}</span>
+                                        <span>Acreedor: {gasto.AcreedorNombre} {gasto.AcreedorApellido}</span>
+                                    </div>
+                                    <p className="subtotal-card">
+                                        ${(gasto.MontoTotal * gasto.PorcentajeDeuda / 100).toFixed(2)}
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
         </div>
