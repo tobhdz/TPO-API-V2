@@ -596,6 +596,18 @@ export default function Proyectos() {
 
                           return tickets.map(ticket => (
                             <div className="caja-imagen" key={ticket.TicketId}>
+                              <button 
+                                className="eliminar-ticket"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (window.confirm('¿Está seguro que desea eliminar este ticket?')) {
+                                    // Aquí irá la lógica para eliminar el ticket
+                                    console.log('Eliminar ticket:', ticket.TicketId);
+                                  }
+                                }}
+                              >
+                                ×
+                              </button>
                               <img 
                                 src={`http://localhost:4000/uploads/${ticket.RutaArchivo}`} 
                                 alt={`Ticket ${ticket.TicketId}`}
