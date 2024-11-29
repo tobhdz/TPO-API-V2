@@ -7,7 +7,6 @@
     background: linear-gradient(var(--gris) 40%, #1b1b1b) padding-box, var(--degrade0) border-box;
     border: 3px solid transparent;
     box-sizing: border-box;
-    text-align: center;
     border-radius: 30px;
     text-align: left;
     transition: 0.2s;
@@ -23,10 +22,26 @@
     margin: 0;
 }
 
-.notificacion h1 {
-    font-weight: bold;
+.notificacion p {
+    font-size: 1.2em;
+    font-weight: 400;
+    line-height: 1.4;
 }
 
-.notificacion p {
-    font-weight: 400;
+.fecha-notificacion {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 8px;
+    display: block;
+}
+
+.cargando, .error {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2em;
+    color: #888;
+}
+
+.error {
+    color: #ff6b6b;
 }
