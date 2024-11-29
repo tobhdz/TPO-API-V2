@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './Proyectos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus, faArrowLeft, faFileImage, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faArrowLeft, faFileImage, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { jwtDecode } from 'jwt-decode';
 
 
@@ -395,11 +395,6 @@ export default function Proyectos() {
     }
   };
 
-  const handleEditarGasto = (gastoId) => {
-    // Función placeholder para la edición
-    console.log('Editar gasto:', gastoId);
-  };
-
   const handleEditarProyecto = (proyectoId) => {
     const proyecto = proyectos.find(p => p.ProyectoId === proyectoId);
     if (proyecto) {
@@ -626,8 +621,9 @@ export default function Proyectos() {
                 return gastosData.map(gasto => (
                   <div className="gasto" key={gasto.GastoId}>
                     <div className="botones-gasto">
-                      <button onClick={() => handleEditarGasto(gasto.GastoId)}>Editar</button>
-                      <button onClick={() => handleEliminarGasto(gasto.GastoId)}>Eliminar</button>
+                      <button onClick={() => handleEliminarGasto(gasto.GastoId)}>
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
                     </div>
                     <h2>{gasto.Nombre}</h2>
                     <p className="descripcion-gasto">{gasto.Descripcion}</p>
