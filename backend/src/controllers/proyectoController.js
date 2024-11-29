@@ -103,18 +103,54 @@ export const obtenerProyectosUsuario = async (req, res) => {
           u.Nombre as CreadorNombre,
           u.Apellido as CreadorApellido,
           (
-            SELECT JSON_QUERY((
-              SELECT DISTINCT 
-                u2.Id as UsuarioId,
-                u2.Nombre,
-                u2.Apellido,
-                u2.Correo as Email
-              FROM ParticipantesProyecto pp2
-              JOIN Usuarios u2 ON pp2.UsuarioId = u2.Id
-              WHERE pp2.ProyectoId = p.ProyectoId
-              FOR JSON PATH
-            ))
-          ) as Participantes
+            SELECT COALESCE(
+              (
+                SELECT DISTINCT 
+                  u2.Id as UsuarioId,
+                  u2.Nombre,
+                  u2.Apellido,
+                  u2.Correo as Email
+                FROM ParticipantesProyecto pp2
+                JOIN Usuarios u2 ON pp2.UsuarioId = u2.Id
+                WHERE pp2.ProyectoId = p.ProyectoId
+                FOR JSON PATH
+              ), '[]'
+            )
+          ) as Participantes,
+          (
+            SELECT COALESCE(
+              (
+                SELECT 
+                  g.GastoId,
+                  g.Nombre,
+                  g.Descripcion,
+                  g.Fecha,
+                  g.MontoTotal,
+                  g.AcreedorId,
+                  ua.Nombre as AcreedorNombre,
+                  ua.Apellido as AcreedorApellido,
+                  (
+                    SELECT COALESCE(
+                      (
+                        SELECT 
+                          pg.UsuarioId,
+                          u3.Nombre,
+                          u3.Apellido,
+                          pg.PorcentajeDeuda
+                        FROM ParticipantesGasto pg
+                        JOIN Usuarios u3 ON pg.UsuarioId = u3.Id
+                        WHERE pg.GastoId = g.GastoId
+                        FOR JSON PATH
+                      ), '[]'
+                    )
+                  ) as ParticipantesGasto
+                FROM Gastos g
+                JOIN Usuarios ua ON g.AcreedorId = ua.Id
+                WHERE g.ProyectoId = p.ProyectoId
+                FOR JSON PATH
+              ), '[]'
+            )
+          ) as Gastos
         FROM ProyectosUsuario p
         JOIN Usuarios u ON p.CreadorId = u.Id
         ORDER BY p.FechaInicio DESC
@@ -123,7 +159,8 @@ export const obtenerProyectosUsuario = async (req, res) => {
     // Parsear los participantes de JSON string a objeto
     const proyectos = result.recordset.map(proyecto => ({
       ...proyecto,
-      Participantes: JSON.parse(proyecto.Participantes || '[]')
+      Participantes: JSON.parse(proyecto.Participantes || '[]'),
+      Gastos: JSON.parse(proyecto.Gastos || '[]')
     }));
 
     res.json(proyectos);

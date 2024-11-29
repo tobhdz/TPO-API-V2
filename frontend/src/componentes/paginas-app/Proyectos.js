@@ -344,56 +344,54 @@ export default function Proyectos() {
               Añadir gasto
             </button>
 
-            <div className="gasto">
-              <h2>Nombre gasto</h2>
-              <p className="descripcion-gasto">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-              <p className="fecha-gasto">27/11/2024</p>
-              <p className="acreedor-gasto">Nombre apellido</p>
-              <p className="subtotal-gasto">10.000</p>
-
-              <h2>Participantes</h2>
-              <div className="tabla-grid">
-                <div className="tabla-header">
-                  <div>Nombre</div>
-                  <div>Porcentaje</div>
-                  <div>Deuda</div>
-                </div>
+            {proyecto.Gastos && (() => {
+              try {
+                const gastosData = typeof proyecto.Gastos === 'string' ? 
+                  JSON.parse(proyecto.Gastos) : 
+                  proyecto.Gastos;
                 
-                <div className="tabla-row">
-                  <div>Juan Pérez</div>
-                  <div>50%</div>
-                  <div>$5.000</div>
-                </div>
+                return gastosData.map(gasto => (
+                  <div className="gasto" key={gasto.GastoId}>
+                    <h2>{gasto.Nombre}</h2>
+                    <p className="descripcion-gasto">{gasto.Descripcion}</p>
+                    <p className="fecha-gasto">{new Date(gasto.Fecha).toLocaleDateString()}</p>
+                    <p className="acreedor-gasto">{`${gasto.AcreedorNombre} ${gasto.AcreedorApellido}`}</p>
+                    <p className="subtotal-gasto">{gasto.MontoTotal}</p>
 
-                <div className="tabla-row">
-                  <div>María González</div>
-                  <div>50%</div>
-                  <div>$5.000</div>
-                </div>
-              </div>
-              
-              <button className="añadir-ticket">
-                <FontAwesomeIcon icon={faFileImage} />
-                Añadir ticket
-              </button>
+                    <h2>Participantes</h2>
+                    <div className="tabla-grid">
+                      <div className="tabla-header">
+                        <div>Nombre</div>
+                        <div>Porcentaje</div>
+                        <div>Deuda</div>
+                      </div>
+                      
+                      {(() => {
+                        try {
+                          const participantesData = typeof gasto.ParticipantesGasto === 'string' ? 
+                            JSON.parse(gasto.ParticipantesGasto) : 
+                            gasto.ParticipantesGasto;
 
-              <div className="contenedor-imagenes">
-                <div className="caja-imagen">
-                  <img src="/rutaimg" alt="ticket" />
-                </div>
-              </div>
-
-              {/*Progreso*/}
-
-
-              <h3>Progreso</h3>
-              <div className="barra-progreso">
-                <div className="barra-progreso-relleno"></div>
-              </div>
-              <p>5.000 de 10.000 saldado (50%).</p>
-
-
-            </div>
+                          return participantesData.map(participante => (
+                            <div className="tabla-row" key={participante.UsuarioId}>
+                              <div>{`${participante.Nombre} ${participante.Apellido}`}</div>
+                              <div>{`${participante.PorcentajeDeuda}%`}</div>
+                              <div>${(gasto.MontoTotal * participante.PorcentajeDeuda / 100).toFixed(2)}</div>
+                            </div>
+                          ));
+                        } catch (error) {
+                          console.error('Error al parsear participantes:', error);
+                          return null;
+                        }
+                      })()}
+                    </div>
+                  </div>
+                ));
+              } catch (error) {
+                console.error('Error al parsear gastos:', error);
+                return null;
+              }
+            })()}
           </div>
         ))}
 
