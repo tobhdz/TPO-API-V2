@@ -125,6 +125,18 @@
     content: 'Total: ';
 }
 
+.notificacion-finanzas {
+    background: rgb(39, 39, 39);
+    position: absolute;;
+    font-family: Kanit;
+    font-size: 50px!important;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid rgb(68, 68, 68);
+    font-size: 30px;
+}
+
 @media (max-width: 680px) {
     .finanzas-card {
         flex-direction: column;

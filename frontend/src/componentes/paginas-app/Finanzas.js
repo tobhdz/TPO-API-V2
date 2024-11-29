@@ -153,10 +153,11 @@ export default function Finanzas() {
                 </div>
             )}
             {mostrarNotificacion && (
-                <div className="notificacion">
+                <div className="notificacion-finanzas">
                     ¡Pago exitoso!
                 </div>
             )}
+
         </div>
     );
 }

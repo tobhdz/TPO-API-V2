@@ -52,18 +52,21 @@ export const pagarDeuda = async (req, res) => {
     await transaction.begin();
 
     try {
-      // Obtener información del gasto y usuario
+      // Obtener información del gasto, usuario y acreedor
       const result = await transaction.request()
         .input('GastoId', Int, gastoId)
         .input('UsuarioId', Int, userId)
         .query(`
           SELECT 
-            u.Balance,
+            u.Balance as BalanceDeudor,
+            ua.Id as AcreedorId,
+            ua.Balance as BalanceAcreedor,
             g.MontoTotal,
             pg.PorcentajeDeuda
           FROM Usuarios u
           JOIN ParticipantesGasto pg ON pg.UsuarioId = u.Id
           JOIN Gastos g ON g.GastoId = pg.GastoId
+          JOIN Usuarios ua ON g.AcreedorId = ua.Id
           WHERE u.Id = @UsuarioId AND g.GastoId = @GastoId
         `);
 
@@ -71,14 +74,14 @@ export const pagarDeuda = async (req, res) => {
         throw new Error('Gasto no encontrado');
       }
 
-      const { Balance, MontoTotal, PorcentajeDeuda } = result.recordset[0];
+      const { BalanceDeudor, AcreedorId, BalanceAcreedor, MontoTotal, PorcentajeDeuda } = result.recordset[0];
       const montoPagar = (MontoTotal * PorcentajeDeuda / 100);
 
-      if (Balance < montoPagar) {
+      if (BalanceDeudor < montoPagar) {
         throw new Error('Saldo insuficiente');
       }
 
-      // Actualizar balance del usuario
+      // Actualizar balance del deudor (restar)
       await transaction.request()
         .input('UsuarioId', Int, userId)
         .input('MontoPagar', Decimal(18,2), montoPagar)
@@ -86,6 +89,16 @@ export const pagarDeuda = async (req, res) => {
           UPDATE Usuarios 
           SET Balance = Balance - @MontoPagar
           WHERE Id = @UsuarioId
+        `);
+
+      // Actualizar balance del acreedor (sumar)
+      await transaction.request()
+        .input('AcreedorId', Int, AcreedorId)
+        .input('MontoPagar', Decimal(18,2), montoPagar)
+        .query(`
+          UPDATE Usuarios 
+          SET Balance = Balance + @MontoPagar
+          WHERE Id = @AcreedorId
         `);
 
       // Actualizar estado de la deuda
@@ -101,7 +114,7 @@ export const pagarDeuda = async (req, res) => {
       await transaction.commit();
       res.json({ 
         message: 'Pago realizado exitosamente',
-        nuevoBalance: Balance - montoPagar
+        nuevoBalance: BalanceDeudor - montoPagar
       });
     } catch (error) {
       await transaction.rollback();
