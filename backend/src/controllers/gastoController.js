@@ -3,8 +3,8 @@ const { VarChar, Int, DateTime, Decimal } = pkg;
 import { getConnection } from '../database/connection.js';
 
 export const crearGasto = async (req, res) => {
-  const { proyectoId, nombre, descripcion, montoTotal, fecha, participantes } = req.body;
-  const acreedorId = req.userId; // El usuario que crea el gasto es el acreedor
+  const { proyectoId, nombre, descripcion, montoTotal, fecha, participantes, acreedorId } = req.body;
+  const usuarioCreador = req.userId;
 
   try {
     const pool = await getConnection();
@@ -12,10 +12,10 @@ export const crearGasto = async (req, res) => {
     await transaction.begin();
 
     try {
-      // Verificar que el usuario es participante del proyecto
+      // Verificar que el usuario creador es participante del proyecto
       const verificacionParticipante = await transaction.request()
         .input('ProyectoId', Int, proyectoId)
-        .input('UsuarioId', Int, acreedorId)
+        .input('UsuarioId', Int, usuarioCreador)
         .query(`
           SELECT 1 FROM ParticipantesProyecto 
           WHERE ProyectoId = @ProyectoId AND UsuarioId = @UsuarioId
@@ -23,6 +23,19 @@ export const crearGasto = async (req, res) => {
 
       if (verificacionParticipante.recordset.length === 0) {
         throw new Error('No tienes permiso para crear gastos en este proyecto');
+      }
+
+      // Verificar que el acreedor es participante del proyecto
+      const verificacionAcreedor = await transaction.request()
+        .input('ProyectoId', Int, proyectoId)
+        .input('UsuarioId', Int, acreedorId)
+        .query(`
+          SELECT 1 FROM ParticipantesProyecto 
+          WHERE ProyectoId = @ProyectoId AND UsuarioId = @UsuarioId
+        `);
+
+      if (verificacionAcreedor.recordset.length === 0) {
+        throw new Error('El acreedor debe ser participante del proyecto');
       }
 
       // Crear el gasto
@@ -41,7 +54,7 @@ export const crearGasto = async (req, res) => {
 
       const gastoId = resultGasto.recordset[0].GastoId;
 
-      // Insertar participantes del gasto
+      // Insertar participantes del gasto y crear registros en EstadoDeudas
       for (const participante of participantes) {
         await transaction.request()
           .input('GastoId', Int, gastoId)
@@ -49,7 +62,10 @@ export const crearGasto = async (req, res) => {
           .input('PorcentajeDeuda', Decimal(5,2), participante.porcentajeDeuda)
           .query(`
             INSERT INTO ParticipantesGasto (GastoId, UsuarioId, PorcentajeDeuda)
-            VALUES (@GastoId, @UsuarioId, @PorcentajeDeuda)
+            VALUES (@GastoId, @UsuarioId, @PorcentajeDeuda);
+
+            INSERT INTO EstadoDeudas (GastoId, UsuarioId, Estado, FechaSaldado)
+            VALUES (@GastoId, @UsuarioId, 0, NULL);
           `);
       }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './Proyectos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus, faArrowLeft, faFileImage, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { jwtDecode } from 'jwt-decode';
 
 
 export default function Proyectos() {
@@ -22,6 +23,7 @@ export default function Proyectos() {
   const [proyectoActual, setProyectoActual] = useState(null);
   const [acreedorId, setAcreedorId] = useState(null);
   const [menuProyectoVisible, setMenuProyectoVisible] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const menuButtonStyle = {
     display: 'block',
@@ -51,6 +53,14 @@ export default function Proyectos() {
       document.body.classList.remove('modal-open');
     };
   }, [mostrarFormularioProyecto, mostrarFormularioGasto]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      setUserId(decodedToken.userId);
+    }
+  }, []);
 
   const cargarProyectos = async () => {
     try {
@@ -293,7 +303,8 @@ export default function Proyectos() {
           descripcion: descripcionGasto,
           montoTotal: parseFloat(montoGasto),
           fecha: new Date().toISOString(),
-          participantes: participantesGasto
+          participantes: participantesGasto,
+          acreedorId: acreedorId
         })
       });
 
@@ -304,13 +315,9 @@ export default function Proyectos() {
         setMontoGasto('');
         setParticipantesGasto([]);
         
-        // Guardar el ID del proyecto seleccionado
         const proyectoId = proyectoSeleccionado;
-        
-        // Recargar los proyectos
         await cargarProyectos();
         
-        // Volver a mostrar el proyecto seleccionado
         setTimeout(() => {
           handleProyectoClick(proyectoId);
         }, 100);
