@@ -206,3 +206,13 @@
     color: white;
     border: 1px solid #ffffff3d;
 }
+
+.botones-confirmacion button:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(157, 73, 178, 0.3);
+}
+
+.botones-confirmacion button:last-child:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}

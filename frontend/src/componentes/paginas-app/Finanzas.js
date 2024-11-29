@@ -10,7 +10,8 @@ export default function Finanzas() {
     const [error, setError] = useState(null);
     const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
     const [gastoSeleccionado, setGastoSeleccionado] = useState(null);
-    const { updateUser } = useContext(UserContext);
+    const { updateUser, balance } = useContext(UserContext);
+    const [mostrarNotificacion, setMostrarNotificacion] = useState(false);
 
     const obtenerFinanzas = async () => {
         try {
@@ -57,6 +58,8 @@ export default function Finanzas() {
                 await obtenerFinanzas();
                 setMostrarConfirmacion(false);
                 setGastoSeleccionado(null);
+                setMostrarNotificacion(true);
+                setTimeout(() => setMostrarNotificacion(false), 3000);
             } else {
                 alert(data.message);
             }
@@ -140,12 +143,18 @@ export default function Finanzas() {
                             <p><strong>Gasto:</strong> {gastoSeleccionado.Nombre}</p>
                             <p><strong>Proyecto:</strong> {gastoSeleccionado.NombreProyecto}</p>
                             <p><strong>Monto a pagar:</strong> ${(gastoSeleccionado.MontoTotal * gastoSeleccionado.PorcentajeDeuda / 100).toFixed(2)}</p>
+                            <p className="saldo-actual"><strong>Saldo actual:</strong> ${balance.toFixed(2)}</p>
                         </div>
                         <div className="botones-confirmacion">
                             <button onClick={handlePagar}>Confirmar</button>
                             <button onClick={() => setMostrarConfirmacion(false)}>Cancelar</button>
                         </div>
                     </div>
+                </div>
+            )}
+            {mostrarNotificacion && (
+                <div className="notificacion">
+                    ¡Pago exitoso!
                 </div>
             )}
         </div>
