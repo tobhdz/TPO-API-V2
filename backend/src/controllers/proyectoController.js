@@ -39,6 +39,15 @@ export const crearProyecto = async (req, res) => {
           VALUES (@ProyectoId, @UsuarioId)
         `);
 
+      // Crear notificación para el creador
+      await transaction.request()
+        .input('UsuarioId', Int, creadorId)
+        .input('Mensaje', VarChar(pkg.MAX), `Has creado el proyecto "${nombre}" exitosamente.`)
+        .query(`
+          INSERT INTO Notificaciones (UsuarioId, Mensaje)
+          VALUES (@UsuarioId, @Mensaje)
+        `);
+
       // Insertar otros participantes si existen
       if (participantes && participantes.length > 0) {
         for (const participante of participantes) {
@@ -51,12 +60,24 @@ export const crearProyecto = async (req, res) => {
             `);
           
           if (userResult.recordset.length > 0) {
+            const participanteId = userResult.recordset[0].Id;
+            
+            // Insertar participante
             await transaction.request()
               .input('ProyectoId', Int, proyectoId)
-              .input('UsuarioId', Int, userResult.recordset[0].Id)
+              .input('UsuarioId', Int, participanteId)
               .query(`
                 INSERT INTO ParticipantesProyecto (ProyectoId, UsuarioId)
                 VALUES (@ProyectoId, @UsuarioId)
+              `);
+
+            // Crear notificación para el participante
+            await transaction.request()
+              .input('UsuarioId', Int, participanteId)
+              .input('Mensaje', VarChar(pkg.MAX), `Has sido agregado al proyecto "${nombre}".`)
+              .query(`
+                INSERT INTO Notificaciones (UsuarioId, Mensaje)
+                VALUES (@UsuarioId, @Mensaje)
               `);
           }
         }
