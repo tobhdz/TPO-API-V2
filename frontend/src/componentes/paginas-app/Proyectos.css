@@ -296,6 +296,7 @@
     border-radius: 8px;
     background: transparent;
     text-align: center;
+    overflow: hidden;
 }
 
 .tabla-header, .tabla-row {
