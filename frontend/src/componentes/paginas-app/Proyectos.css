@@ -326,9 +326,13 @@
     color: white;
     padding-block: 15px;
     font-size: 18px;
-    font-family: Kanit;
+    font-family: Montserrat;
     text-transform: uppercase;
     font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    cursor: pointer;
 }
 
 .añadir-ticket:hover {
@@ -339,6 +343,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    margin-top: -10px;
 }
 
 .caja-imagen {

@@ -535,6 +535,17 @@ export default function Proyectos() {
                         }
                       })()}
                     </div>
+
+                    <button className="añadir-ticket">
+                      <FontAwesomeIcon icon={faFileImage} />
+                      Añadir ticket
+                    </button>
+
+                    <div className="contenedor-imagenes">
+                      <div className="caja-imagen">
+                        <img src="/rutaimg" alt="ticket" />
+                      </div>
+                    </div>
                   </div>
                 ));
               } catch (error) {
