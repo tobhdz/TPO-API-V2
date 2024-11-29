@@ -40,6 +40,18 @@ export default function Proyectos() {
     cargarProyectos();
   }, []);
 
+  useEffect(() => {
+    if (mostrarFormularioProyecto || mostrarFormularioGasto) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+
+    return () => {
+      document.body.classList.remove('modal-open');
+    };
+  }, [mostrarFormularioProyecto, mostrarFormularioGasto]);
+
   const cargarProyectos = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -675,6 +687,7 @@ export default function Proyectos() {
                       </div>
                       <input
                         type="number"
+                        style={{background: 'transparent', width: '100px', border: '1px solid rgba(255,255,255,0.3)', borderRadius: '8px', padding: '8px', fontFamily: 'kanit', color: '#ffffffed'}}
                         placeholder="Porcentaje"
                         min="0"
                         max="100"
