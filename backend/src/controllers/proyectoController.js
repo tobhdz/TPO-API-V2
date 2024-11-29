@@ -198,31 +198,7 @@ export const actualizarProyecto = async (req, res) => {
     await transaction.begin();
 
     try {
-      // Verificar si el usuario es el creador del proyecto
-      const verificacion = await transaction.request()
-        .input('ProyectoId', Int, proyectoId)
-        .input('CreadorId', Int, userId)
-        .query(`
-          SELECT CreadorId FROM Proyectos 
-          WHERE ProyectoId = @ProyectoId AND CreadorId = @CreadorId
-        `);
-
-      if (verificacion.recordset.length === 0) {
-        throw new Error('No tienes permiso para editar este proyecto');
-      }
-
-      // Actualizar información básica del proyecto
-      await transaction.request()
-        .input('ProyectoId', Int, proyectoId)
-        .input('Nombre', VarChar(100), nombre)
-        .input('Descripcion', VarChar(pkg.MAX), descripcion)
-        .query(`
-          UPDATE Proyectos 
-          SET Nombre = @Nombre, Descripcion = @Descripcion
-          WHERE ProyectoId = @ProyectoId
-        `);
-
-      // Verificar participantes en gastos y eliminar los que se pueden eliminar
+      // Verificar participantes en gastos
       const participantesEnGastos = await transaction.request()
         .input('ProyectoId', Int, proyectoId)
         .query(`
@@ -233,44 +209,76 @@ export const actualizarProyecto = async (req, res) => {
           WHERE g.ProyectoId = @ProyectoId
         `);
 
-      const emailsEnGastos = participantesEnGastos.recordset.map(p => p.Email);
-      const emailsNuevos = participantes.map(p => p.email);
-
-      // Eliminar participantes que no están en gastos
-      await transaction.request()
+      // Obtener participantes actuales
+      const participantesActuales = await transaction.request()
         .input('ProyectoId', Int, proyectoId)
         .query(`
-          DELETE FROM ParticipantesProyecto 
-          WHERE ProyectoId = @ProyectoId 
-          AND UsuarioId IN (
-            SELECT u.Id
-            FROM Usuarios u
-            JOIN ParticipantesProyecto pp ON u.Id = pp.UsuarioId
-            WHERE pp.ProyectoId = @ProyectoId
-            AND u.Correo NOT IN (${emailsEnGastos.map(email => `'${email}'`).join(',') || "''"})
-            AND u.Correo NOT IN (${emailsNuevos.map(email => `'${email}'`).join(',') || "''"})
-          )
+          SELECT u.Correo as Email
+          FROM ParticipantesProyecto pp
+          JOIN Usuarios u ON pp.UsuarioId = u.Id
+          WHERE pp.ProyectoId = @ProyectoId
         `);
+
+      const emailsActuales = participantesActuales.recordset.map(p => p.Email);
+      const emailsNuevos = participantes.map(p => p.email);
+      const emailsEnGastos = participantesEnGastos.recordset.map(p => p.Email);
+
+      // Verificar si se está intentando eliminar participantes que están en gastos
+      const participantesEliminados = emailsActuales.filter(
+        email => !emailsNuevos.includes(email)
+      );
+
+      for (const email of participantesEliminados) {
+        if (emailsEnGastos.includes(email)) {
+          throw new Error(`No se puede eliminar al participante ${email} porque está incluido en uno o más gastos.`);
+        }
+      }
+
+      // Si llegamos aquí, podemos continuar con la actualización
+      await transaction.request()
+        .input('ProyectoId', Int, proyectoId)
+        .input('Nombre', VarChar(100), nombre)
+        .input('Descripcion', VarChar(pkg.MAX), descripcion)
+        .query(`
+          UPDATE Proyectos 
+          SET Nombre = @Nombre, Descripcion = @Descripcion
+          WHERE ProyectoId = @ProyectoId
+        `);
+
+      // Eliminar participantes que no están en gastos
+      for (const email of participantesEliminados) {
+        await transaction.request()
+          .input('ProyectoId', Int, proyectoId)
+          .input('Email', VarChar(100), email)
+          .query(`
+            DELETE FROM ParticipantesProyecto 
+            WHERE ProyectoId = @ProyectoId 
+            AND UsuarioId IN (
+              SELECT Id FROM Usuarios WHERE Correo = @Email
+            )
+          `);
+      }
 
       // Agregar nuevos participantes
       for (const participante of participantes) {
         const userResult = await transaction.request()
+          .input('ProyectoId', Int, proyectoId)
           .input('Email', VarChar(100), participante.email)
-          .query(`SELECT Id FROM Usuarios WHERE Correo = @Email`);
-
-        if (userResult.recordset.length > 0) {
-          await transaction.request()
-            .input('ProyectoId', Int, proyectoId)
-            .input('UsuarioId', Int, userResult.recordset[0].Id)
-            .query(`
-              IF NOT EXISTS (
-                SELECT 1 FROM ParticipantesProyecto 
-                WHERE ProyectoId = @ProyectoId AND UsuarioId = @UsuarioId
-              )
+          .query(`
+            IF NOT EXISTS (
+              SELECT 1 
+              FROM ParticipantesProyecto pp
+              JOIN Usuarios u ON pp.UsuarioId = u.Id
+              WHERE pp.ProyectoId = @ProyectoId 
+              AND u.Correo = @Email
+            )
+            BEGIN
               INSERT INTO ParticipantesProyecto (ProyectoId, UsuarioId)
-              VALUES (@ProyectoId, @UsuarioId)
-            `);
-        }
+              SELECT @ProyectoId, Id
+              FROM Usuarios
+              WHERE Correo = @Email
+            END
+          `);
       }
 
       await transaction.commit();
