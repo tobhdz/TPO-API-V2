@@ -18,7 +18,13 @@ export const UserProvider = ({ children }) => {
         }
     });
     const [password, setPassword] = useState(() => Cookies.get('password') || '');
-    const [profileImage, setProfileImage] = useState(() => Cookies.get('profileImage') || '/img/defaultuser.png');
+    const [profileImage, setProfileImage] = useState(() => {
+        const savedImage = Cookies.get('profileImage');
+        if (!savedImage) return '/img/defaultuser.png';
+        return savedImage.startsWith('http') ? 
+               savedImage : 
+               `http://localhost:4000/uploads/pfp/${savedImage}`;
+    });
     const [metodosPago, setMetodosPago]=useState([]);
     const [userId, setUserId] = useState(() => Cookies.get('userId') || null);
 
@@ -69,7 +75,11 @@ export const UserProvider = ({ children }) => {
     };
 
     const updateProfileImage = (imageUrl) => {
-        setProfileImage(imageUrl);
+        // Guardamos solo el nombre del archivo en la cookie
+        const fileName = imageUrl.split('/').pop();
+        Cookies.set('profileImage', fileName, { expires: 7 });
+        // Pero usamos la URL completa en el estado
+        setProfileImage(`http://localhost:4000/uploads/pfp/${fileName}`);
     };
 
     const updateUser = ({ newUser, newName, newEmail, newBalance }) => {
